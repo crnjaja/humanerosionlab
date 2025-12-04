@@ -10,7 +10,6 @@
               <h1>Nous trouver & nous joindre</h1>
             </div>
           </div>
-
         </div>
 
         <div class="chips" aria-label="Informations rapides">
@@ -49,28 +48,32 @@
             <li class="info-item">
               <div class="info-key">Email</div>
               <div class="info-val">
-                <a class="btn btn--ghost" href="mailto:reception@lodze.ch" aria-label="Envoyer un email">
+                <a
+                  class="btn btn--ghost"
+                  href="mailto:reception@lodze.ch"
+                  aria-label="Envoyer un email"
+                >
                   ✉️ reception@lodze.ch
                 </a>
               </div>
             </li>
 
             <li class="info-item">
-              <div class="info-key">Horaires</div>
+              <div class="info-key">Restaurant</div>
               <div class="info-val">
-                Mer–Dim : 11:30 → 22:30<br />
-                (bains : créneaux selon réservation)
+                Diner : 12:00 → 14:00<br />
+                Souper : 19:00 → 21:30
               </div>
             </li>
 
             <li class="info-item">
-              <div class="info-key">Accès</div>
+              <div class="info-key">Bains</div>
               <div class="info-val">
-                Parking à proximité · Transports publics · Accès PMR selon zones
+                Lun–Jeu : 12:00 → 22:00<br />
+                Ven–Dim : 09:00 → 22:00
               </div>
             </li>
           </ul>
-
         </article>
 
         <aside class="split__right map-frame" aria-label="Carte Google Maps">
@@ -90,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-const addressLine = "Avenue du Grand-Saint-Bernard 1, 1920 Martigny, Suisse";
-const mapsEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(addressLine)}&z=15&output=embed`;
-const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`;
+const addressLine = 'Avenue du Grand-Saint-Bernard 1, 1920 Martigny, Suisse'
+const mapsEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(addressLine)}&z=15&output=embed`
+const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`
 </script>
