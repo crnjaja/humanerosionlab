@@ -4,8 +4,8 @@
     <RouterLink class="brand" to="/">
       <img class="brand__logo" src="/files/logo.png" alt="Logo" />
       <span class="brand__text">
-        <span class="brand__name">Le Dodu</span>
-        <span class="brand__tag">SIte personnel</span>
+        <span class="brand__name">Le P'tit Dodu</span>
+        <span class="brand__tag">Site personnel</span>
       </span>
     </RouterLink>
 
