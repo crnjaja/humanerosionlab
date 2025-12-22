@@ -10,12 +10,6 @@ const router = createRouter({
       meta: { title: 'Accueil' },
     },
     {
-      path: '/experience',
-      name: 'experience',
-      component: () => import('@/pages/ExperiencePage.vue'),
-      meta: { title: 'Expérience' },
-    },
-    {
       path: '/le-bon',
       name: 'about',
       component: () => import('@/pages/AboutPage.vue'),
