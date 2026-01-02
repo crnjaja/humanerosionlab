@@ -6,6 +6,7 @@
 @import './layout.css' layer(layout);
 
 @import './components/header.css' layer(components);
+@import './components/footer.css' layer(components);
 @import './components/hero.css' layer(components);
 @import './components/buttons.css' layer(components);
 @import './components/cards.css' layer(components);

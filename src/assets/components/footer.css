@@ -1,0 +1,97 @@
+.site-footer {
+  /* “header-like” glass bar, but for the bottom */
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 34, 59, 0.72);
+  box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(10px);
+
+  /* If you want it always visible like the header, uncomment:
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 90;
+  */
+}
+
+.footer-inner {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-brand {
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.05;
+}
+
+.footer-muted {
+  font-size: 12px;
+  font-weight: 650;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.footer-link {
+  text-decoration: none;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  font-size: var(--header-font);
+  padding: 10px 10px;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid transparent;
+
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.footer-link:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+  text-decoration: none; /* keep it consistent with header behavior */
+}
+
+.footer-link.router-link-active {
+  border-color: rgba(216, 75, 139, 0.55);
+  background: rgba(216, 75, 139, 0.12);
+  position: relative;
+}
+
+.footer-link.router-link-active::after {
+  content: '';
+  position: absolute;
+  inset: auto -1px -1px -1px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* Responsive: stack nicely on smaller screens */
+@media (max-width: 720px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-nav {
+    justify-content: flex-start;
+  }
+}

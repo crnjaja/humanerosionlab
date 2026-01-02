@@ -10,14 +10,13 @@
             LE P’TIT DODU
           </div>
 
-          <h1 class="hero-title">
-            INSIGHTS, IN-DEPTH ANALYSIS,
-            <span class="accent">CONVERSATIONS</span>
+          <h1 class="hero-title hero-title--words" ref="heroTitleEl">
+            INSIGHTS, IN-DEPTH ANALYSIS, <span class="accent">CONVERSATIONS</span>
           </h1>
 
           <p class="hero-subtitle">
-            Image fixe derrière toute la page : le contenu scrolle “par-dessus”, comme des panneaux.
-            Séparateurs en V comme l’exemple.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.
           </p>
 
           <div class="hero-actions">
@@ -57,7 +56,7 @@
                       <p class="feature-meta">Published: 12 Oct 2025</p>
                     </div>
                     <p class="feature-actions actions-right">
-                      <a class="feature-link" href="#" aria-label="Browse all news">All News →</a>
+                      <a class="feature-link" href="#">All News →</a>
                     </p>
                   </div>
                 </article>
@@ -80,11 +79,7 @@
                       <p class="feature-meta">Published: 08 Oct 2025</p>
                     </div>
                     <p class="feature-actions actions-right">
-                      <a
-                        class="feature-link"
-                        href="https://www.human-erosion-lab.com/publications"
-                        aria-label="Browse all publications"
-                      >
+                      <a class="feature-link" href="https://www.human-erosion-lab.com/publications">
                         All Publications →
                       </a>
                     </p>
@@ -94,7 +89,7 @@
 
               <!-- ===== RIGHT: AGENDA ===== -->
               <aside class="agenda" aria-label="Agenda">
-                <div class="agenda-card" role="region" aria-labelledby="agenda-title">
+                <section class="agenda-card" aria-labelledby="agenda-title">
                   <div class="agenda-header">
                     <div class="pill">Agenda</div>
                     <h3 id="agenda-title" class="agenda-title">Upcoming</h3>
@@ -140,24 +135,18 @@
                             </svg>
                           </button>
 
-                          <a class="feature-link" :href="ev.url || '#'" aria-label="Event details"
-                            >Details →</a
-                          >
+                          <a class="feature-link" :href="ev.url || '#'">Details →</a>
                         </div>
                       </div>
                     </li>
                   </ol>
 
                   <div class="agenda-footer actions-right">
-                    <a
-                      class="feature-link"
-                      href="https://www.human-erosion-lab.com/events"
-                      aria-label="All events"
-                    >
+                    <a class="feature-link" href="https://www.human-erosion-lab.com/events">
                       All Events →
                     </a>
                   </div>
-                </div>
+                </section>
               </aside>
             </div>
           </section>
@@ -183,13 +172,9 @@
                     </p>
                   </div>
                   <p class="project-actions actions-right">
-                    <a
-                      class="feature-link"
-                      href="https://www.human-erosion-lab.com/about/lab"
-                      aria-label="Read the HEL project"
-                    >
-                      Read more →
-                    </a>
+                    <RouterLink class="feature-link" to="/projects/hel">
+                      Read the HEL project →
+                    </RouterLink>
                   </p>
                 </div>
               </article>
@@ -210,13 +195,9 @@
                     </p>
                   </div>
                   <p class="project-actions actions-right">
-                    <a
-                      class="feature-link"
-                      href="https://www.human-erosion-lab.com/projects/hrjust"
-                      aria-label="Read the HRJUST project"
-                    >
-                      Read more →
-                    </a>
+                    <RouterLink class="feature-link" to="/projects/hrjust">
+                      Read the HRJUST project →
+                    </RouterLink>
                   </p>
                 </div>
               </article>
@@ -237,13 +218,9 @@
                     </p>
                   </div>
                   <p class="project-actions actions-right">
-                    <a
-                      class="feature-link"
-                      href="https://www.human-erosion-lab.com/projects/gem"
-                      aria-label="Read the GEM project"
-                    >
-                      Read more →
-                    </a>
+                    <RouterLink class="feature-link" to="/projects/gem">
+                      Read the GEM project →
+                    </RouterLink>
                   </p>
                 </div>
               </article>
@@ -264,13 +241,9 @@
                     </p>
                   </div>
                   <p class="project-actions actions-right">
-                    <a
-                      class="feature-link"
-                      href="https://www.human-erosion-lab.com/projects/cli-m-co2"
-                      aria-label="Read the CLIMCO2 project"
-                    >
-                      Read more →
-                    </a>
+                    <RouterLink class="feature-link" to="/projects/cli-m-co2">
+                      Read the CLIMCO2 project →
+                    </RouterLink>
                   </p>
                 </div>
               </article>
@@ -309,9 +282,9 @@
           <div class="partners-kicker">THE PROJECT IS A JOINT INITIATIVE BY</div>
 
           <div class="logos">
-            <div class="logo-box">EPC</div>
-            <div class="logo-box">KBF</div>
-            <div class="logo-box">MERCATOR</div>
+            <div class="logo-box">UNIBE</div>
+            <div class="logo-box">UNITN</div>
+            <div class="logo-box">IIR</div>
           </div>
         </div>
       </div>
@@ -321,6 +294,12 @@
 
 <script setup>
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
+import { useWordReveal } from '@/composables/useWordReveal'
+
+const { el: heroTitleEl } = useWordReveal({
+  stagger: 140, // even slower stagger
+  duration: 1300, // longer easing per word
+})
 
 const agendaConfig = {
   timezone: 'Europe/Zurich',
@@ -432,7 +411,7 @@ function closeMenu() {
 
 function toUTCBlock(d) {
   const iso = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()
-  return iso.replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')
+  return iso.replaceAll(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')
 }
 
 function googleCalendarURL(ev) {
@@ -478,8 +457,8 @@ function downloadICS(ev) {
     `DTSTAMP:${toICSDate(new Date(), 'UTC')}Z`,
     `DTSTART;TZID=${tz}:${dtStart}`,
     `DTEND;TZID=${tz}:${dtEnd}`,
-    `SUMMARY:${(ev.title || '').replace(/\n/g, ' ')}`,
-    ev.location ? `LOCATION:${String(ev.location).replace(/\n/g, ' ')}` : '',
+    `SUMMARY:${(ev.title || '').replaceAll('\n', ' ')}`,
+    ev.location ? `LOCATION:${String(ev.location).replaceAll('\n', ' ')}` : '',
     ev.url ? `URL:${ev.url}` : '',
     'END:VEVENT',
     'END:VCALENDAR',
@@ -492,9 +471,9 @@ function downloadICS(ev) {
   a.href = URL.createObjectURL(blob)
   a.download =
     (ev.title || 'event')
-      .replace(/[^\w\s-]+/g, '')
+      .replaceAll(/[^\w\s-]+/g, '')
       .trim()
-      .replace(/\s+/g, '-') + '.ics'
+      .replaceAll(/\s+/g, '-') + '.ics'
   document.body.appendChild(a)
   a.click()
   URL.revokeObjectURL(a.href)

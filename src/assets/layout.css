@@ -110,3 +110,40 @@
   display: grid;
   place-items: center;
 }
+
+/* Hero compact for inner pages */
+.stage--top--compact .stage-inner {
+  padding-top: calc(var(--header-h) + 54px);
+  padding-bottom: 54px;
+}
+
+/* If your top stage uses min-height, this helps too */
+.stage--top--compact {
+  min-height: 64vh;
+}
+
+/* PROJECT / INNER PAGES: flat top banner (no V) + shorter */
+.stage--top.stage--top--flat {
+  /* reduce overall height */
+  min-height: clamp(280px, 42vh, 520px);
+
+  /* control the space above/below content (instead of the homepage values) */
+  padding-top: calc(var(--header-h) + 28px);
+  padding-bottom: 40px;
+}
+
+/* remove the extra inner padding added by stage--top--compact */
+.stage--top.stage--top--flat .stage-inner {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* kill the V shape from .stage--top::after */
+.stage--top.stage--top--flat::after {
+  content: none;
+}
+
+/* optional: since there's no V anymore, stop the overlap trick */
+.project-page .hero-offset {
+  margin-top: 0;
+}

@@ -54,8 +54,9 @@
 }
 
 .focus-grid {
-  align-items: stretch;
+  align-items: start;
 }
+
 @media (min-width: 1100px) {
   .focus-grid {
     grid-template-columns: minmax(0, 1.15fr) min(360px, 30%);
@@ -80,7 +81,7 @@
 .project-row {
   position: relative;
   display: grid;
-  align-items: center;
+  align-items: start;
   opacity: 0;
   transform: translateY(14px);
 }
