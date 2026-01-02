@@ -1,7 +1,3 @@
-/* =========================
-   SITE HEADER
-========================= */
-
 .site-header {
   position: fixed;
   inset: 0 0 auto 0;
@@ -10,7 +6,6 @@
 
   background: transparent;
   border-bottom: 1px solid transparent;
-  overflow: visible; /* allow hero logo to hang */
 
   transition:
     background 160ms ease,
@@ -34,61 +29,39 @@
   gap: 16px;
 }
 
-/* =========================
-   BRAND / LOGO
-========================= */
-
+/* Brand */
 .brand {
-  margin-left: -30px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   text-decoration: none;
 }
-
-.brand-logo.is-hero {
-  transform: translateY(22px) scale(1.4);
-  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.45));
-
-  margin-top: -16px;
-}
-
-/* normal logo */
 .brand-logo {
-  height: 70px;
-  width: auto;
-  max-width: 260px;
+  height: 70px; /* contrôle VISUEL principal */
+  width: auto; /* respecte le ratio */
+  max-width: 260px; /* empêche qu’il devienne énorme */
   object-fit: contain;
   display: block;
-
-  transform-origin: left top;
-  will-change: transform, filter;
-
   filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
-
-  transition:
-    transform 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
-    filter 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
 }
 
-/* mobile scaling */
-@media (max-width: 720px) {
-  .brand-logo.is-hero {
-    transform: translateY(16px) scale(1.55);
-  }
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.brand-name {
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+}
+.brand-tag {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.68);
+  font-weight: 650;
 }
 
-/* reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .brand-logo {
-    transition: none;
-  }
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-
+/* Nav */
 .top-nav {
   display: flex;
   align-items: center;
@@ -102,10 +75,8 @@
   letter-spacing: 0.02em;
   font-size: var(--header-font);
   padding: 10px 10px;
-
   color: rgba(255, 255, 255, 0.9);
   border: 1px solid transparent;
-
   transition:
     background 140ms ease,
     border-color 140ms ease,
@@ -122,6 +93,7 @@
   border-color: rgba(216, 75, 139, 0.55);
   background: rgba(216, 75, 139, 0.12);
   position: relative;
+  text-decoration: none;
 }
 
 .top-nav-link.router-link-active::after {
@@ -132,17 +104,41 @@
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
 
-/* =========================
-   DROPDOWNS
-========================= */
+.hero-title--words .w {
+  display: inline-block;
+  transform: translateY(0.7em);
+  opacity: 0;
+  filter: blur(8px);
 
+  transition:
+    transform var(--wordDuration, 1100ms) cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity var(--wordDuration, 1100ms) cubic-bezier(0.2, 0.9, 0.2, 1),
+    filter var(--wordDuration, 1100ms) cubic-bezier(0.2, 0.9, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+.hero-title--words.reveal-on .w {
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title--words .w {
+    transition: none;
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+}
+
+/* ===== Dropdown About ===== */
 .nav-dropdown {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
 
-/* dropdown button */
 .top-nav-link--dropdown {
   appearance: none;
   -webkit-appearance: none;
@@ -150,25 +146,24 @@
   background: transparent;
   border: 1px solid transparent;
 
-  color: rgba(255, 255, 255, 0.9);
-  font: inherit;
-  font-size: var(--header-font);
-  font-weight: 750;
+  color: rgba(255, 255, 255, 0.9); /* same as .top-nav-link */
+  font: inherit; /* same font as links */
   letter-spacing: 0.02em;
-
   cursor: pointer;
+
   padding: 10px 10px;
+
+  font-size: var(--header-font);
+  font-weight: 750; /* <-- comme .top-nav-link */
+  line-height: normal; /* (optionnel) évite le "line-height: 1" différent */
 }
 
 .dropdown-icon {
   display: inline-flex;
   width: 16px;
   height: 16px;
-  margin-left: 4px;
-
   opacity: 0.85;
   transform: translateY(0.5px);
-
   transition:
     transform 160ms ease,
     opacity 160ms ease;
@@ -179,11 +174,12 @@
   opacity: 1;
 }
 
-/* active dropdown button */
+/* Active state for the button, matching router-link-active */
 .top-nav-link.is-active {
   border-color: rgba(216, 75, 139, 0.55);
   background: rgba(216, 75, 139, 0.12);
   position: relative;
+  text-decoration: none;
 }
 
 .top-nav-link.is-active::after {
@@ -194,11 +190,11 @@
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
 
-/* dropdown panel */
+/* Panel */
 .nav-dropdown-panel {
   position: absolute;
   top: calc(100% + 2px);
-  right: 0;
+  right: 1;
 
   width: min(320px, 80vw);
   padding: 8px;
@@ -214,33 +210,29 @@
   opacity: 0;
   transform: translateY(-6px);
   pointer-events: none;
-
   transition:
     opacity 160ms ease,
     transform 160ms ease;
-
   z-index: 200;
 }
 
-/* hover buffer */
 .nav-dropdown::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  height: 10px;
-  pointer-events: auto;
+  height: 10px; /* zone tampon */
+  pointer-events: auto; /* IMPORTANT */
 }
 
-/* open state */
+/* Open */
 .nav-dropdown--open .nav-dropdown-panel {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-/* dropdown items */
 .nav-dropdown-item {
   text-decoration: none;
   display: grid;
@@ -279,10 +271,13 @@
   color: rgba(255, 255, 255, 0.68);
 }
 
-/* =========================
-   MOBILE DROPDOWN
-========================= */
+.nav-dropdown-sep {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 2px 6px;
+}
 
+/* Mobile: let it span nicely */
 @media (max-width: 720px) {
   .nav-dropdown-panel {
     right: auto;
