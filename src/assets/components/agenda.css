@@ -178,3 +178,28 @@ a.agenda-link:hover {
   display: flex;
   justify-content: flex-end;
 }
+
+/* the button that holds the icon */
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(10, 34, 59, 0.16);
+  background: transparent;
+  color: var(--navy); /* icon color */
+  cursor: pointer;
+}
+
+/* the svg itself */
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: currentColor; /* critical if you have global svg resets */
+}
+
+/* ensure the path actually fills */
+.icon-btn svg path {
+  fill: currentColor;
+}

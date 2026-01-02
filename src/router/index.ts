@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LeBonView from '../views/LeBonView.vue'
 import ContactView from '../views/ContactView.vue'
+import PublicationsView from '../views/PublicationsView.vue'
+import EventsView from '../views/EventsView.vue'
+import TeamView from '../views/about/TeamView.vue'
 
 // Projects (lazy-loaded)
 const HelView = () => import('../views/projects/HelView.vue')
@@ -15,9 +18,12 @@ const router = createRouter({
     { path: '/', name: 'home', component: HomeView },
     { path: '/le-bon', name: 'le-bon', component: LeBonView },
     { path: '/contact', name: 'contact', component: ContactView },
+    { path: '/publications', name: 'publications', component: PublicationsView },
+    { path: '/events', name: 'events', component: EventsView },
 
-    // Projects
     { path: '/projects/hel', name: 'project-hel', component: HelView },
+    { path: '/projects/team', name: 'project-team', component: TeamView },
+
     { path: '/projects/hrjust', name: 'project-hrjust', component: HrjustView },
     { path: '/projects/gem', name: 'project-gem', component: GemView },
     { path: '/projects/cli-m-co2', name: 'project-cli-m-co2', component: CliMCo2View },
