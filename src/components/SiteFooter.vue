@@ -7,9 +7,16 @@
       </div>
 
       <nav class="footer-nav" aria-label="Liens">
+        <!-- If you have routes, prefer RouterLink -->
         <RouterLink class="footer-link" to="/imprint">Terms of Use</RouterLink>
         <RouterLink class="footer-link" to="/privacy-policy">Privacy Policy</RouterLink>
         <RouterLink class="footer-link" to="/cookies-consent">Cookies &amp; Consent</RouterLink>
+
+        <!-- If you DON'T have routes yet, replace with <a> like below:
+        <a class="footer-link" href="#" @click.prevent>Imprint</a>
+        <a class="footer-link" href="#" @click.prevent>Privacy Policy</a>
+        <a class="footer-link" href="#" @click.prevent>Cookies & Consent</a>
+        -->
       </nav>
     </div>
   </footer>

@@ -21,7 +21,7 @@
 
 .btn--primary {
   color: #fff;
-  background: var(--accentbis);
+  background: var(--accent);
   border-color: rgba(255, 255, 255, 0.16);
 }
 .btn--primary:hover {

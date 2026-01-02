@@ -11,9 +11,7 @@
           </div>
 
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
-            WHEN
-            <span class="accent">CLIMATE CHANGE</span> ERODES
-            <span class="accent"> HUMAN RIGHTS</span>
+            INSIGHTS, IN-DEPTH ANALYSIS, <span class="accent">CONVERSATIONS</span>
           </h1>
 
           <p class="hero-subtitle">
@@ -22,7 +20,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn--primary" href="#news">About Us</a>
+            <a class="btn btn--primary" href="#news">Get to know us</a>
             <RouterLink class="btn btn--ghost" to="/contact">Contact</RouterLink>
           </div>
         </div>

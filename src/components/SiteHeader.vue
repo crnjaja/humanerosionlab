@@ -130,6 +130,8 @@
         <RouterLink class="top-nav-link" to="/publications">Publications</RouterLink>
         <RouterLink class="top-nav-link" to="/events">Events</RouterLink>
         <RouterLink class="top-nav-link" to="/contact">Contact</RouterLink>
+
+        <a class="social-pill" href="#" aria-label="Twitter" @click.prevent>✕</a>
       </nav>
     </div>
   </header>
