@@ -1,12 +1,8 @@
 <template>
   <header class="site-header" :class="{ 'site-header--solid': isSolid }">
     <div class="container header-inner">
-      <RouterLink to="/" class="brand">
+      <RouterLink to="/" class="brand brand--logo-only">
         <img class="brand-logo" src="/files/logo.png" alt="Logo" />
-        <span class="brand-text">
-          <span class="brand-name">Le P’tit Dodu</span>
-          <span class="brand-tag">Site personnel</span>
-        </span>
       </RouterLink>
 
       <nav class="top-nav" aria-label="Navigation principale">

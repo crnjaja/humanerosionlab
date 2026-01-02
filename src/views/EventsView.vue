@@ -6,7 +6,7 @@
         <div class="hero hero--events">
           <div class="hero-kicker">
             <span class="kicker-dot" aria-hidden="true"></span>
-            EVENTS
+            content
           </div>
 
           <!-- SAME WORD ANIMATION AS HOMEPAGE -->

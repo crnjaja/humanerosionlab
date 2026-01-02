@@ -6,7 +6,7 @@
         <div class="hero hero--team">
           <div class="hero-kicker">
             <span class="kicker-dot" aria-hidden="true"></span>
-            TEAM
+            CURRENT PROJECT
           </div>
 
           <!-- SAME WORD ANIMATION AS HOMEPAGE -->

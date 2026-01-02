@@ -26,7 +26,7 @@
   --focus: rgba(216, 75, 139, 0.35);
 
   /* IMPORTANT: /public/files/ */
-  --bg-image: url('/files/home-bg.webp');
+  --bg-image: url('/files/home-bg3.webp');
   --bg-overlay: linear-gradient(
     180deg,
     rgba(6, 16, 28, 0.68) 0%,

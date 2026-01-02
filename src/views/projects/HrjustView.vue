@@ -5,7 +5,7 @@
         <div class="hero">
           <div class="hero-kicker">
             <span class="kicker-dot" aria-hidden="true"></span>
-            PROJECT
+            PREVIOUS PROJECT
           </div>
 
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
