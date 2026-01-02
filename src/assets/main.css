@@ -1,0 +1,989 @@
+/* =========================================================
+   main.css — Fixed background + “content overlays image”
+   - 1 fixed image behind everything (never moves)
+   - content blocks are opaque panels that scroll over the image
+   - top hero has a LIGHT V cut down into the panel
+   - bottom image section has a LIGHT V overlay at its top (like reference)
+   ========================================================= */
+
+/* ===========================
+   TOKENS
+   =========================== */
+:root {
+  --maxw: 1120px;
+  --radius: 0px;
+
+  --header-h: 72px;
+
+  /* V heights */
+  --v-h: 86px; /* top light V */
+  --v-h-bottom: 170px; /* bottom light V overlay */
+
+  /* Colors (screenshot-inspired) */
+  --navy: #0b2a4a;
+  --navy-2: #0a223b;
+  --ink: #0b1f33;
+  --muted: rgba(11, 31, 51, 0.7);
+
+  --accent: #d84b8b;
+  --accent-2: #ff6aa9;
+
+  /* Light section color (panels) */
+  --panel: #eef3fb;
+  --white: #ffffff;
+
+  --border: rgba(10, 34, 59, 0.14);
+  --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.16);
+
+  --focus: rgba(216, 75, 139, 0.35);
+
+  /* IMPORTANT: put this image in /public/files/ */
+  --bg-image: url('/files/home-bg.webp');
+  --bg-overlay: linear-gradient(
+    180deg,
+    rgba(6, 16, 28, 0.68) 0%,
+    rgba(6, 16, 28, 0.45) 45%,
+    rgba(6, 16, 28, 0.68) 100%
+  );
+}
+
+/* ===========================
+   BASE
+   =========================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial;
+  color: var(--ink);
+  background: var(--panel);
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================================================
+   ✅ GLOBAL FIXED BACKGROUND (image never moves)
+   ========================================================= */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+
+  background-image: var(--bg-overlay), var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* desktop nice effect */
+  background-attachment: fixed;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(1200px 800px at 50% 30%, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.22));
+  pointer-events: none;
+}
+
+/* Links */
+a {
+  color: inherit;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   HELPERS
+   =========================== */
+.container {
+  width: min(var(--maxw), calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.spacer {
+  height: 26px;
+}
+
+/* ===========================
+   HEADER (transparent -> solid)
+   =========================== */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--header-h);
+  z-index: 100;
+
+  background: transparent;
+  border-bottom: 1px solid transparent;
+
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    backdrop-filter 160ms ease;
+}
+
+.site-header--solid {
+  background: rgba(10, 34, 59, 0.72);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+.header-inner {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.3));
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.brand-name {
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.brand-tag {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.68);
+  font-weight: 650;
+}
+
+/* Nav */
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.top-nav-link {
+  text-decoration: none;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  font-size: 13px;
+  padding: 10px 10px;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid transparent;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.top-nav-link:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.top-nav-link.router-link-active {
+  border-color: rgba(216, 75, 139, 0.55);
+  background: rgba(216, 75, 139, 0.12);
+  position: relative;
+  text-decoration: none;
+}
+
+.top-nav-link.router-link-active::after {
+  content: '';
+  position: absolute;
+  inset: auto -1px -1px -1px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* ===========================
+   HOME / STAGES
+   =========================== */
+.home {
+  padding-top: 0;
+}
+
+/* Stage is transparent (shows fixed background) */
+.stage {
+  position: relative;
+  background: transparent;
+}
+
+/* TOP HERO */
+.stage--top {
+  min-height: 72vh;
+  padding-top: calc(var(--header-h) + 64px);
+  padding-bottom: calc(64px + var(--v-h));
+  display: grid;
+  align-items: center;
+}
+
+/* Top LIGHT V “cuts” into the panel */
+.stage--top::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: var(--v-h);
+  background: var(--panel);
+  clip-path: polygon(0 0, 50% 100%, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.stage-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* HERO */
+.hero {
+  max-width: 920px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 14px;
+}
+
+.kicker-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.05;
+  font-weight: 950;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.hero-title .accent {
+  color: var(--accent);
+}
+
+.hero-subtitle {
+  margin: 14px 0 0;
+  max-width: 68ch;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.7;
+}
+
+.hero-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ===========================
+   BUTTONS
+   =========================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+  transition:
+    transform 140ms ease,
+    filter 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.btn--primary:hover {
+  filter: saturate(1.06);
+  transform: translateY(-1px);
+  background: #d33d83;
+  text-decoration: none;
+}
+
+.btn--ghost {
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.btn--ghost:hover {
+  border-color: rgba(216, 75, 139, 0.6);
+  background: rgba(216, 75, 139, 0.14);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* ===========================
+   CONTENT BLOCK (opaque panel)
+   =========================== */
+.content-block {
+  background: var(--panel);
+  padding: 80px 0 110px; /* ✅ more length */
+  position: relative;
+  z-index: 10;
+}
+
+/* Cards are above any overlays */
+.content-block > .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   ✅ NEW HOMEPAGE BLOCK (Focus + Agenda + Projects)
+   - same layout/disposition/behavior as your snippet
+   - colors adapted to your theme (navy + pink accent)
+   ========================================================= */
+
+/* ✅ Content starts lower (less overlap) */
+.hero-offset {
+  margin-top: -40px; /* was -100px -> starts lower */
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 900px) {
+  .hero-offset {
+    margin-top: 0px;
+  }
+}
+
+/* Shared tokens */
+.feature-section,
+.projects-section {
+  --primary: var(--accent);
+  --ink: var(--ink);
+  --muted: var(--muted);
+  --surface: var(--white);
+  --shadow: var(--shadow-soft);
+  --shadow-soft-2: 0 10px 28px rgba(0, 0, 0, 0.14);
+  --shadow-soft-3: 0 3px 10px rgba(0, 0, 0, 0.08);
+  --gap: clamp(24px, 3.6vw, 52px); /* ✅ more spacing */
+  --radius: var(--radius);
+  container-type: inline-size;
+}
+
+/* FOCUS */
+.feature-section {
+  padding: clamp(26px, 5vw, 58px) 0; /* ✅ more length */
+}
+
+/* Big headings */
+.section-heading,
+.projects-heading {
+  position: relative;
+  font-size: clamp(38px, 8vw, 86px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(11, 42, 74, 0.16);
+  font-weight: 800;
+  margin: 0 0 clamp(8px, 1.4vw, 16px);
+  display: inline-block;
+}
+.section-heading::after,
+.projects-heading::after {
+  content: '';
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  margin-top: clamp(6px, 0.9cqw, 10px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+  overflow: visible;
+}
+.focus-grid {
+  align-items: stretch;
+}
+@media (min-width: 1100px) {
+  .focus-grid {
+    grid-template-columns: minmax(0, 1.15fr) min(360px, 30%);
+  }
+}
+
+/* Left stack */
+.focus-left {
+  display: grid;
+  gap: var(--gap);
+}
+
+/* Feature rows */
+.feature-row {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: clamp(380px, 36cqw, 520px); /* ✅ taller */
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.feature-media {
+  margin: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft-3);
+  border: 1px solid rgba(10, 34, 59, 0.1);
+}
+.feature-media img {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 34cqw, 420px); /* ✅ taller image */
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 0.55s ease;
+}
+.feature-row:hover .feature-media img {
+  transform: scale(1.035);
+}
+
+/* Feature overlay card (NO pink top line now) */
+.feature-card {
+  position: absolute;
+  right: 3%;
+  bottom: -3%;
+  top: auto;
+  width: min(720px, 86%);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: clamp(18px, 2.6cqw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* ✅ remove the pink line on feature cards */
+.feature-card::before {
+  content: none !important;
+}
+
+.feature-section .pill,
+.projects-section .pill,
+.agenda-card .pill {
+  display: inline-block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 10px;
+  border: 1px solid rgba(216, 75, 139, 0.55);
+  color: var(--accent);
+  background: #fff;
+  margin-bottom: 10px;
+  font-weight: 900;
+}
+
+.feature-title {
+  margin: 0 0 0.25em;
+  font-size: clamp(18px, 2.6cqw, 26px);
+  font-weight: 950;
+  color: var(--navy);
+}
+
+.feature-text {
+  margin: 0 0 0.5em;
+  color: var(--muted);
+  font-size: clamp(14px, 2.2cqw, 18px);
+  line-height: 1.5;
+
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  text-align-last: left;
+}
+
+.feature-meta {
+  margin: 0 0 0.25em;
+  font-size: 13px;
+  color: rgba(11, 31, 51, 0.55);
+  font-weight: 750;
+}
+
+/* actions bottom-right */
+.actions-right {
+  margin-top: auto;
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.feature-link {
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  font-weight: 900;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.feature-link:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 899.98px) {
+  .feature-card {
+    position: static;
+    width: 100%;
+    margin-top: -10px;
+  }
+}
+
+/* ===== Agenda (KEEP pink top line) ===== */
+.agenda {
+  opacity: 0;
+  transform: translateY(14px);
+  display: grid;
+}
+
+.agenda-card {
+  height: 100%;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: clamp(16px, 2.2cqw, 22px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ✅ keep pink line ONLY here */
+.agenda-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.agenda-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 1100px) {
+  .agenda-card {
+    position: sticky;
+    top: clamp(12px, 4cqw, 28px);
+  }
+}
+
+.agenda-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.agenda-title {
+  margin: 0;
+  font-size: clamp(18px, 2.4cqw, 22px);
+  font-weight: 950;
+  color: var(--navy);
+}
+
+.agenda-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 180px;
+}
+
+.agenda-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 12px;
+  align-items: start;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(10, 34, 59, 0.08);
+}
+.agenda-item:last-child {
+  border-bottom: none;
+}
+
+.agenda-date {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  box-shadow: var(--shadow-soft-3);
+  border-radius: var(--radius);
+  padding: 8px 6px;
+  text-align: center;
+  background: #fff;
+}
+.agenda-date .day {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 950;
+  color: var(--navy);
+}
+.agenda-date .month {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(11, 31, 51, 0.6);
+  font-weight: 900;
+}
+
+.agenda-main {
+  display: grid;
+  gap: 4px;
+}
+
+.agenda-link {
+  text-decoration: none;
+  color: var(--navy);
+  font-weight: 950;
+  line-height: 1.3;
+}
+a.agenda-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.agenda-meta {
+  font-size: 13px;
+  color: rgba(11, 31, 51, 0.6);
+  font-weight: 750;
+}
+
+.agenda-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.agenda-item:hover .agenda-actions,
+.agenda-item:focus-within .agenda-actions {
+  opacity: 1;
+}
+@media (hover: none) {
+  .agenda-actions {
+    opacity: 1;
+  }
+}
+
+/* Popover */
+.agenda-popover {
+  position: fixed;
+  z-index: 9999;
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid rgba(10, 34, 59, 0.16);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft-3);
+  padding: 6px;
+}
+.agenda-popover a,
+.agenda-popover button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  background: transparent;
+  border: 0;
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+.agenda-popover a:hover,
+.agenda-popover button:hover {
+  background: rgba(216, 75, 139, 0.06);
+}
+
+.agenda-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===== PROJECTS (more length + NO pink line) ===== */
+.projects-section {
+  padding: clamp(26px, 5vw, 78px) 0; /* ✅ more length */
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+  overflow: visible;
+}
+@media (min-width: 900px) {
+  .projects-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+  }
+}
+
+.project-row {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: clamp(400px, 38cqw, 560px); /* ✅ taller */
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.project-media {
+  margin: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft-3);
+  border: 1px solid rgba(10, 34, 59, 0.1);
+}
+.project-media img {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 34cqw, 420px); /* ✅ taller */
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 0.55s ease;
+}
+.project-row:hover .project-media img {
+  transform: scale(1.035);
+}
+
+.project-card {
+  position: absolute;
+  right: 5%;
+  bottom: -3%;
+  top: auto;
+  width: min(560px, 72%);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: clamp(18px, 2.6cqw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* ✅ remove pink line on project cards */
+.project-card::before {
+  content: none !important;
+}
+
+.project-title {
+  margin: 0 0 0.35em;
+  font-size: clamp(18px, 2.6cqw, 24px);
+  font-weight: 950;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.project-text {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(14px, 2.2cqw, 18px);
+  line-height: 1.5;
+
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  text-align-last: left;
+}
+
+.project-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Reveal animation */
+.revealed {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+/* Optional: avoid justified rivers on tiny screens */
+@media (max-width: 420px) {
+  .feature-text,
+  .project-text {
+    text-align: left;
+    text-justify: auto;
+  }
+}
+
+/* ===========================
+   BOTTOM IMAGE AREA (transparent)
+   =========================== */
+.stage--bottom {
+  position: relative;
+  background: transparent;
+  z-index: 1;
+
+  padding-top: calc(90px + var(--v-h-bottom));
+  padding-bottom: 140px;
+  min-height: 420px;
+
+  display: grid;
+  place-items: center;
+}
+
+.stage--bottom::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: var(--v-h-bottom);
+
+  background: var(--panel);
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+
+  pointer-events: none;
+  z-index: 0;
+
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.25);
+}
+
+.stage-inner--bottom {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+}
+
+.partners {
+  width: min(980px, 100%);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.partners-kicker {
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 13px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.logo-box {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 18px;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius);
+}
+
+/* ===========================
+   ACCESSIBILITY / REDUCED MOTION
+   =========================== */
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===========================
+   MOBILE SAFETY
+   background-attachment fixed can glitch on iOS
+   =========================== */
+@media (max-width: 900px) {
+  body::before {
+    background-attachment: scroll;
+  }
+}

@@ -1,41 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import LeBonView from '../views/LeBonView.vue'
+import ContactView from '../views/ContactView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('@/pages/HomePage.vue'),
-      meta: { title: 'Accueil' },
-    },
-    {
-      path: '/le-bon',
-      name: 'about',
-      component: () => import('@/pages/AboutPage.vue'),
-      meta: { title: 'Le Bon' },
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: () => import('@/pages/ContactPage.vue'),
-      meta: { title: 'Contact' },
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'notfound',
-      component: () => import('@/pages/NotFoundPage.vue'),
-      meta: { title: '404' },
-    },
+    { path: '/', name: 'home', component: HomeView },
+    { path: '/le-bon', name: 'le-bon', component: LeBonView },
+    { path: '/contact', name: 'contact', component: ContactView },
   ],
   scrollBehavior() {
     return { top: 0 }
   },
-})
-
-router.afterEach((to) => {
-  const base = 'Le Dodu'
-  document.title = typeof to.meta.title === 'string' ? `${base} - ${to.meta.title}` : base
 })
 
 export default router
