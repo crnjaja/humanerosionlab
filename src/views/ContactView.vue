@@ -19,7 +19,7 @@
           <div class="hero-actions hero-socials" aria-label="Social media links">
             <a
               class="social-box facebook"
-              href="https://www.facebook.com/"
+              href="https://www.facebook.com/World.Trade.Institute"
               target="_blank"
               rel="noopener"
               aria-label="Facebook"
@@ -33,8 +33,24 @@
             </a>
 
             <a
+              class="social-box instagram"
+              href="https://www.instagram.com/world_trade_institute/"
+              target="_blank"
+              rel="noopener"
+              aria-label="Instagram"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9z"
+                />
+                <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+                <path d="M17.3 6.7a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z" />
+              </svg>
+            </a>
+
+            <a
               class="social-box linkedin"
-              href="https://www.linkedin.com/"
+              href="https://www.linkedin.com/school/world-trade-institute/"
               target="_blank"
               rel="noopener"
               aria-label="LinkedIn"
@@ -50,7 +66,7 @@
 
             <a
               class="social-box youtube"
-              href="https://www.youtube.com/"
+              href="https://www.youtube.com/channel/UC2a_GyOuBViWVjcuVBfxqLA"
               target="_blank"
               rel="noopener"
               aria-label="YouTube"
@@ -69,7 +85,7 @@
 
             <a
               class="social-box x"
-              href="https://x.com/"
+              href="https://x.com/WTIunibe"
               target="_blank"
               rel="noopener"
               aria-label="X (formerly Twitter)"
@@ -633,6 +649,10 @@ async function onSubmit(e) {
 }
 .social-box.twitter:hover {
   border-color: #1da1f2;
+}
+
+.social-box.instagram:hover {
+  border-color: #e1306c;
 }
 
 /* Mobile spacing */
