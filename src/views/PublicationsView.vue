@@ -55,7 +55,7 @@
                   :disabled="!hasActiveFilters"
                   title="Clear filters"
                 >
-                  Clear filters
+                  Direct link
                 </button>
               </div>
             </div>
