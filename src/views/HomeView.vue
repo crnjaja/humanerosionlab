@@ -1,6 +1,61 @@
 <!-- src/views/HomeView.vue -->
 <template>
   <div class="home">
+    <!-- Hidden SVG filter defs (used by the looping "erosion" effect) -->
+    <svg class="visually-hidden" width="0" height="0" aria-hidden="true" focusable="false">
+      <filter id="erodeFilter" x="-20%" y="-20%" width="140%" height="140%">
+        <!-- noise -->
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="1.1"
+          numOctaves="3"
+          seed="2"
+          result="noise"
+        >
+          <!-- slow drift -->
+          <animate
+            attributeName="baseFrequency"
+            dur="6s"
+            values="0.9;1.4;0.9"
+            repeatCount="indefinite"
+          />
+          <!-- subtle variation -->
+          <animate
+            attributeName="seed"
+            dur="2.2s"
+            values="1;2;3;4;5;6;7"
+            repeatCount="indefinite"
+          />
+        </feTurbulence>
+
+        <!-- turn noise into a moving alpha mask (controls how much gets "eaten") -->
+        <feComponentTransfer in="noise" result="mask">
+          <feFuncA type="gamma" amplitude="1.05" exponent="1" offset="-0.06">
+            <animate
+              attributeName="exponent"
+              dur="3.8s"
+              values="0.65;2.6;0.65"
+              repeatCount="indefinite"
+            />
+          </feFuncA>
+        </feComponentTransfer>
+
+        <!-- apply mask to the text (erodes holes) -->
+        <feComposite in="SourceGraphic" in2="mask" operator="in" result="cut" />
+
+        <!-- wobble the remaining edges a bit -->
+        <feDisplacementMap
+          in="cut"
+          in2="noise"
+          scale="10"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        >
+          <animate attributeName="scale" dur="5.2s" values="2;14;2" repeatCount="indefinite" />
+        </feDisplacementMap>
+      </filter>
+    </svg>
+
     <!-- TOP HERO -->
     <section class="stage stage--top full-bleed">
       <div class="container stage-inner">
@@ -10,9 +65,11 @@
             highlight
           </div>
 
+          <!-- Keep your word reveal animation (useWordReveal) -->
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             WHEN <span class="accent">CLIMATE CHANGE</span> ERODES
-            <span class="accent">HUMAN RIGHTS</span>
+            <!-- Looping erosion effect only on HUMAN RIGHTS -->
+            <span class="accent erode-loop">HUMAN RIGHTS</span>
           </h1>
 
           <p class="hero-subtitle">
@@ -341,11 +398,17 @@
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
 import { useWordReveal } from '@/composables/useWordReveal'
 
+/**
+ * Hero title word reveal animation (kept exactly as you already had it)
+ */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140, // even slower stagger
   duration: 1300, // longer easing per word
 })
 
+/**
+ * Agenda mock data
+ */
 const agendaConfig = {
   timezone: 'Europe/Zurich',
   items: [
@@ -574,3 +637,48 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', onAnyScrollOrResize, true)
 })
 </script>
+
+<style scoped>
+/* Hidden SVG defs helper */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* Looping "erosion" effect only on the HUMAN RIGHTS span */
+.erode-loop {
+  display: inline-block;
+  filter: url(#erodeFilter);
+  will-change: filter, transform, opacity;
+  animation: erodeFloat 5.2s ease-in-out infinite;
+}
+
+/* premium micro-motion so it feels modern, not gimmicky */
+@keyframes erodeFloat {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(0.5px, -0.5px, 0);
+    opacity: 0.98;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .erode-loop {
+    filter: none;
+    animation: none;
+  }
+}
+</style>
