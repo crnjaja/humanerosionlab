@@ -41,49 +41,56 @@
               <div class="focus-left">
                 <!-- LAST NEWS -->
                 <article class="feature-row" aria-label="Last News">
-                  <figure class="feature-media">
-                    <img src="/images/background4.jpg" alt="News cover" loading="lazy" />
-                  </figure>
-                  <div class="feature-card">
-                    <div>
-                      <div class="pill">Last News</div>
-                      <h3 class="feature-title">Policy Brief Released: Climate Risk Disclosure</h3>
-                      <p class="feature-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                  <div class="media-frame">
+                    <figure class="feature-media">
+                      <img src="/images/background4.jpg" alt="News cover" loading="lazy" />
+                    </figure>
+                    <div class="feature-card">
+                      <div>
+                        <div class="pill">Last News</div>
+                        <h3 class="feature-title">Policy Brief: Climate Risk Disclosure</h3>
+                        <p class="feature-text">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                          tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+                          amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua.
+                        </p>
+                        <p class="feature-meta">Published: 12 Oct 2025</p>
+                      </div>
+                      <p class="feature-actions actions-right">
+                        <a class="feature-link" href="#">All News →</a>
                       </p>
-                      <p class="feature-meta">Published: 12 Oct 2025</p>
                     </div>
-                    <p class="feature-actions actions-right">
-                      <a class="feature-link" href="#">All News →</a>
-                    </p>
                   </div>
                 </article>
 
                 <!-- LAST PUBLICATION -->
                 <article class="feature-row" aria-label="Last Publication">
-                  <figure class="feature-media">
-                    <img src="/images/rose.png" alt="Publications cover" loading="lazy" />
-                  </figure>
-                  <div class="feature-card">
-                    <div>
-                      <div class="pill">Last Publication</div>
-                      <h3 class="feature-title">Working Paper: Corporate Climate Duties</h3>
-                      <p class="feature-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                  <div class="media-frame">
+                    <figure class="feature-media">
+                      <img src="/images/rose.png" alt="Publications cover" loading="lazy" />
+                    </figure>
+                    <div class="feature-card">
+                      <div>
+                        <div class="pill">Last Publication</div>
+                        <h3 class="feature-title">Working Paper: Corporate Climate Duties</h3>
+                        <p class="feature-text">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                          tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+                          amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua.
+                        </p>
+                        <p class="feature-meta">Published: 08 Oct 2025</p>
+                      </div>
+                      <p class="feature-actions actions-right">
+                        <a
+                          class="feature-link"
+                          href="https://www.human-erosion-lab.com/publications"
+                        >
+                          All Publications →
+                        </a>
                       </p>
-                      <p class="feature-meta">Published: 08 Oct 2025</p>
                     </div>
-                    <p class="feature-actions actions-right">
-                      <a class="feature-link" href="https://www.human-erosion-lab.com/publications">
-                        All Publications →
-                      </a>
-                    </p>
                   </div>
                 </article>
               </div>
@@ -159,93 +166,101 @@
             <div class="projects-grid">
               <!-- 1 -->
               <article class="project-row">
-                <figure class="project-media">
-                  <img src="/images/background4.jpg" alt="HEL cover" loading="lazy" />
-                </figure>
-                <div class="project-card">
-                  <div>
-                    <h3 class="project-title">HEL</h3>
-                    <p class="project-text">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua.
+                <div class="media-frame">
+                  <figure class="project-media">
+                    <img src="/images/background4.jpg" alt="HEL cover" loading="lazy" />
+                  </figure>
+                  <div class="project-card">
+                    <div>
+                      <h3 class="project-title">HEL</h3>
+                      <p class="project-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                      </p>
+                    </div>
+                    <p class="project-actions actions-right">
+                      <RouterLink class="feature-link" to="/projects/hel">
+                        Read the HEL project →
+                      </RouterLink>
                     </p>
                   </div>
-                  <p class="project-actions actions-right">
-                    <RouterLink class="feature-link" to="/projects/hel">
-                      Read the HEL project →
-                    </RouterLink>
-                  </p>
                 </div>
               </article>
 
               <!-- 2 -->
               <article class="project-row">
-                <figure class="project-media">
-                  <img src="/images/bordeaux.png" alt="HRJUST cover" loading="lazy" />
-                </figure>
-                <div class="project-card">
-                  <div>
-                    <h3 class="project-title">HRJUST</h3>
-                    <p class="project-text">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua.
+                <div class="media-frame">
+                  <figure class="project-media">
+                    <img src="/images/bordeaux.png" alt="HRJUST cover" loading="lazy" />
+                  </figure>
+                  <div class="project-card">
+                    <div>
+                      <h3 class="project-title">HRJUST</h3>
+                      <p class="project-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                      </p>
+                    </div>
+                    <p class="project-actions actions-right">
+                      <RouterLink class="feature-link" to="/projects/hrjust">
+                        Read the HRJUST project →
+                      </RouterLink>
                     </p>
                   </div>
-                  <p class="project-actions actions-right">
-                    <RouterLink class="feature-link" to="/projects/hrjust">
-                      Read the HRJUST project →
-                    </RouterLink>
-                  </p>
                 </div>
               </article>
 
               <!-- 3 -->
               <article class="project-row">
-                <figure class="project-media">
-                  <img src="/images/rose.png" alt="GEM cover" loading="lazy" />
-                </figure>
-                <div class="project-card">
-                  <div>
-                    <h3 class="project-title">GEM</h3>
-                    <p class="project-text">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua.
+                <div class="media-frame">
+                  <figure class="project-media">
+                    <img src="/images/rose.png" alt="GEM cover" loading="lazy" />
+                  </figure>
+                  <div class="project-card">
+                    <div>
+                      <h3 class="project-title">GEM</h3>
+                      <p class="project-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                      </p>
+                    </div>
+                    <p class="project-actions actions-right">
+                      <RouterLink class="feature-link" to="/projects/gem">
+                        Read the GEM project →
+                      </RouterLink>
                     </p>
                   </div>
-                  <p class="project-actions actions-right">
-                    <RouterLink class="feature-link" to="/projects/gem">
-                      Read the GEM project →
-                    </RouterLink>
-                  </p>
                 </div>
               </article>
 
               <!-- 4 -->
               <article class="project-row">
-                <figure class="project-media">
-                  <img src="/images/vert.png" alt="CLIMCO2 cover" loading="lazy" />
-                </figure>
-                <div class="project-card">
-                  <div>
-                    <h3 class="project-title">CLI-M-CO2</h3>
-                    <p class="project-text">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua.
+                <div class="media-frame">
+                  <figure class="project-media">
+                    <img src="/images/vert.png" alt="CLIMCO2 cover" loading="lazy" />
+                  </figure>
+                  <div class="project-card">
+                    <div>
+                      <h3 class="project-title">CLI-M-CO2</h3>
+                      <p class="project-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                      </p>
+                    </div>
+                    <p class="project-actions actions-right">
+                      <RouterLink class="feature-link" to="/projects/cli-m-co2">
+                        Read the CLIMCO2 project →
+                      </RouterLink>
                     </p>
                   </div>
-                  <p class="project-actions actions-right">
-                    <RouterLink class="feature-link" to="/projects/cli-m-co2">
-                      Read the CLIMCO2 project →
-                    </RouterLink>
-                  </p>
                 </div>
               </article>
             </div>

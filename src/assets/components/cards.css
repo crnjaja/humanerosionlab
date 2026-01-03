@@ -118,12 +118,21 @@
   transform: scale(1.035);
 }
 
+.media-frame {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
 /* Overlay cards (shared base) */
 .feature-card,
 .project-card {
   position: absolute;
-  bottom: -3%;
-  top: auto;
+
+  /* anchor near bottom, but not too low */
+
+  /* center the card on that anchor */
+  transform: translate(-50%, -50%);
+
   background: var(--white);
   box-shadow: var(--shadow);
   border-radius: var(--radius);
@@ -133,16 +142,20 @@
   gap: 10px;
   border: 1px solid var(--border);
   overflow: hidden;
+
+  width: min(720px, 86%);
 }
 
 /* Differences */
 .feature-card {
-  right: 3%;
   width: min(720px, 86%);
+  left: 54%;
+  top: 62%;
 }
 .project-card {
-  right: 5%;
-  width: min(560px, 72%);
+  width: min(640px, 80%);
+  left: 55%;
+  top: 65%;
 }
 
 /* remove pink line on feature/project cards */
@@ -232,15 +245,6 @@
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
-}
-
-/* Mobile card placement */
-@media (max-width: 899.98px) {
-  .feature-card {
-    position: static;
-    width: 100%;
-    margin-top: -10px;
-  }
 }
 
 /* Tiny screen: avoid justified rivers */
