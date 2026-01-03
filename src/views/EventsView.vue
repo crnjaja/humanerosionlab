@@ -29,12 +29,37 @@
     <!-- CONTENT -->
     <section class="content-block full-bleed">
       <div class="container">
-        <!-- ✅ keep content below banner -->
+        <!-- ✅ lowered content (no overlap on banner) -->
         <div class="hero-offset events-hero-offset">
           <section class="events-section" aria-labelledby="events-title">
-            <h2 id="events-title" class="section-heading">Events</h2>
+            <!-- ✅ Publications-like head (title + actions) -->
+            <div class="section-head">
+              <h2 id="events-title" class="section-heading">Events</h2>
 
-            <!-- Toolbar -->
+              <div class="section-actions" aria-label="View options">
+                <button
+                  class="chip chip--ghost"
+                  type="button"
+                  @click="toggleCompact"
+                  :aria-pressed="String(compact)"
+                  title="Toggle compact/comfort view"
+                >
+                  {{ compact ? 'Comfort view' : 'Compact view' }}
+                </button>
+
+                <button
+                  class="chip chip--ghost"
+                  type="button"
+                  @click="clearAll"
+                  :disabled="!hasActiveFilters"
+                  title="Clear filters"
+                >
+                  Clear filters
+                </button>
+              </div>
+            </div>
+
+            <!-- ===== Toolbar: search + filters + sort (SAME AS PUBLICATIONS FILTERBAR) ===== -->
             <section class="toolbar" aria-label="Filters and Search">
               <label class="search-input" aria-label="Search events">
                 <svg
@@ -45,16 +70,38 @@
                   aria-hidden="true"
                 >
                   <path
-                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
                   />
                 </svg>
+
                 <input
                   id="q"
                   v-model="q"
                   type="search"
                   placeholder="Search title, speakers, location, keywords…"
                   autocomplete="off"
+                  @keydown.esc.prevent="q = ''"
                 />
+
+                <button
+                  v-if="q"
+                  class="icon-btn"
+                  type="button"
+                  aria-label="Clear search"
+                  @click="q = ''"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29l6.3 6.31 6.3-6.31z"
+                    />
+                  </svg>
+                </button>
               </label>
 
               <label class="select" for="year">
@@ -64,8 +111,6 @@
                   <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
                 </select>
               </label>
-
-              <!-- ✅ Category filter removed -->
 
               <label class="select" for="location">
                 <span class="pill" aria-hidden="true">Location</span>
@@ -86,52 +131,80 @@
               </label>
             </section>
 
-            <div class="stats-row" aria-live="polite">
-              <span>{{ totalCount }} result{{ totalCount === 1 ? '' : 's' }}</span>
-              <span>Click thumbnails to open the gallery. “Add to Calendar” downloads a .ics.</span>
+            <!-- ✅ Active filters chips (same behavior as Publications) -->
+            <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
+              <button v-if="year" class="chip" type="button" @click="year = ''">
+                Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
+              </button>
+              <button v-if="location" class="chip" type="button" @click="location = ''">
+                Location: {{ location }} <span class="chip-x" aria-hidden="true">×</span>
+              </button>
+              <button v-if="q" class="chip" type="button" @click="q = ''">
+                Search: “{{ q }}” <span class="chip-x" aria-hidden="true">×</span>
+              </button>
             </div>
 
-            <!-- Grid -->
-            <section class="grid" aria-label="Events list">
+            <!-- ✅ Stats row (same as Publications) -->
+            <div class="stats-row" aria-live="polite">
+              <span class="stat">
+                <strong>{{ totalCount }}</strong>
+                result{{ totalCount === 1 ? '' : 's' }}
+              </span>
+              <span class="hint"
+                >Tip: click “Read more” to expand. “Add to Calendar” downloads a .ics.</span
+              >
+            </div>
+
+            <!-- ===== Grid ===== -->
+            <section class="grid" :class="{ compact }" aria-label="Events list">
               <article
                 v-for="(it, idx) in visibleItems"
                 :key="keyOf(it)"
                 class="event-card"
                 :data-k="keyOf(it)"
-                :class="{ revealed: revealedKeys.has(keyOf(it)) }"
+                :class="{
+                  revealed: revealedKeys.has(keyOf(it)),
+                  expanded: !isCollapsed(it),
+                }"
                 :aria-labelledby="`e${idx}-title`"
                 ref="cardEls"
               >
-                <!-- Meta rail -->
-                <aside class="meta">
-                  <div class="date-badge" aria-label="Event date">
-                    <div class="day">{{ dayOf(it.start) }}</div>
-                    <div class="mon">{{ monthOf(it.start) }}</div>
-                    <div v-if="timeRange(it.start, it.end)" class="time">
-                      {{ timeRange(it.start, it.end) }}
+                <!-- ✅ Solid banner like Publications -->
+                <header class="event-banner">
+                  <div class="banner-inner">
+                    <h3 :id="`e${idx}-title`" class="event-title">
+                      {{ it.title }}
+                    </h3>
+
+                    <div class="event-meta">
+                      <span class="event-speakers" v-if="(it.speakers || []).length">
+                        {{ (it.speakers || []).join(', ') }}
+                      </span>
+                      <span class="event-date">· {{ formatDateRange(it.start, it.end) }}</span>
+                      <span v-if="timeRange(it.start, it.end)" class="event-time">
+                        · {{ timeRange(it.start, it.end) }}
+                      </span>
                     </div>
                   </div>
+                </header>
 
-                  <div class="meta-row">
-                    <div class="label">Location</div>
-                    <div class="value">{{ it.location }}</div>
+                <div class="event-body">
+                  <!-- Meta pills row -->
+                  <div class="meta-row meta-row--pills" aria-label="Event meta">
+                    <span class="pill-chip">
+                      <span class="pill-label">Location</span>
+                      <span class="pill-value">{{ it.location }}</span>
+                    </span>
+
+                    <span class="pill-chip">
+                      <span class="pill-label">Category</span>
+                      <span class="pill-value">{{ it.category }}</span>
+                    </span>
                   </div>
 
-                  <!-- ✅ Keep category display on card (only the filter was removed) -->
-                  <div class="meta-row">
-                    <div class="label">Category</div>
-                    <div class="value">
-                      <span class="cat">{{ it.category }}</span>
-                    </div>
+                  <div v-if="(it.tags || []).length" class="tags-row" aria-label="Tags">
+                    <span v-for="t in it.tags" :key="t" class="tag">{{ t }}</span>
                   </div>
-                </aside>
-
-                <!-- Content -->
-                <div class="content">
-                  <h3 :id="`e${idx}-title`" class="title">{{ it.title }}</h3>
-                  <p v-if="(it.speakers || []).length" class="speakers">
-                    {{ (it.speakers || []).join(', ') }}
-                  </p>
 
                   <div class="summary-wrap" :data-collapsed="isCollapsed(it) ? 'true' : 'false'">
                     <p class="summary" :id="`e${idx}-summary`">{{ it.summary }}</p>
@@ -140,6 +213,7 @@
                   <!-- Media strip -->
                   <fieldset class="media-strip">
                     <legend class="visually-hidden">Event media</legend>
+
                     <a
                       v-if="it.links?.program"
                       class="chip"
@@ -232,20 +306,20 @@
                     />
                   </div>
 
-                  <!-- Actions -->
-                  <div class="actions">
+                  <!-- Publications-like bottom actions -->
+                  <footer class="event-actions event-actions--split" aria-label="Event actions">
                     <button
-                      class="expand-btn"
+                      class="action action--read"
                       type="button"
                       :aria-controls="`e${idx}-summary`"
                       :aria-expanded="String(!isCollapsed(it))"
                       @click="toggle(it)"
                     >
-                      <span class="expand-text">{{
+                      <span class="action-label">{{
                         isCollapsed(it) ? 'Read more' : 'Show less'
                       }}</span>
                       <svg
-                        class="expand-icon"
+                        class="action-icon"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         aria-hidden="true"
@@ -254,21 +328,31 @@
                       </svg>
                     </button>
 
-                    <button class="btn" type="button" @click="downloadICS(it)">
-                      Add to Calendar
+                    <button class="action action--ics" type="button" @click="downloadICS(it)">
+                      <span class="action-label">Add to Calendar</span>
+                      <svg
+                        class="action-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4V2zm14 8H3v10h18V10zM5 12h4v4H5v-4z"
+                        />
+                      </svg>
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </article>
             </section>
 
-            <!-- Pagination -->
+            <!-- ===== Pagination ===== -->
             <nav class="pager" aria-label="Pagination">
               <button
-                class="btn"
+                class="btn btn--load"
                 type="button"
                 @click="loadMore"
-                :disabled="totalCount === 0"
+                :disabled="totalCount === 0 || !canLoadMore"
                 v-show="canLoadMore || totalCount === 0"
               >
                 {{
@@ -407,24 +491,33 @@ const year = ref('')
 const location = ref('')
 const sort = ref('date-desc')
 
-/**
- * ✅ Expand state should be stable across filtering/sorting:
- * store "expanded" by item key, not by index.
- */
+/** Density toggle (match Publications) */
+const compact = ref(false)
+function toggleCompact() {
+  compact.value = !compact.value
+}
+
+/** Active filters (pubs-like) */
+const hasActiveFilters = computed(() => !!q.value || !!year.value || !!location.value)
+function clearAll() {
+  q.value = ''
+  year.value = ''
+  location.value = ''
+  sort.value = 'date-desc'
+  page.value = 1
+}
+
+/** Expand state stable across filtering/sorting */
 const expandedKeys = ref(new Set())
 
-/**
- * ✅ Reveal state should be stable across filtering/sorting:
- * store revealed by item key, not by index.
- */
+/** Reveal state stable across filtering/sorting */
 const revealedKeys = ref(new Set())
 
-/** Dropdowns */
+/** Dropdown values */
 const years = computed(() => {
   const set = new Set(items.value.map((x) => (x.start || '').slice(0, 4)).filter(Boolean))
   return Array.from(set).sort((a, b) => b.localeCompare(a))
 })
-
 const locations = computed(() => {
   const set = new Set(items.value.map((x) => x.location).filter(Boolean))
   return Array.from(set).sort((a, b) => a.localeCompare(b))
@@ -451,10 +544,10 @@ const filtered = computed(() => {
         .join(' ')
         .toLowerCase()
 
-      const mQ = !qq || hay.includes(qq)
-      const mY = !yy || it.y === yy
-      const mL = !ll || it.location === ll
-      return mQ && mY && mL
+      const matchQ = !qq || hay.includes(qq)
+      const matchY = !yy || it.y === yy
+      const matchL = !ll || it.location === ll
+      return matchQ && matchY && matchL
     })
 
   arr.sort((A, B) => {
@@ -476,21 +569,16 @@ const filtered = computed(() => {
 
 const totalCount = computed(() => filtered.value.length)
 
-const visibleItems = computed(() => {
-  return filtered.value.slice(0, PAGE_SIZE * page.value)
-})
+const visibleItems = computed(() => filtered.value.slice(0, PAGE_SIZE * page.value))
 
 const canLoadMore = computed(() => visibleItems.value.length < filtered.value.length)
 
-/**
- * ✅ Stable key for each event card (no index).
- * Add location as a tie-breaker to reduce collisions.
- */
+/** Stable key for each event card (no index). */
 function keyOf(it) {
   return `${it.title}__${it.start}__${it.location || ''}`
 }
 
-/** Reset paging/expanded/reveal when filters change */
+/** Reset paging/reveal/expand when filters change */
 watch([q, year, location, sort], async () => {
   page.value = 1
   expandedKeys.value = new Set()
@@ -519,15 +607,20 @@ function loadMore() {
   }
 }
 
-/** Date helpers */
-function dayOf(iso) {
-  const d = new Date(iso)
-  return Number.isFinite(d.getTime()) ? String(d.getDate()) : ''
-}
-function monthOf(iso) {
-  const d = new Date(iso)
-  if (!Number.isFinite(d.getTime())) return ''
-  return d.toLocaleString(undefined, { month: 'short' }).toUpperCase()
+/** Dates */
+function formatDateRange(startISO, endISO) {
+  const s = new Date(startISO)
+  if (!Number.isFinite(s.getTime())) return startISO
+
+  const df = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: '2-digit' })
+  const sTxt = df.format(s)
+
+  if (!endISO) return sTxt
+  const e = new Date(endISO)
+  if (!Number.isFinite(e.getTime())) return sTxt
+  const eTxt = df.format(e)
+
+  return sTxt === eTxt ? sTxt : `${sTxt} – ${eTxt}`
 }
 function timeRange(startISO, endISO) {
   try {
@@ -565,7 +658,6 @@ function observeCards() {
     { threshold: 0.12 },
   )
 
-  // ✅ No index mapping: the template already has :data-k="keyOf(it)"
   els.forEach((el) => io.observe(el))
 }
 
@@ -662,41 +754,68 @@ function downloadICS(it) {
 
 <style scoped>
 /* =========================
-   EVENTS PAGE – your theme (square, accent rails, quiet UI)
+   EVENTS PAGE – filterbar EXACTLY like Publications filterbar
+   (square corners, sticky glass toolbar, aligned heights)
    ========================= */
 
-/* ✅ keep content below banner */
+/* Lower content (avoid overlapping hero/banner) */
 .events-hero-offset {
   margin-top: -40px;
   position: relative;
   z-index: 2;
 }
 
-/* Heading (same as Publications) */
+/* Section head (title + actions) */
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.section-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Heading */
 .section-heading {
   position: relative;
-  display: inline-block;
   font-size: clamp(38px, 8vw, 86px);
   line-height: 1;
   letter-spacing: -0.02em;
-  font-weight: 800;
   color: rgba(11, 42, 74, 0.16);
+  font-weight: 800;
   margin: 0 0 clamp(18px, 3vw, 36px);
+  display: inline-block;
 }
 .section-heading::after {
   content: '';
   display: block;
   height: 4px;
+  width: 100%;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
   margin-top: clamp(6px, 0.9cqw, 10px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-/* Toolbar (✅ category removed => 1fr + 3 controls) */
+/* =========================
+   ✅ FILTERBAR (copied from Publications)
+   ========================= */
 .toolbar {
-  background: var(--white);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
+  position: sticky;
+  top: calc(var(--header-h, 72px) + 10px);
+  z-index: 5;
+
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  border-radius: 0;
+
   padding: 12px;
   display: grid;
   gap: 10px;
@@ -705,23 +824,20 @@ function downloadICS(it) {
 }
 @media (max-width: 900px) {
   .toolbar {
-    grid-template-columns: 1fr auto;
-  }
-}
-@media (max-width: 700px) {
-  .toolbar {
     grid-template-columns: 1fr;
   }
 }
 
+/* Search */
 .search-input {
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
   border: 1px solid rgba(10, 34, 59, 0.14);
+  border-radius: 0;
   background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   padding: 10px 12px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 .search-input input {
   border: 0;
@@ -732,26 +848,50 @@ function downloadICS(it) {
   color: var(--ink);
 }
 
+.icon-btn {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+}
+.icon-btn:hover {
+  opacity: 1;
+}
+.icon-btn svg {
+  fill: rgba(11, 31, 51, 0.85);
+}
+
+/* Selects */
 .select,
 .sort {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 8px;
   border: 1px solid rgba(10, 34, 59, 0.14);
+  border-radius: 0;
   background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   padding: 8px 10px;
-  font-weight: 900;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--ink);
 }
 .select select,
 .sort select {
+  font-weight: 600;
   border: 0;
   outline: 0;
   background: transparent;
-  font: inherit;
+  font-family: inherit;
   color: var(--ink);
+  font-size: 14px;
 }
 
+/* Pill */
 .pill {
   display: inline-block;
   font-size: 12px;
@@ -764,145 +904,232 @@ function downloadICS(it) {
   font-weight: 900;
 }
 
+/* Active filters */
+.active-filters {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Chips */
+.chip {
+  border: 1px solid rgba(21, 138, 201, 0.4);
+  background: rgba(21, 138, 201, 0.08);
+  color: rgba(11, 31, 51, 0.9);
+  font-weight: 900;
+  padding: 8px 10px;
+  border-radius: 0;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+.chip:hover {
+  background: rgba(21, 138, 201, 0.14);
+}
+.chip-x {
+  font-size: 16px;
+  line-height: 1;
+  opacity: 0.75;
+}
+.chip--ghost {
+  border: 1px solid rgba(10, 34, 59, 0.18);
+  background: #fff;
+  color: rgba(11, 31, 51, 0.85);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.chip--ghost:hover {
+  background: #f7fbff;
+}
+.chip--ghost:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 /* Stats row */
 .stats-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  color: rgba(11, 31, 51, 0.65);
-  font-size: 13px;
+  justify-content: space-between;
+  gap: 10px;
   margin-top: clamp(10px, 2vw, 14px);
+  color: rgba(11, 31, 51, 0.72);
+  font-size: 13px;
+}
+.stats-row .stat strong {
+  font-size: 16px;
+  color: rgba(11, 31, 51, 0.9);
 }
 @media (max-width: 720px) {
   .stats-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
   }
 }
+
+/* ✅ Match Publications: unified control heights inside toolbar */
+.toolbar .search-input,
+.toolbar .select,
+.toolbar .sort {
+  height: 44px;
+  padding: 0 12px;
+  align-items: center;
+  display: flex;
+}
+
+/* =========================
+   (Rest of your Events styles kept as-is below)
+   ========================= */
 
 /* Grid */
 .grid {
   margin-top: clamp(14px, 2.6vw, 28px);
   display: grid;
+  grid-template-columns: 1fr;
   gap: clamp(14px, 2.6vw, 28px);
 }
-@media (min-width: 760px) {
+@media (min-width: 780px) {
   .grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .grid.compact {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  .grid.compact .event-body {
+    padding: 14px 16px;
+    gap: 10px;
   }
 }
 
 /* Event card */
 .event-card {
+  position: relative;
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 18px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
-  padding: clamp(14px, 2.2cqw, 20px);
+  grid-template-columns: 1fr;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  overflow: hidden;
 
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(14px);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
-@media (max-width: 820px) {
-  .event-card {
-    grid-template-columns: 1fr;
-  }
+.event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.14);
 }
-
 .event-card.revealed {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) !important;
   transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+    opacity 0.55s ease,
+    transform 0.55s ease,
+    box-shadow 0.2s ease;
 }
 
-/* Meta rail */
-.meta {
+/* Banner */
+.event-banner {
+  background: #158ac9;
+  color: #fff;
+}
+.banner-inner {
+  padding: clamp(16px, 2.2cqw, 22px);
   display: grid;
-  align-content: start;
-  gap: 12px;
-  border-right: 1px solid var(--border);
-  padding-right: 16px;
+  gap: 10px;
 }
-@media (max-width: 820px) {
-  .meta {
-    border-right: 0;
-    padding-right: 0;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 12px;
-  }
-}
-
-.date-badge {
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(10, 34, 59, 0.14);
-  background: #f6fbff;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  padding: 14px 10px;
-  text-align: center;
-}
-.date-badge .day {
-  font-size: 28px;
-  line-height: 1;
-  font-weight: 950;
-  letter-spacing: -0.02em;
-}
-.date-badge .mon {
-  font-weight: 950;
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-}
-.date-badge .time {
-  font-size: 12px;
-  color: rgba(11, 31, 51, 0.55);
-  margin-top: 6px;
-}
-
-.meta-row {
-  display: grid;
-  gap: 6px;
-}
-.meta .label {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(11, 31, 51, 0.55);
-}
-.meta .value {
-  font-weight: 900;
-  color: var(--ink);
-}
-
-.cat {
-  display: inline-block;
-  border: 1px solid rgba(10, 34, 59, 0.14);
-  padding: 6px 8px;
-  font-weight: 950;
-  background: #fff;
-}
-
-/* Content */
-.title {
+.event-title {
   margin: 0;
   font-size: clamp(18px, 2.6cqw, 22px);
   font-weight: 950;
-  color: var(--ink);
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
 }
-.speakers {
-  color: rgba(11, 31, 51, 0.86);
-  font-weight: 800;
-  margin: 2px 0 0;
+.event-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.86);
 }
+.event-speakers {
+  font-weight: 900;
+  color: #fff;
+}
+.event-date,
+.event-time {
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* Body */
+.event-body {
+  padding: clamp(16px, 2.2cqw, 22px);
+  display: grid;
+  gap: 12px;
+}
+
+/* Meta pills inside card */
+.meta-row--pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pill-chip {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  background: rgba(11, 31, 51, 0.03);
+  padding: 8px 10px;
+  font-weight: 900;
+}
+.pill-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(11, 31, 51, 0.6);
+}
+.pill-value {
+  color: rgba(11, 31, 51, 0.9);
+}
+
+/* Tags */
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  background: rgba(11, 31, 51, 0.03);
+  color: rgba(11, 31, 51, 0.84);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+/* Summary */
 .summary {
-  color: rgba(11, 31, 51, 0.7);
-  margin: 8px 0 0;
+  color: rgba(11, 31, 51, 0.78);
+  font-size: 15px;
+  margin: 0;
   text-align: justify;
   text-justify: inter-word;
   hyphens: auto;
@@ -917,37 +1144,58 @@ function downloadICS(it) {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.summary-wrap {
+  position: relative;
+}
+.summary-wrap[data-collapsed='true']::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 70%);
+}
 
 /* Media strip */
 .media-strip {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
 }
-.chip {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  border: 1px solid rgba(10, 34, 59, 0.14);
-  background: #fff;
-  padding: 7px 10px;
-  font-weight: 900;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  text-decoration: none;
-  color: var(--ink);
-  cursor: pointer;
+.media-strip .chip {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
-.chip:hover {
-  background: #f7fbff;
-}
-.chip svg {
+.media-strip .chip svg {
   width: 16px;
   height: 16px;
   fill: currentColor;
 }
 
-/* utility: visually hidden but available to assistive tech */
+/* Thumbs */
+.thumbs {
+  display: flex;
+  gap: 8px;
+  overflow: auto;
+}
+.thumb {
+  flex: 0 0 92px;
+  aspect-ratio: 4/3;
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  background: #eef6fd;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  border-radius: 0;
+}
+.thumb:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* visually hidden */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -960,86 +1208,89 @@ function downloadICS(it) {
   border: 0;
 }
 
-/* Thumbs */
-.thumbs {
-  display: flex;
-  gap: 8px;
-  overflow: auto;
-  margin-top: 8px;
+/* Bottom actions */
+.event-actions--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+  padding-top: 10px;
+  border-top: 1px solid rgba(10, 34, 59, 0.1);
 }
-.thumb {
-  flex: 0 0 92px;
-  aspect-ratio: 4/3;
-  border: 1px solid rgba(10, 34, 59, 0.14);
-  background: #eef6fd;
-  background-size: cover;
-  background-position: center;
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  height: 44px;
+  padding: 0 12px;
+
+  border-radius: 0;
+  font-weight: 950;
+  text-decoration: none;
+  user-select: none;
   cursor: pointer;
+
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  background: #fff;
+  color: rgba(11, 31, 51, 0.92);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
-.thumb:focus-visible {
+.action:hover {
+  background: rgba(21, 138, 201, 0.06);
+}
+.action:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
-
-/* Actions */
-.actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-top: 12px;
-  flex-wrap: wrap;
+.action--read {
+  border-color: rgba(21, 138, 201, 0.35);
+  color: rgba(21, 138, 201, 1);
 }
-
-.events-section {
-  padding: clamp(12px, 4vw, 32px) 0;
-  container-type: inline-size; /* if you want it consistent with pubs */
+.action--ics {
+  border-color: rgba(10, 34, 59, 0.14);
+  font-weight: 700;
 }
-
-.events-section .btn {
-  border: 1px solid var(--border);
-  background: #fff;
-  color: var(--ink);
-  padding: 9px 12px;
-  font-weight: 950;
-  cursor: pointer;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-}
-
-.events-section .btn:hover {
-  background: #f7fbff;
-}
-
-.expand-btn {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  font-weight: 950;
-  color: var(--accent);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-}
-.expand-btn:hover {
-  border-bottom-color: var(--accent);
-}
-
-.expand-icon {
+.action-icon {
   width: 16px;
   height: 16px;
-  vertical-align: -2px;
-  transition: transform 0.2s ease;
   fill: currentColor;
+  transition: transform 0.2s ease;
 }
-.expand-btn[aria-expanded='true'] .expand-icon {
+.action--read[aria-expanded='true'] .action-icon {
   transform: rotate(180deg);
+}
+@media (max-width: 520px) {
+  .event-actions--split {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Pager */
 .pager {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 8px;
   margin-top: clamp(14px, 2.6vw, 28px);
+}
+.btn--load {
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  background: #fff;
+  color: var(--ink);
+  padding: 12px 16px;
+  font-weight: 950;
+  cursor: pointer;
+  border-radius: 0;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+.btn--load:hover:enabled {
+  background: #f7fbff;
+}
+.btn--load:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Lightbox */
@@ -1050,12 +1301,13 @@ dialog.lightbox {
   background: var(--white);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
   padding: 0;
+  border-radius: 0;
 }
 .lightbox-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(10, 34, 59, 0.14);
   padding: 10px 12px;
 }
 .lightbox-title {
@@ -1078,7 +1330,7 @@ dialog.lightbox {
 }
 .gallery-item {
   background: #eef6fd;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(10, 34, 59, 0.14);
   aspect-ratio: 4/3;
   background-size: cover;
   background-position: center;
@@ -1090,17 +1342,16 @@ dialog.lightbox {
   background: #000;
   margin-bottom: 10px;
 }
-
-.events-section .close-btn {
-  border: 1px solid var(--border);
+.close-btn {
+  border: 1px solid rgba(10, 34, 59, 0.14);
   background: #fff;
   font-weight: 950;
   padding: 6px 10px;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 0;
 }
-
-.events-section .close-btn:hover {
+.close-btn:hover {
   background: #f7fbff;
 }
 
@@ -1111,9 +1362,12 @@ dialog.lightbox {
     transform: none !important;
     transition: none !important;
   }
+  .event-card:hover {
+    transform: none !important;
+  }
 }
 
-/* Hero tune (same as your inner pages) */
+/* Hero tune */
 :deep(.stage--top--flat) {
   min-height: clamp(320px, 46vh, 520px);
   padding-top: calc(var(--header-h) + 54px);

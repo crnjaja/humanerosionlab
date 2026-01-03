@@ -32,9 +32,35 @@
         <!-- ✅ lowered content (no overlap on banner) -->
         <div class="hero-offset pubs-hero-offset">
           <section class="pubs-section" aria-labelledby="pubs-title">
-            <h2 id="pubs-title" class="section-heading">Publications</h2>
+            <!-- ✅ Events-like head (title + actions) -->
+            <div class="section-head">
+              <h2 id="pubs-title" class="section-heading">Publications</h2>
 
-            <!-- ===== Toolbar: search + filters + sort ===== -->
+              <div class="section-actions" aria-label="View options">
+                <!-- ✅ Compact/comfort toggle (same UX as Events page) -->
+                <button
+                  class="chip chip--ghost"
+                  type="button"
+                  @click="toggleCompact"
+                  :aria-pressed="String(compact)"
+                  title="Toggle compact/comfort view"
+                >
+                  {{ compact ? 'Comfort view' : 'Compact view' }}
+                </button>
+
+                <button
+                  class="chip chip--ghost"
+                  type="button"
+                  @click="clearAll"
+                  :disabled="!hasActiveFilters"
+                  title="Clear filters"
+                >
+                  Clear filters
+                </button>
+              </div>
+            </div>
+
+            <!-- ===== Toolbar: search + filters + sort (same as Events block) ===== -->
             <section class="toolbar" aria-label="Filters and Search">
               <label class="search-input" aria-label="Search publications">
                 <svg
@@ -48,13 +74,35 @@
                     d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
                   />
                 </svg>
+
                 <input
                   id="q"
                   v-model="q"
                   type="search"
                   placeholder="Search title, author, keywords…"
                   autocomplete="off"
+                  @keydown.esc.prevent="q = ''"
                 />
+
+                <button
+                  v-if="q"
+                  class="icon-btn"
+                  type="button"
+                  aria-label="Clear search"
+                  @click="q = ''"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29l6.3 6.31 6.3-6.31z"
+                    />
+                  </svg>
+                </button>
               </label>
 
               <label class="select" for="year">
@@ -65,6 +113,7 @@
                 </select>
               </label>
 
+              <!-- ✅ Authors (instead of location) -->
               <label class="select" for="author">
                 <span class="pill" aria-hidden="true">Author</span>
                 <select id="author" v-model="author" aria-label="Filter by author">
@@ -84,13 +133,32 @@
               </label>
             </section>
 
+            <!-- ✅ Active filters chips (same behavior as Events) -->
+            <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
+              <button v-if="year" class="chip" type="button" @click="year = ''">
+                Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
+              </button>
+              <button v-if="author" class="chip" type="button" @click="author = ''">
+                Author: {{ author }} <span class="chip-x" aria-hidden="true">×</span>
+              </button>
+              <button v-if="q" class="chip" type="button" @click="q = ''">
+                Search: “{{ q }}” <span class="chip-x" aria-hidden="true">×</span>
+              </button>
+            </div>
+
+            <!-- ✅ Stats row -->
             <div class="stats-row" aria-live="polite">
-              <span>{{ totalCount }} result{{ totalCount === 1 ? '' : 's' }}</span>
-              <span>Tip: click “Read more” to expand a summary. Use search to filter quickly.</span>
+              <span class="stat">
+                <strong>{{ totalCount }}</strong>
+                result{{ totalCount === 1 ? '' : 's' }}
+              </span>
+              <span class="hint"
+                >Tip: click “Read more” to expand a summary. Use search to filter quickly.</span
+              >
             </div>
 
             <!-- ===== Grid ===== -->
-            <section class="grid" aria-label="Publications list">
+            <section class="grid" :class="{ compact }" aria-label="Publications list">
               <article
                 v-for="(it, idx) in visibleItems"
                 :key="keyOf(it)"
@@ -100,12 +168,15 @@
                 :aria-labelledby="`p${idx}-title`"
                 ref="cardEls"
               >
-                <div class="pub-head">
-                  <h3 :id="`p${idx}-title`" class="pub-title">{{ it.title }}</h3>
+                <!-- ✅ Colored header band (title + meta) -->
+                <div class="pub-header">
+                  <div class="pub-head">
+                    <h3 :id="`p${idx}-title`" class="pub-title">{{ it.title }}</h3>
 
-                  <div class="pub-meta">
-                    <span class="pub-authors">{{ (it.authors || []).join(', ') }}</span>
-                    <span class="pub-date">· {{ formatDate(it.date) }}</span>
+                    <div class="pub-meta">
+                      <span class="pub-authors">{{ (it.authors || []).join(', ') }}</span>
+                      <span class="pub-date">· {{ formatDate(it.date) }}</span>
+                    </div>
                   </div>
                 </div>
 
@@ -117,33 +188,53 @@
                   <p class="summary" :id="`p${idx}-summary`">{{ it.summary }}</p>
                 </div>
 
-                <div class="pub-actions">
-                  <div class="left-actions">
-                    <button
-                      class="expand-btn"
-                      type="button"
-                      :aria-controls="`p${idx}-summary`"
-                      :aria-expanded="String(!isCollapsed(it))"
-                      @click="toggle(it)"
+                <footer class="pub-actions pub-actions--split" aria-label="Publication actions">
+                  <button
+                    class="action action--read"
+                    type="button"
+                    :aria-controls="`p${idx}-summary`"
+                    :aria-expanded="String(!isCollapsed(it))"
+                    @click="toggle(it)"
+                  >
+                    <span class="action-label">{{
+                      isCollapsed(it) ? 'Read more' : 'Show less'
+                    }}</span>
+                    <svg
+                      class="action-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
-                      <span class="expand-text">{{
-                        isCollapsed(it) ? 'Read more' : 'Show less'
-                      }}</span>
-                      <svg
-                        class="expand-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path d="M7 10l5 5 5-5H7z" />
-                      </svg>
-                    </button>
-                  </div>
+                      <path d="M7 10l5 5 5-5H7z" />
+                    </svg>
+                  </button>
 
-                  <div class="right-actions">
-                    <a v-if="it.url" class="feature-link" :href="it.url"> Open publication → </a>
-                  </div>
-                </div>
+                  <a
+                    v-if="it.url"
+                    class="action action--link"
+                    :href="it.url"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <span class="action-label">Open publication</span>
+                    <svg
+                      class="action-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <!-- external link icon -->
+                      <path
+                        d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"
+                      />
+                    </svg>
+                  </a>
+
+                  <!-- Optional: if no url, keep layout balanced -->
+                  <span v-else class="action action--link action--disabled" aria-disabled="true">
+                    <span class="action-label">No link</span>
+                  </span>
+                </footer>
               </article>
             </section>
 
@@ -153,7 +244,7 @@
                 class="btn"
                 type="button"
                 @click="loadMore"
-                :disabled="totalCount === 0"
+                :disabled="totalCount === 0 || !canLoadMore"
                 v-show="canLoadMore || totalCount === 0"
               >
                 {{
@@ -280,6 +371,22 @@ const q = ref('')
 const year = ref('')
 const author = ref('')
 const sort = ref('date-desc')
+
+/** ✅ Density toggle (same as Events) */
+const compact = ref(false)
+function toggleCompact() {
+  compact.value = !compact.value
+}
+
+/** Active filters (events-like) */
+const hasActiveFilters = computed(() => !!q.value || !!year.value || !!author.value)
+function clearAll() {
+  q.value = ''
+  year.value = ''
+  author.value = ''
+  sort.value = 'date-desc'
+  page.value = 1
+}
 
 /**
  * ✅ Expand state should be stable across filtering/sorting:
@@ -425,7 +532,6 @@ function observeCards() {
     { threshold: 0.12 },
   )
 
-  // ✅ No index mapping: the template already has :data-k="keyOf(it)"
   els.forEach((el) => io.observe(el))
 }
 
@@ -437,17 +543,30 @@ onBeforeUnmount(() => {
 
 <style scoped>
 /* =========================
-   PUBLICATIONS PAGE – your theme (square, panel, accent)
+   PUBLICATIONS PAGE – Events toolbar + compact view
    ========================= */
 
-/* ✅ Lower content (avoid overlapping hero/banner) */
 .pubs-hero-offset {
-  margin-top: -40px; /* keep content below banner */
+  margin-top: -40px;
   position: relative;
   z-index: 2;
 }
 
-/* Section heading like your cards.css big headings */
+/* Section head (title + actions) */
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.section-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Heading */
 .section-heading {
   position: relative;
   font-size: clamp(38px, 8vw, 86px);
@@ -468,18 +587,20 @@ onBeforeUnmount(() => {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-/* Publications section */
-.pubs-section {
-  padding: clamp(12px, 4vw, 32px) 0;
-  container-type: inline-size;
-}
-
-/* Toolbar */
+/* Toolbar (sticky + glass, square corners) */
 .toolbar {
-  background: var(--white);
-  box-shadow: var(--shadow-soft);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  position: sticky;
+  top: calc(var(--header-h, 72px) + 10px);
+  z-index: 5;
+
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  border-radius: 0;
+
   padding: 12px;
   display: grid;
   gap: 10px;
@@ -492,14 +613,15 @@ onBeforeUnmount(() => {
   }
 }
 
+/* Search */
 .search-input {
   display: flex;
   align-items: center;
   gap: 10px;
   border: 1px solid rgba(10, 34, 59, 0.14);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: #fff;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   padding: 10px 12px;
 }
 .search-input input {
@@ -511,30 +633,50 @@ onBeforeUnmount(() => {
   color: var(--ink);
 }
 
+.icon-btn {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+}
+.icon-btn:hover {
+  opacity: 1;
+}
+.icon-btn svg {
+  fill: rgba(11, 31, 51, 0.85);
+}
+
+/* Selects */
 .select,
 .sort {
   display: flex;
   align-items: center;
   gap: 8px;
   border: 1px solid rgba(10, 34, 59, 0.14);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: #fff;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   padding: 8px 10px;
   white-space: nowrap;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink);
 }
 .select select,
 .sort select {
+  font-weight: 600;
   border: 0;
   outline: 0;
   background: transparent;
-  font: inherit;
+  font-family: inherit;
   color: var(--ink);
+  font-size: 14px;
 }
 
-/* Pill (same as your theme) */
+/* Pill */
 .pill {
   display: inline-block;
   font-size: 12px;
@@ -547,15 +689,63 @@ onBeforeUnmount(() => {
   font-weight: 900;
 }
 
-/* Info row */
+/* Active filters */
+.active-filters {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Chips */
+.chip {
+  border: 1px solid rgba(21, 138, 201, 0.4);
+  background: rgba(21, 138, 201, 0.08);
+  color: rgba(11, 31, 51, 0.9);
+  font-weight: 900;
+  padding: 8px 10px;
+  border-radius: 0;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+.chip:hover {
+  background: rgba(21, 138, 201, 0.14);
+}
+.chip-x {
+  font-size: 16px;
+  line-height: 1;
+  opacity: 0.75;
+}
+.chip--ghost {
+  border: 1px solid rgba(10, 34, 59, 0.18);
+  background: #fff;
+  color: rgba(11, 31, 51, 0.85);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.chip--ghost:hover {
+  background: #f7fbff;
+}
+.chip--ghost:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Stats row */
 .stats-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   margin-top: clamp(10px, 2vw, 14px);
-  color: rgba(11, 31, 51, 0.7);
+  color: rgba(11, 31, 51, 0.72);
   font-size: 13px;
+}
+.stats-row .stat strong {
+  font-size: 16px;
+  color: rgba(11, 31, 51, 0.9);
 }
 @media (max-width: 720px) {
   .stats-row {
@@ -564,16 +754,41 @@ onBeforeUnmount(() => {
   }
 }
 
-/* Grid */
+/* ✅ Grid: comfort=2 cols; compact=3 cols (wide) */
 .grid {
   margin-top: clamp(14px, 2.6vw, 28px);
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(14px, 2.6vw, 28px);
 }
-@media (min-width: 720px) {
+@media (min-width: 780px) {
   .grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .grid.compact {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+
+  .grid.compact .pub-card {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .grid.compact .pub-header {
+    padding: 12px 14px;
+    margin: -14px -16px 8px;
+  }
+
+  .grid.compact .summary {
+    font-size: 14px;
+  }
+
+  .grid.compact .summary-wrap[data-collapsed='true'] .summary {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
   }
 }
 
@@ -584,7 +799,7 @@ onBeforeUnmount(() => {
   grid-template-columns: 1fr;
   background: var(--white);
   box-shadow: var(--shadow-soft);
-  border-radius: var(--radius);
+  border-radius: 0;
   border: 1px solid var(--border);
   padding: clamp(16px, 2.2cqw, 22px);
   gap: 10px;
@@ -600,6 +815,17 @@ onBeforeUnmount(() => {
     transform 0.55s ease;
 }
 
+/* Colored title header band */
+.pub-header {
+  background: linear-gradient(135deg, #0f6fa8 0%, #158ac9 55%, #1fa0e0 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+
+  padding: 14px 16px;
+  margin: calc(-1 * clamp(16px, 2.2cqw, 22px)) calc(-1 * clamp(16px, 2.2cqw, 22px)) 8px;
+}
+
 .pub-head {
   display: flex;
   align-items: baseline;
@@ -607,28 +833,33 @@ onBeforeUnmount(() => {
   gap: 10px;
   flex-wrap: wrap;
 }
+
 .pub-title {
   margin: 0;
   font-size: clamp(18px, 2.6cqw, 22px);
   font-weight: 950;
-  color: var(--ink);
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
 }
+
 .pub-meta {
   display: flex;
   gap: 10px;
   align-items: center;
-  color: rgba(11, 31, 51, 0.55);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 13px;
 }
 .pub-authors {
-  font-weight: 800;
-  color: var(--ink);
+  font-weight: 900;
+  color: #fff;
 }
 .pub-date {
   white-space: nowrap;
+  color: rgba(255, 255, 255, 0.82);
 }
 
-/* Justified summary */
+/* Summary */
 .summary {
   color: rgba(11, 31, 51, 0.7);
   font-size: 15px;
@@ -641,8 +872,6 @@ onBeforeUnmount(() => {
   -ms-hyphens: auto;
   text-align-last: left;
 }
-
-/* Clamp when collapsed */
 .summary-wrap[data-collapsed='true'] .summary {
   display: -webkit-box;
   line-clamp: 6;
@@ -650,8 +879,6 @@ onBeforeUnmount(() => {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-/* Fade at bottom when collapsed */
 .summary-wrap {
   position: relative;
 }
@@ -680,7 +907,6 @@ onBeforeUnmount(() => {
   gap: 8px;
   flex-wrap: wrap;
 }
-
 .right-actions {
   display: flex;
   align-items: center;
@@ -691,14 +917,18 @@ onBeforeUnmount(() => {
   border: 1px solid var(--border);
   background: #fff;
   color: var(--ink);
-  padding: 9px 12px;
+  padding: 12px 16px;
   font-weight: 950;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
 }
-
-.pubs-section .btn:hover {
+.pubs-section .btn:hover:enabled {
   background: #f7fbff;
+}
+.pubs-section .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .pager {
@@ -743,7 +973,6 @@ onBeforeUnmount(() => {
   transform: rotate(180deg);
 }
 
-/* Motion preference */
 @media (prefers-reduced-motion: reduce) {
   .pub-card {
     opacity: 1 !important;
@@ -752,7 +981,7 @@ onBeforeUnmount(() => {
   }
 }
 
-/* Hero tune (same as your inner pages) */
+/* Hero tune */
 :deep(.stage--top--flat) {
   min-height: clamp(320px, 46vh, 520px);
   padding-top: calc(var(--header-h) + 54px);
@@ -760,5 +989,92 @@ onBeforeUnmount(() => {
 }
 :deep(.stage--top--flat::after) {
   content: none !important;
+}
+
+/* ✅ Publications bottom actions (same as Events split bar) */
+.pub-actions--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+  padding-top: 10px;
+  border-top: 1px solid rgba(10, 34, 59, 0.1);
+}
+
+/* Same button base */
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  height: 44px;
+  padding: 0 12px;
+
+  border-radius: 0;
+  font-weight: 950;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  background: #fff;
+  color: rgba(11, 31, 51, 0.92);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.action:hover {
+  background: rgba(21, 138, 201, 0.06);
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Read action (accent blue like Events) */
+.action--read {
+  border-color: rgba(21, 138, 201, 0.35);
+  color: rgba(21, 138, 201, 1);
+}
+
+/* Link action (neutral like Events "Add to Calendar") */
+.action--link {
+  border-color: rgba(10, 34, 59, 0.14);
+  font-weight: 700;
+}
+
+/* Disabled state for missing url */
+.action--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Icons */
+.action-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: transform 0.2s ease;
+}
+
+/* Chevron rotation when expanded (same behavior) */
+.action--read[aria-expanded='true'] .action-icon {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 520px) {
+  .pub-actions--split {
+    grid-template-columns: 1fr;
+  }
+}
+.toolbar .search-input,
+.toolbar .select,
+.toolbar .sort {
+  height: 44px;
+  padding: 0 12px;
+  align-items: center;
+  display: flex;
 }
 </style>

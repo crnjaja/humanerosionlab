@@ -241,10 +241,6 @@ const { el: heroTitleEl } = useWordReveal({
   duration: 1300,
 })
 
-/**
- * EmailJS config
- * - Replace with your real values (kept from your HTML example).
- */
 const EMAILJS_PUBLIC_KEY = '6jwcoTo9J7a9hsz9I'
 const EMAILJS_SERVICE_ID = 'service_z7aivyd'
 const EMAILJS_TEMPLATE_ID = 'template_c111oep'
@@ -279,8 +275,6 @@ function clearErrors() {
 }
 
 function sanitize(str) {
-  // Keep it simple + safe: trim and remove potential invisible junk.
-  // (EmailJS sends plain strings; Vue already escapes rendered output.)
   return String(str || '')
     .replaceAll('\u0000', '')
     .trim()
@@ -323,10 +317,10 @@ function validate() {
 }
 
 function onMessageInput() {
-  // no-op placeholder (kept for readability / future hooks)
+  // no-op placeholder
 }
 
-async function onSubmit(e) {
+async function onSubmit() {
   response.message = ''
   response.ok = false
 
@@ -335,7 +329,6 @@ async function onSubmit(e) {
   isSending.value = true
 
   try {
-    // Send using the same template fields: from_name, from_email, message
     const payload = {
       from_name: sanitize(form.name),
       from_email: sanitize(form.email),
@@ -356,7 +349,6 @@ async function onSubmit(e) {
   } catch (err) {
     response.ok = false
     response.message = `❌ Failed to send message. Please try again.`
-    // If you want more detail in dev:
     console.error(err)
   } finally {
     isSending.value = false
@@ -365,34 +357,69 @@ async function onSubmit(e) {
 </script>
 
 <style scoped>
-/* Layout */
+/* ✅ Align contact content with Events/Publications */
+.hero-offset {
+  margin-top: -65px; /* change this value and it WILL move */
+  position: relative;
+  z-index: 2;
+}
+
+.feature-section {
+  padding: clamp(12px, 4vw, 32px) 0;
+  container-type: inline-size;
+}
+
+/* Heading (match pubs/events) */
+.section-heading {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(38px, 8vw, 86px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  color: rgba(11, 42, 74, 0.16);
+  margin: 0 0 clamp(18px, 3vw, 36px);
+}
+.section-heading::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+  margin-top: clamp(6px, 0.9cqw, 10px);
+}
+
+/* Grid */
 .contact-grid {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
   gap: var(--gap);
-
   align-items: stretch;
 }
-
 @media (max-width: 980px) {
   .contact-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* Card base (match your current “panel” look: white, border, soft shadow, square corners) */
+/* Cards */
 .contact-card,
 .location-card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 0;
   box-shadow: var(--shadow-soft-3);
   overflow: hidden;
   position: relative;
 }
 
-/* Top accent line (like your old HTML’s ::before but aligned with your site gradient) */
-.contact-card::before,
+/* ✅ Remove top line ONLY on contact form card */
+.contact-card::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* ✅ Keep top line on location card */
 .location-card::before {
   content: '';
   position: absolute;
@@ -406,19 +433,18 @@ async function onSubmit(e) {
   padding: 18px 18px 0;
 }
 
-.card-title {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 950;
-  color: var(--navy);
-  letter-spacing: -0.01em;
-}
-
-.card-subtitle {
-  margin: 8px 0 0;
-  color: rgba(11, 31, 51, 0.7);
-  line-height: 1.6;
-  font-size: 14px;
+/* Pill */
+.pill {
+  display: inline-block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 10px;
+  border: 1px solid rgba(216, 75, 139, 0.55);
+  color: var(--accent);
+  background: #fff;
+  font-weight: 900;
+  border-radius: 0;
 }
 
 /* Form */
@@ -439,13 +465,12 @@ async function onSubmit(e) {
   font-weight: 900;
   color: rgba(11, 31, 51, 0.82);
   letter-spacing: 0.01em;
-  text-transform: none;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  border-radius: var(--radius);
+  border-radius: 0;
   border: 1px solid rgba(10, 34, 59, 0.18);
   padding: 12px 12px;
   font-size: 15px;
@@ -481,6 +506,7 @@ async function onSubmit(e) {
   background: rgba(255, 255, 255, 0.88);
   padding: 2px 6px;
   border: 1px solid rgba(10, 34, 59, 0.12);
+  border-radius: 0;
 }
 
 .char-count--warn {
@@ -499,15 +525,10 @@ async function onSubmit(e) {
   font-weight: 800;
 }
 
-/* Actions */
 .form-actions {
   display: flex;
   justify-content: center;
   padding-top: 6px;
-}
-
-.btn-submit {
-  gap: 10px;
 }
 
 .btn-submit:disabled {
@@ -526,7 +547,6 @@ async function onSubmit(e) {
 .response-msg--ok {
   color: rgba(24, 135, 64, 0.98);
 }
-
 .response-msg--error {
   color: rgba(205, 57, 57, 0.98);
 }
@@ -544,7 +564,7 @@ async function onSubmit(e) {
   width: 100%;
   height: 288px;
   border: 0;
-  border-radius: var(--radius);
+  border-radius: 0;
   box-shadow: var(--shadow-soft-3);
   border: 1px solid rgba(10, 34, 59, 0.12);
 }
@@ -556,7 +576,6 @@ async function onSubmit(e) {
   gap: 22px;
   padding: 14px 18px 0;
 }
-
 @media (max-width: 520px) {
   .location-meta {
     flex-direction: column;
@@ -585,7 +604,7 @@ async function onSubmit(e) {
   padding: 14px 18px 0;
 }
 
-/* PROJECT PAGE: flat/square banner (no V shape) + smaller height */
+/* Hero tune (same as your inner pages) */
 :deep(.stage--top--flat) {
   min-height: clamp(320px, 46vh, 520px);
   padding-top: calc(var(--header-h) + 54px);
@@ -594,17 +613,13 @@ async function onSubmit(e) {
 :deep(.stage--top--flat::after) {
   content: none !important;
 }
-:deep(.contact-page .hero-offset) {
-  margin-top: 0;
-}
-/* Social boxes in hero */
+
+/* Socials */
 .hero-socials {
   display: flex;
   gap: 14px;
   margin-top: 10px;
 }
-
-/* Base box */
 .social-box {
   width: 54px;
   height: 54px;
@@ -614,7 +629,7 @@ async function onSubmit(e) {
 
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: var(--radius);
+  border-radius: 0;
 
   transition:
     transform 160ms ease,
@@ -622,46 +637,20 @@ async function onSubmit(e) {
     border-color 160ms ease,
     box-shadow 160ms ease;
 }
-
 .social-box svg {
   width: 22px;
   height: 22px;
   fill: #ffffff;
 }
-
-/* Hover */
 .social-box:hover {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(216, 75, 139, 0.6);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
 }
-
-/* Optional: platform accent hint (subtle, not loud) */
-.social-box.facebook:hover {
-  border-color: #1877f2;
-}
-.social-box.linkedin:hover {
-  border-color: #0a66c2;
-}
-.social-box.youtube:hover {
-  border-color: #ff0033;
-}
-.social-box.twitter:hover {
-  border-color: #1da1f2;
-}
-
-.social-box.instagram:hover {
-  border-color: #e1306c;
-}
-
-/* Mobile spacing */
 @media (max-width: 520px) {
   .hero-socials {
     justify-content: center;
   }
-}
-.contact-card::before {
-  display: none;
 }
 </style>
