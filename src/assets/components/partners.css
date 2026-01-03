@@ -15,15 +15,50 @@
 
 .logos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 18px;
+  justify-content: center; /* centers the 2-column grid block */
+  align-items: center;
 }
 
 .logo-box {
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.06);
-  padding: 18px;
-  font-weight: 950;
-  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 130px; /* ⬅️ smaller */
+  padding: 0 22px; /* slightly tighter horizontally */
+
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: var(--radius);
+  text-decoration: none;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.logo-box img {
+  width: 100%;
+  max-width: 320px; /* controls how large each logo can get */
+  max-height: 90px; /* make them clearly bigger */
+  object-fit: contain;
+
+  /* keep if you want white logos */
+  filter: none;
+  opacity: 0.95;
+}
+
+.logo-box:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.logo-box:hover img {
+  opacity: 1;
+  transform: scale(1.03);
 }

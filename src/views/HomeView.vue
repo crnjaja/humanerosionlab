@@ -298,9 +298,38 @@
           <div class="partners-kicker">THE PROJECT IS A JOINT INITIATIVE BY</div>
 
           <div class="logos">
-            <div class="logo-box">UNIBE</div>
-            <div class="logo-box">UNITN</div>
-            <div class="logo-box">IIR</div>
+            <a
+              class="logo-box"
+              href="https://www.unibe.ch"
+              target="_blank"
+              rel="noopener"
+              aria-label="University of Bern"
+            >
+              <img
+                class="logo-img logo-img--unibe"
+                src="/images/logos/unibe.png"
+                alt="University of Bern logo"
+              />
+            </a>
+
+            <a
+              class="logo-box"
+              href="https://www.wti.org/"
+              target="_blank"
+              rel="noopener"
+              aria-label="World Trade Institute"
+            >
+              <img src="/images/logos/WTI.png" alt="World Trade Institute logo" />
+            </a>
+            <a
+              class="logo-box"
+              href="https://www.wti.org/"
+              target="_blank"
+              rel="noopener"
+              aria-label="World Trade Institute"
+            >
+              <img src="/images/logos/placeholder.png" alt="World Trade Institute logo" />
+            </a>
           </div>
         </div>
       </div>
