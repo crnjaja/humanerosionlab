@@ -30,6 +30,9 @@
   --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.16);
   --focus: rgba(216, 75, 139, 0.35);
 
+  --font-sans:
+    'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
   /* IMPORTANT: /public/files/ */
   --bg-image: url('/files/home-bg3.webp');
   --bg-overlay: linear-gradient(

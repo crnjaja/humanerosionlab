@@ -9,14 +9,7 @@ body {
 
 body {
   margin: 0;
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial;
+  font-family: var(--font-sans);
   color: var(--ink);
   background: var(--panel);
   text-rendering: optimizeLegibility;

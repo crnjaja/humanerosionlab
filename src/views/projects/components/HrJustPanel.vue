@@ -10,7 +10,7 @@
 
       <nav class="hrjust-nav">
         <section class="hrjust-nav__section">
-          <div class="hrjust-nav__title">Sections</div>
+          <div class="hrjust-nav__title">Details</div>
 
           <ul class="hrjust-nav__list">
             <li>

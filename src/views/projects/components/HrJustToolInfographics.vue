@@ -1,6 +1,6 @@
 <template>
   <div class="hrjust-content hrjust-infographics">
-    <!-- Sticky toolbar: ONLY tabs (+ optional menu toggle). KPIs moved below. -->
+    <!-- Sticky toolbar: tabs (with floating dropdown submenu) + KPI popover -->
     <div
       ref="chartsTopEl"
       class="hrjust-ig-toolbar"
@@ -9,68 +9,92 @@
     >
       <div class="hrjust-ig-tabsWrap">
         <nav ref="tabsEl" class="hrjust-ig-tabs" role="tablist" aria-label="Infographic families">
-          <button
+          <!-- ✅ Tabs (submenu is rendered as a fixed floating layer to avoid clipping) -->
+          <div
             v-for="f in families"
             :key="f.id"
-            class="hrjust-ig-tab"
-            role="tab"
-            type="button"
-            :aria-selected="activeFamily === f.id"
-            :data-family="f.id"
-            @click="setFamily(f.id)"
+            class="hrjust-ig-tabDropdown"
+            :class="{ 'hrjust-ig-tabDropdown--open': openMenu === f.id }"
           >
-            {{ f.label }}
-          </button>
+            <button
+              class="hrjust-ig-tab hrjust-ig-tab--dropdown"
+              role="tab"
+              type="button"
+              :aria-selected="activeFamily === f.id"
+              :aria-expanded="openMenu === f.id"
+              aria-haspopup="menu"
+              @click="toggleMenu(f.id, $event)"
+            >
+              {{ f.label }}
+              <span class="hrjust-ig-tabIcon" aria-hidden="true">▾</span>
+            </button>
+          </div>
 
+          <!-- underline indicator stays -->
           <span class="hrjust-ig-indicator" aria-hidden="true" :style="indicatorStyle"></span>
         </nav>
       </div>
 
-      <!-- Menu toggle kept, but compact so tabs keep space -->
-      <button class="hrjust-ig-toggle" type="button" :aria-pressed="isSideOpen" @click="toggleSide">
-        <span class="hrjust-ig-toggle__icon" aria-hidden="true">{{ isSideOpen ? '⟨' : '⟩' }}</span>
-        <span class="hrjust-ig-toggle__label">{{
-          isSideOpen ? 'Collapse menu' : 'Expand menu'
-        }}</span>
+      <!-- ✅ Actions wrapper: KPI info + popover -->
+      <div class="hrjust-ig-actions">
+        <button
+          ref="kpiBtnEl"
+          class="hrjust-ig-infoBtn"
+          type="button"
+          aria-haspopup="dialog"
+          :aria-expanded="isKpiOpen"
+          @click="toggleKpi"
+        >
+          i
+        </button>
+
+        <div
+          v-show="isKpiOpen"
+          class="hrjust-ig-popover"
+          role="dialog"
+          aria-label="Dataset summary"
+          @keydown.esc="isKpiOpen = false"
+        >
+          <div class="hrjust-ig-popover__grid">
+            <div class="hrjust-ig-popover__item">
+              <div class="hrjust-ig-popover__k">Years</div>
+              <div class="hrjust-ig-popover__v">{{ years[0] }} – {{ years[years.length - 1] }}</div>
+            </div>
+
+            <div class="hrjust-ig-popover__item">
+              <div class="hrjust-ig-popover__k">Cases</div>
+              <div class="hrjust-ig-popover__v">285 documented</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Floating submenu layer (fixed: cannot be clipped by charts/containers) -->
+    <div
+      v-show="openMenu"
+      class="hrjust-ig-floatMenu"
+      :style="floatStyle"
+      role="menu"
+      aria-label="Chart submenu"
+      @keydown.esc="closeMenu"
+    >
+      <button
+        v-for="s in openMenu ? subnav[openMenu] : []"
+        :key="s.id"
+        class="hrjust-ig-tabItem"
+        role="menuitem"
+        type="button"
+        :class="{ 'is-active': activeFamily === openMenu && activeSub === s.id }"
+        @click="selectFromMenu(openMenu, s.id)"
+      >
+        <span class="hrjust-ig-tabItem__title">{{ s.title }}</span>
+        <span class="hrjust-ig-tabItem__hint">{{ s.desc }}</span>
       </button>
     </div>
 
-    <!-- KPIs moved out of toolbar so tabs have room -->
-    <div class="hrjust-ig-kpisRow" aria-live="polite" aria-atomic="true">
-      <span class="hrjust-ig-kpi">
-        <span class="hrjust-ig-kpi__label">Years</span>
-        <span class="hrjust-ig-kpi__value">{{ years[0] }} – {{ years[years.length - 1] }}</span>
-      </span>
-      <span class="hrjust-ig-kpi">
-        <span class="hrjust-ig-kpi__label">Cases</span>
-        <span class="hrjust-ig-kpi__value">285 documented</span>
-      </span>
-    </div>
-
-    <!-- Two-column: subnav + stage -->
-    <div class="hrjust-ig-body" :class="{ 'is-collapsed': !isSideOpen }">
-      <!-- Left: sub navigation -->
-      <aside v-show="isSideOpen" class="hrjust-ig-side" aria-label="Chart views">
-        <div class="hrjust-ig-subnav">
-          <button
-            v-for="s in activeSubnav"
-            :key="s.id"
-            class="hrjust-ig-sub"
-            type="button"
-            :class="{ 'is-active': activeSub === s.id }"
-            @click="setSub(s.id)"
-          >
-            <span class="hrjust-ig-sub__mark" aria-hidden="true"></span>
-            <span class="hrjust-ig-sub__text">
-              <span class="hrjust-ig-sub__title">{{ s.title }}</span>
-              <span class="hrjust-ig-sub__desc">{{ s.desc }}</span>
-            </span>
-            <span class="hrjust-ig-sub__chev" aria-hidden="true">›</span>
-          </button>
-        </div>
-      </aside>
-
-      <!-- Right: chart stage -->
+    <!-- ✅ Single column stage (submenu controls the view) -->
+    <div class="hrjust-ig-body hrjust-ig-body--single">
       <main class="hrjust-ig-main">
         <!-- CIVIL -->
         <section
@@ -83,7 +107,6 @@
               <canvas ref="civilStackedEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Stacked bars show, for each year (2009–2025), the
               <span class="accent">number of cases</span>
@@ -98,7 +121,6 @@
               <canvas ref="civilAreaEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               One line per civil-society category (2009–2025), showing the
               <span class="accent">annual count of occurrences</span>. X-axis: year. Y-axis: counts.
@@ -111,7 +133,6 @@
               <canvas ref="civilAmicusEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Two measures per year: <span class="accent">bars</span> = number of cases with ≥1
               amicus; <span class="accent">line</span> = total amicus briefs filed across all cases.
@@ -125,14 +146,13 @@
         <section
           v-show="activeFamily === 'rights'"
           class="hrjust-ig-pane"
-          aria-label="Invoked Rights charts"
+          aria-label="Rights charts"
         >
           <div v-show="activeSub === 'rights-horizontal'" class="hrjust-ig-chart">
             <div class="hrjust-ig-chart__canvas hrjust-ig-chart__canvas--tall">
               <canvas ref="rightsBarEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Ranking of the <span class="accent">most frequently invoked rights</span>. Each bar is
               the number of cases where that right was cited (a case can cite multiple rights).
@@ -145,7 +165,6 @@
               <canvas ref="rightsRadarEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Radar shows the <span class="accent">relative balance</span> of invoked rights.
               Display values use a <em>square-root transform</em> for readability; tooltips show
@@ -165,7 +184,6 @@
               <canvas ref="justPolarEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Polar area comparing <span class="accent">justification typologies</span>. Sector area
               is proportional to the number of cases in each typology; tooltips show exact counts.
@@ -188,7 +206,6 @@
               <canvas ref="justRingsEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Two concentric rings: the <span class="accent">outer ring</span> shows the three main
               typologies (case counts); the <span class="accent">inner ring</span> splits each
@@ -209,7 +226,6 @@
               <canvas ref="instrumentsLollipopEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Horizontal “lollipop” ranking of <span class="accent">legal instruments</span> by
               occurrences (n = 285 mentions). Dots mark counts; dashed stems trace to zero; labels
@@ -222,7 +238,6 @@
               <canvas ref="instrumentsBubbleEl"></canvas>
             </div>
 
-            <!-- ✅ EXPLANATORY TEXT -->
             <ChartCaption title="How to read this chart">
               Each bubble is an instrument positioned by <span class="accent">occurrences</span> (X)
               and <span class="accent">share of all mentions</span> (Y). Bubble size scales with
@@ -233,7 +248,7 @@
 
         <div v-if="!activeFamily || !activeSub" class="hrjust-empty">
           <div class="hrjust-empty__title">Choose a chart</div>
-          <p class="hrjust-empty__text">Select a family and a view on the left.</p>
+          <p class="hrjust-empty__text">Select a family and a view from the submenu.</p>
         </div>
       </main>
     </div>
@@ -306,16 +321,84 @@ const subnav = {
 
 const activeFamily = ref('civil')
 const activeSub = ref('civil-bar')
-const activeSubnav = computed(() => subnav[activeFamily.value] ?? [])
 
-/* Sidebar open/close */
-const isSideOpen = ref(true)
-function toggleSide() {
-  isSideOpen.value = !isSideOpen.value
+/* ✅ Dropdown open state (submenu per tab) */
+const openMenu = ref(null)
+
+/* ✅ Floating menu positioning */
+const floatStyle = ref({ left: '0px', top: '0px', width: '320px' })
+let lastTriggerEl = null
+
+function closeMenu() {
+  openMenu.value = null
+  lastTriggerEl = null
+}
+
+function positionFloatingMenu() {
+  if (!openMenu.value || !lastTriggerEl) return
+  const r = lastTriggerEl.getBoundingClientRect()
+
+  const desiredW = 360
+  const maxW = Math.min(desiredW, window.innerWidth - 16)
+  const left = Math.min(r.left, window.innerWidth - maxW - 8)
+
+  floatStyle.value = {
+    left: `${Math.max(8, Math.round(left))}px`,
+    top: `${Math.round(r.bottom + 8)}px`,
+    width: `${Math.round(maxW)}px`,
+  }
+}
+
+function toggleMenu(id, evt) {
+  if (openMenu.value === id) {
+    closeMenu()
+    return
+  }
+  openMenu.value = id
+  lastTriggerEl = evt?.currentTarget || null
+  nextTick(() => positionFloatingMenu())
+}
+
+/* Select view from menu */
+function selectFromMenu(familyId, subId) {
+  activeFamily.value = familyId
+  activeSub.value = subId
+  closeMenu()
   nextTick(() => {
     moveIndicator()
+    buildChartsIfNeeded()
     resizeCharts(true)
   })
+}
+
+/* =========================
+   KPI popover state
+   ========================= */
+const isKpiOpen = ref(false)
+const kpiBtnEl = ref(null)
+function toggleKpi() {
+  isKpiOpen.value = !isKpiOpen.value
+}
+
+/* Close KPI popover on outside click */
+function onDocClick(e) {
+  if (!isKpiOpen.value) return
+  const btn = kpiBtnEl.value
+  const pop = document.querySelector('.hrjust-ig-popover')
+  const t = e.target
+  if (btn && btn.contains(t)) return
+  if (pop && pop.contains(t)) return
+  isKpiOpen.value = false
+}
+
+/* Close menu on outside click */
+function onDocClickMenus(e) {
+  if (!openMenu.value) return
+  const t = e.target
+  const menuEl = document.querySelector('.hrjust-ig-floatMenu')
+  if (menuEl && menuEl.contains(t)) return
+  if (lastTriggerEl && lastTriggerEl.contains(t)) return
+  closeMenu()
 }
 
 /* =========================
@@ -356,28 +439,6 @@ function moveIndicator() {
   const tabsRect = tabs.getBoundingClientRect()
   indicator.left = Math.round(btnRect.left - tabsRect.left + tabs.scrollLeft)
   indicator.width = Math.round(btnRect.width)
-}
-
-/* =========================
-   Actions
-   ========================= */
-function setFamily(id) {
-  activeFamily.value = id
-  const first = subnav[id]?.[0]?.id
-  activeSub.value = first || ''
-  nextTick(() => {
-    moveIndicator()
-    buildChartsIfNeeded()
-    resizeCharts(true)
-  })
-}
-
-function setSub(id) {
-  activeSub.value = id
-  nextTick(() => {
-    buildChartsIfNeeded()
-    resizeCharts(true)
-  })
 }
 
 /* =========================
@@ -520,9 +581,9 @@ function wrapLabel(label, maxLen = 16) {
 function withAlpha(hex, a) {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
   if (!m) return hex
-  const r = parseInt(m[1], 16)
-  const g = parseInt(m[2], 16)
-  const b = parseInt(m[3], 16)
+  const r = Number.parseInt(m[1], 16)
+  const g = Number.parseInt(m[2], 16)
+  const b = Number.parseInt(m[3], 16)
   return `rgba(${r},${g},${b},${a})`
 }
 function baseOptions() {
@@ -998,19 +1059,32 @@ onMounted(async () => {
   buildChartsIfNeeded()
   resizeCharts(true)
 
+  document.addEventListener('click', onDocClick, true)
+  document.addEventListener('click', onDocClickMenus, true)
+
   const onResize = () => {
     moveIndicator()
     resizeCharts(true)
+    positionFloatingMenu()
   }
   window.addEventListener('resize', onResize, { passive: true })
 
+  const onWinScroll = () => positionFloatingMenu()
+  window.addEventListener('scroll', onWinScroll, { passive: true, capture: true })
+
   const tabs = tabsEl.value
-  const onScroll = () => moveIndicator()
-  tabs?.addEventListener('scroll', onScroll, { passive: true })
+  const onTabsScroll = () => {
+    moveIndicator()
+    positionFloatingMenu()
+  }
+  tabs?.addEventListener('scroll', onTabsScroll, { passive: true })
 
   onBeforeUnmount(() => {
     window.removeEventListener('resize', onResize)
-    tabs?.removeEventListener('scroll', onScroll)
+    window.removeEventListener('scroll', onWinScroll, true)
+    tabs?.removeEventListener('scroll', onTabsScroll)
+    document.removeEventListener('click', onDocClick, true)
+    document.removeEventListener('click', onDocClickMenus, true)
   })
 })
 
@@ -1035,7 +1109,6 @@ onBeforeUnmount(() => destroyAll())
   --ig-accent: var(--hrjust-accent, #ae0c36);
   --ig-accent-2: var(--hrjust-accent-2, #002d47);
 
-  --ig-side-w: 280px;
   --ig-gap: 16px;
   --ig-stage-h: clamp(380px, 48vh, 560px);
   --ig-stage-square: clamp(360px, 46vh, 560px);
@@ -1045,12 +1118,10 @@ onBeforeUnmount(() => destroyAll())
 .hrjust-ig-toolbar {
   position: sticky;
   top: 0;
-  z-index: 6;
+  z-index: 100;
+  overflow: visible;
   background: #fff;
-
-  /* ✅ remove the top separator, keep only the bottom */
   border-bottom: 1px solid var(--ig-border-soft);
-
   padding: 10px 0 8px;
   margin: 0 0 10px;
 
@@ -1062,13 +1133,18 @@ onBeforeUnmount(() => destroyAll())
 
 /* Tabs */
 .hrjust-ig-tabsWrap {
-  overflow: auto hidden;
+  overflow-x: auto;
+  overflow-y: visible;
   scrollbar-width: none;
+  position: relative;
+  z-index: 50;
 }
 .hrjust-ig-tabsWrap::-webkit-scrollbar {
   display: none;
 }
 .hrjust-ig-tabs {
+  overflow: visible;
+  z-index: 60;
   position: relative;
   display: inline-flex;
   gap: 8px;
@@ -1077,6 +1153,13 @@ onBeforeUnmount(() => destroyAll())
   padding: 0 0 6px;
   min-height: 44px;
 }
+
+.hrjust-ig-tabDropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .hrjust-ig-tab {
   appearance: none;
   border: 1px solid var(--ig-border-soft);
@@ -1088,6 +1171,9 @@ onBeforeUnmount(() => destroyAll())
   padding: 10px 14px;
   border-radius: 0;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 .hrjust-ig-tab[aria-selected='true'] {
   border-color: rgba(174, 12, 54, 0.28);
@@ -1097,6 +1183,22 @@ onBeforeUnmount(() => destroyAll())
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
+.hrjust-ig-tabIcon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  opacity: 0.85;
+  transform: translateY(0.5px);
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+.hrjust-ig-tabDropdown--open .hrjust-ig-tabIcon {
+  transform: rotate(180deg) translateY(-0.5px);
+  opacity: 1;
+}
+
+/* Underline indicator */
 .hrjust-ig-indicator {
   position: absolute;
   left: 0;
@@ -1108,175 +1210,147 @@ onBeforeUnmount(() => destroyAll())
     width 180ms ease;
 }
 
-/* Toggle */
-/* Toggle (smaller + compact) */
-.hrjust-ig-toggle {
+/* ✅ Floating submenu (fixed: cannot be clipped) */
+.hrjust-ig-floatMenu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 320px;
+
+  background: #fff;
+  border: 1px solid var(--ig-border);
+  border-radius: 0;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.14);
+  padding: 8px;
+
+  display: grid;
+  gap: 6px;
+
+  z-index: 9999;
+}
+
+/* Items (same style you had) */
+.hrjust-ig-tabItem {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 0;
+  padding: 10px 10px;
+  cursor: pointer;
+
+  display: grid;
+  gap: 2px;
+
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+.hrjust-ig-tabItem:hover,
+.hrjust-ig-tabItem:focus-visible {
+  border-color: var(--ig-border);
+  background: var(--ig-hover);
+  transform: translateY(-1px);
+  outline: none;
+}
+.hrjust-ig-tabItem.is-active {
+  border-color: rgba(174, 12, 54, 0.35);
+  background: rgba(174, 12, 54, 0.1);
+}
+.hrjust-ig-tabItem__title {
+  font-weight: 900;
+  color: rgba(11, 31, 51, 0.92);
+  letter-spacing: 0.01em;
+  font-size: 13px;
+  line-height: 1.15;
+}
+.hrjust-ig-tabItem__hint {
+  font-size: 12px;
+  font-weight: 650;
+  color: rgba(11, 31, 51, 0.62);
+}
+
+/* ✅ Actions wrapper */
+.hrjust-ig-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+/* ✅ KPI Info button */
+.hrjust-ig-infoBtn {
+  width: 32px;
+  height: 32px;
   border: 1px solid var(--ig-border-soft);
   background: #fff;
   border-radius: 0;
-
-  /* ✅ smaller */
-  padding: 5px 8px;
-  min-height: 32px;
-
+  display: grid;
+  place-items: center;
+  font-weight: 950;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  color: rgba(11, 31, 51, 0.86);
-  font-weight: 900;
-  white-space: nowrap;
+  color: rgba(11, 31, 51, 0.72);
+  line-height: 1;
 }
-
-.hrjust-ig-toggle:hover {
+.hrjust-ig-infoBtn:hover {
   background: var(--ig-hover);
   border-color: var(--ig-border);
 }
-
-.hrjust-ig-toggle__icon {
-  width: 16px;
-  height: 16px;
-  display: inline-grid;
-  place-items: center;
-
-  /* ✅ smaller icon */
-  font-size: 14px;
-  line-height: 1;
-
-  color: rgba(11, 31, 51, 0.55);
+.hrjust-ig-infoBtn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
-.hrjust-ig-toggle__label {
-  /* ✅ smaller label */
-  font-size: 11.5px;
-  line-height: 1;
-}
-
-/* ✅ Optional: on small screens, keep only the icon */
-@media (max-width: 520px) {
-  .hrjust-ig-toggle__label {
-    display: none;
-  }
-}
-
-/* KPIs row */
-.hrjust-ig-kpisRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-  margin: 0 0 14px;
-}
-.hrjust-ig-kpi {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-  border: 1px solid var(--ig-border-soft);
+/* ✅ KPI Popover */
+.hrjust-ig-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: min(320px, 90vw);
   background: #fff;
-  padding: 7px 10px;
+  border: 1px solid var(--ig-border);
   border-radius: 0;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  z-index: 40;
 }
-.hrjust-ig-kpi__label {
+.hrjust-ig-popover__title {
+  font-weight: 950;
+  color: var(--ig-accent-2);
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.hrjust-ig-popover__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.hrjust-ig-popover__item {
+  border: 1px solid var(--ig-border-soft);
+  padding: 10px;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(10, 34, 59, 0.03), rgba(10, 34, 59, 0.015));
+}
+.hrjust-ig-popover__k {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.11em;
   font-size: 10px;
   color: var(--ig-muted-2);
 }
-.hrjust-ig-kpi__value {
+.hrjust-ig-popover__v {
+  margin-top: 6px;
   font-weight: 950;
-  color: var(--ig-text);
   font-size: 12.5px;
-}
-
-/* Layout */
-.hrjust-ig-body {
-  display: grid;
-  grid-template-columns: var(--ig-side-w) minmax(0, 1fr);
-  gap: var(--ig-gap);
-  align-items: start;
-}
-.hrjust-ig-body.is-collapsed {
-  grid-template-columns: 1fr;
-}
-
-/* Side */
-.hrjust-ig-side {
-  position: sticky;
-  top: 64px;
-  align-self: start;
-}
-.hrjust-ig-subnav {
-  display: grid;
-  gap: 8px;
-}
-.hrjust-ig-sub {
-  width: 100%;
-  border: 1px solid transparent;
-  background: transparent;
-  border-radius: 0;
-  padding: 10px 10px;
-  cursor: pointer;
-  text-align: left;
-  display: grid;
-  grid-template-columns: 6px 1fr auto;
-  gap: 10px;
-  align-items: center;
-  transition:
-    background 140ms ease,
-    border-color 140ms ease;
-}
-.hrjust-ig-sub__mark {
-  width: 4px;
-  height: 34px;
-  background: rgba(10, 34, 59, 0.08);
-}
-.hrjust-ig-sub__text {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-.hrjust-ig-sub__title {
-  font-weight: 950;
   color: var(--ig-text);
-  line-height: 1.12;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.hrjust-ig-sub__desc {
-  font-weight: 750;
-  font-size: 12.5px;
-  color: var(--ig-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.hrjust-ig-sub__chev {
-  color: rgba(11, 31, 51, 0.38);
-  font-weight: 900;
-  transition:
-    transform 140ms ease,
-    color 140ms ease;
-}
-.hrjust-ig-sub:hover {
-  background: var(--ig-hover);
-  border-color: var(--ig-border-soft);
-}
-.hrjust-ig-sub:hover .hrjust-ig-sub__chev {
-  transform: translateX(2px);
-  color: rgba(11, 31, 51, 0.6);
-}
-.hrjust-ig-sub.is-active {
-  background: var(--ig-active);
-  border-color: rgba(174, 12, 54, 0.28);
-}
-.hrjust-ig-sub.is-active .hrjust-ig-sub__mark {
-  background: linear-gradient(180deg, var(--ig-accent), var(--ig-accent-2));
 }
 
-/* Main */
+/* Layout (single column) */
+.hrjust-ig-body--single {
+  display: block;
+}
 .hrjust-ig-main {
   min-width: 0;
   display: grid;
@@ -1383,23 +1457,12 @@ onBeforeUnmount(() => destroyAll())
   .hrjust-ig-toolbar {
     grid-template-columns: 1fr;
   }
-  .hrjust-ig-kpisRow {
-    justify-content: flex-start;
-  }
-  .hrjust-ig-body {
-    grid-template-columns: 1fr;
-  }
-  .hrjust-ig-side {
-    position: static;
-  }
 }
 
-/* ✅ Explanatory text */
+/* ✅ Explanatory text sizing */
 :deep(.hrjust-ig-caption__body) {
   font-size: 13px;
 }
-
-/* optional: caption title */
 :deep(.hrjust-ig-caption__title) {
   font-size: 13px;
 }
@@ -1408,13 +1471,11 @@ onBeforeUnmount(() => destroyAll())
   height: 20px;
   display: grid;
   place-items: center;
-
-  background: var(--ig-accent); /* 🔴 main color */
-  color: #fff; /* white "i" */
+  background: var(--ig-accent);
+  color: #fff;
   font-weight: 900;
   font-size: 12px;
-
-  border-radius: 50%; /* circle */
+  border-radius: 50%;
   border: none;
 }
 </style>
