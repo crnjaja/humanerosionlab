@@ -15,12 +15,6 @@
           is zoomable. <span class="hrjust-accentText">Blue countries</span> are
           <strong>Core Case Countries</strong>.
         </p>
-
-        <!-- Debug-friendly status -->
-        <p v-if="isLoading" class="hrjust-map__status">Loading map…</p>
-        <p v-else-if="loadError" class="hrjust-map__status hrjust-map__status--error">
-          Map failed to load: {{ loadError }}
-        </p>
       </div>
 
       <!-- Stage -->
@@ -32,6 +26,9 @@
 
       <!-- Case details output -->
       <div ref="caseEl" class="hrjust-map__case" aria-live="polite"></div>
+
+      <!-- ✅ Tooltip anchored INSIDE the tool container -->
+      <div ref="tooltipEl" class="hrjust-map__tooltip" role="tooltip" aria-hidden="true"></div>
     </div>
 
     <!-- Popup -->
@@ -43,25 +40,16 @@
 
         <div class="hrjust-map__popupHeader">{{ popupHeader }}</div>
 
-        <ul class="hrjust-map__caseList" role="list">
-          <li
-            v-for="c in popupCases"
-            :key="c"
-            class="hrjust-map__caseItem"
-            role="button"
-            tabindex="0"
-            @click="showCase(c)"
-            @keydown.enter="showCase(c)"
-          >
-            <span class="hrjust-map__caseItemIcon" aria-hidden="true">⚖</span>
-            <span class="hrjust-map__caseItemTitle">{{ c }}</span>
+        <ul class="hrjust-map__caseList">
+          <li v-for="c in popupCases" :key="c">
+            <button type="button" class="hrjust-map__caseItem" @click="showCase(c)">
+              <span class="hrjust-map__caseItemIcon" aria-hidden="true">⚖</span>
+              <span class="hrjust-map__caseItemTitle">{{ c }}</span>
+            </button>
           </li>
         </ul>
       </div>
     </div>
-
-    <!-- Tooltip -->
-    <div ref="tooltipEl" class="hrjust-map__tooltip" role="tooltip" aria-hidden="true"></div>
   </div>
 </template>
 
@@ -126,26 +114,49 @@ function formatJustifications(input) {
     .join(', ')
 }
 
-function showTooltip(html, pageX, pageY) {
-  const el = tooltipEl.value
-  if (!el) return
-  el.style.display = 'block'
-  el.innerHTML = html
-  el.style.left = `${pageX + 15}px`
-  el.style.top = `${pageY + 15}px`
+/* =========================================================
+   ✅ Tooltip positioning FIX
+   - We position tooltip relative to the .hrjust-tool--map box
+   - Using clientX/clientY (viewport coords) and subtracting rect
+   ========================================================= */
+function getTooltipPoint(event) {
+  const host = mapEl.value?.closest?.('.hrjust-tool--map') || mapEl.value
+  if (!host) return { x: event.clientX, y: event.clientY }
+
+  const r = host.getBoundingClientRect()
+  return {
+    x: event.clientX - r.left,
+    y: event.clientY - r.top,
+  }
 }
 
-function moveTooltip(pageX, pageY) {
+function showTooltip(html, event) {
+  const el = tooltipEl.value
+  if (!el) return
+
+  const { x, y } = getTooltipPoint(event)
+
+  el.style.display = 'block'
+  el.innerHTML = html
+  el.style.left = `${x + 15}px`
+  el.style.top = `${y + 15}px`
+  el.setAttribute('aria-hidden', 'false')
+}
+
+function moveTooltip(event) {
   const el = tooltipEl.value
   if (!el || el.style.display !== 'block') return
-  el.style.left = `${pageX + 15}px`
-  el.style.top = `${pageY + 15}px`
+
+  const { x, y } = getTooltipPoint(event)
+  el.style.left = `${x + 15}px`
+  el.style.top = `${y + 15}px`
 }
 
 function hideTooltip() {
   const el = tooltipEl.value
   if (!el) return
   el.style.display = 'none'
+  el.setAttribute('aria-hidden', 'true')
 }
 
 function showCase(caseName) {
@@ -366,15 +377,16 @@ async function buildMap() {
         const name = d.properties.name
         const cases = countryCaseMap.get(name)
         if (!cases) return
+
         const star = coreCountries.includes(name) ? ' ⭐' : ''
         const plural = cases.length > 1 ? 's' : ''
+
         showTooltip(
           `<strong>${htmlEscape(name)}${star}</strong><br>${cases.length} case${plural}`,
-          event.pageX,
-          event.pageY,
+          event,
         )
       })
-      .on('mousemove', (event) => moveTooltip(event.pageX, event.pageY))
+      .on('mousemove', (event) => moveTooltip(event))
       .on('mouseout', hideTooltip)
       .on('click', (event, d) => {
         const name = d.properties.name
@@ -437,6 +449,9 @@ onBeforeUnmount(() => {
   border-radius: 0;
   padding: 16px;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+
+  /* ✅ IMPORTANT: anchor for tooltip absolute positioning */
+  position: relative;
 }
 
 .hrjust-tool__head {
@@ -664,6 +679,7 @@ onBeforeUnmount(() => {
   gap: 10px;
 }
 .hrjust-map__caseItem {
+  width: 100%;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-left: 3px solid var(--ig-accent);
@@ -675,6 +691,16 @@ onBeforeUnmount(() => {
   grid-template-columns: 22px 1fr;
   gap: 10px;
   align-items: center;
+  text-align: left;
+  /* Reset native button styles so visuals match previous li styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  color: inherit;
+  font: inherit;
+  border-radius: 0;
+  border-style: solid;
 }
 .hrjust-map__caseItem:hover {
   background: rgba(10, 34, 59, 0.02);
