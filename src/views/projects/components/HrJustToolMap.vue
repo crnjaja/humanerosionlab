@@ -302,12 +302,8 @@ async function buildMap() {
     // If CORS blocks this in dev, replace dbURL/worldURL with proxy paths (see below).
     const base = import.meta.env.BASE_URL
 
-    const worldURL = `${base}world-geo/holtzy/D3-graph-gallery/master/DATA/world.geojson`
-
-    const dbURL = `${base}hrjust-json/includes/JSON/climate_cases2_new.json`
-    console.log('BASE_URL:', import.meta.env.BASE_URL)
-    console.log('worldURL:', worldURL)
-    console.log('dbURL:', dbURL)
+    const worldURL = `${base}world.geojson`
+    const dbURL = `${base}climate_cases2_new.json`
 
     const [worldData, db] = await Promise.all([d3.json(worldURL), d3.json(dbURL)])
 
