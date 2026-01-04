@@ -469,6 +469,16 @@ const rightsCases = [102, 133, 38, 27, 11, 19, 12, 11, 41, 30, 34, 4, 4, 10, 8, 
 
 const years = Array.from({ length: 2025 - 2009 + 1 }, (_, i) => 2009 + i)
 
+/* ✅ Sort Rights Distribution (desc) */
+const rightsSorted = computed(() => {
+  return rightsLabels
+    .map((label, i) => ({ label, value: rightsCases[i] }))
+    .sort((a, b) => b.value - a.value)
+})
+
+const rightsLabelsSorted = computed(() => rightsSorted.value.map((d) => d.label))
+const rightsCasesSorted = computed(() => rightsSorted.value.map((d) => d.value))
+
 const rawCivilKnown = {
   amicus: [0, 0, 0, 0, 2, 0, 4, 3, 2, 3, 3, 7, 5, 4, 1, 0, 0],
   ngosClaimants: [1, 0, 1, 0, 3, 1, 1, 3, 4, 5, 6, 14, 21, 16, 17, 8, 1],
@@ -728,8 +738,14 @@ function buildChartsIfNeeded() {
     charts.rightsBar = new Chart(rightsBarEl.value.getContext('2d'), {
       type: 'bar',
       data: {
-        labels: rightsLabels,
-        datasets: [{ label: 'Number of cases', data: rightsCases, backgroundColor: '#205072' }],
+        labels: rightsLabelsSorted.value,
+        datasets: [
+          {
+            label: 'Number of cases',
+            data: rightsCasesSorted.value,
+            backgroundColor: '#205072',
+          },
+        ],
       },
       options: {
         ...baseOptions(),
