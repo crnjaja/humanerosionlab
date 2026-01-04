@@ -2,8 +2,8 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
       <div class="footer-left">
-        <div class="footer-brand">Website in development</div>
-        <div class="footer-muted">Some functionalities may be missing</div>
+        <div class="footer-brand">Website in development...</div>
+        <div class="footer-muted">...some functionalities may be missing!</div>
       </div>
 
       <nav class="footer-nav" aria-label="Liens">
