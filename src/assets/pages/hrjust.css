@@ -32,8 +32,8 @@
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
   border-radius: 0;
 
-  height: var(--hrjust-panel-h);
-  overflow: hidden;
+  height: auto; /* was: var(--hrjust-panel-h) */
+  overflow: visible; /* was: hidden */
 }
 
 /* =========================
@@ -57,8 +57,8 @@
    ========================= */
 
 .hrjust-page .hrjust-panel__content {
-  height: 100%;
-  overflow: auto;
+  height: auto; /* was: 100% */
+  overflow: visible; /* was: auto */
   overscroll-behavior: contain;
 
   padding: clamp(18px, 2.2cqw, 26px);
@@ -281,8 +281,8 @@
   }
 
   .hrjust-page .hrjust-panel__menu {
-    height: auto;
-    overflow: visible;
+    height: auto; /* was: 100% */
+    overflow: visible; /* was: auto */
     border-right: 0;
     border-bottom: 1px solid var(--hrjust-border-soft);
   }
