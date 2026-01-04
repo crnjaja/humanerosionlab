@@ -1,0 +1,306 @@
+/* =========================
+   HRJUST PAGE – Minimal modern panel
+   - Clean layout, square corners
+   - Right side scrolls inside panel
+   - Left menu pinned inside panel
+   ========================= */
+
+.hrjust-page {
+  --hrjust-nav-w: 300px;
+  --hrjust-panel-top: calc(var(--header-h, 72px) + 12px);
+  --hrjust-panel-h: calc(100vh - var(--hrjust-panel-top) - 12px);
+
+  /* New tokens (safe defaults) */
+  --hrjust-surface: #ffffff;
+  --hrjust-border: rgba(10, 34, 59, 0.12);
+  --hrjust-border-soft: rgba(10, 34, 59, 0.08);
+  --hrjust-text: rgba(11, 31, 51, 0.92);
+  --hrjust-muted: rgba(11, 31, 51, 0.62);
+  --hrjust-muted-2: rgba(11, 31, 51, 0.48);
+  --hrjust-hover: rgba(10, 34, 59, 0.035);
+  --hrjust-active: rgba(174, 12, 54, 0.08);
+}
+
+/* Panel frame */
+.hrjust-page .hrjust-panel {
+  display: grid;
+  grid-template-columns: var(--hrjust-nav-w) minmax(0, 1fr);
+  gap: 0;
+
+  background: var(--hrjust-surface);
+  border: 1px solid var(--hrjust-border);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+
+  height: var(--hrjust-panel-h);
+  overflow: hidden;
+}
+
+/* =========================
+   LEFT MENU
+   ========================= */
+
+.hrjust-page .hrjust-panel__menu {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+
+  padding: 18px 16px 16px;
+
+  background: #ffffff;
+  border-right: 1px solid var(--hrjust-border-soft);
+  overscroll-behavior: contain;
+}
+
+/* =========================
+   RIGHT CONTENT (only scroller)
+   ========================= */
+
+.hrjust-page .hrjust-panel__content {
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+
+  padding: clamp(18px, 2.2cqw, 26px);
+  background: #ffffff;
+}
+
+/* =========================
+   NAV HEADER
+   ========================= */
+
+.hrjust-page .hrjust-navhead {
+  display: grid;
+  gap: 6px;
+
+  padding: 2px 6px 14px;
+  margin-bottom: 14px;
+
+  border-bottom: 1px solid var(--hrjust-border-soft);
+}
+
+.hrjust-page .hrjust-navhead__kicker {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  color: var(--hrjust-muted-2);
+}
+
+.hrjust-page .hrjust-navhead__title {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: 18px;
+  color: var(--hrjust-text);
+  line-height: 1.1;
+}
+
+/* Make the rule subtle (less “banner-ish”) */
+.hrjust-page .hrjust-navhead__rule {
+  height: 2px;
+  width: 42px;
+  background: linear-gradient(90deg, var(--hrjust-accent), var(--hrjust-accent-2));
+  opacity: 0.95;
+  margin-top: 4px;
+}
+
+/* =========================
+   NAV STRUCTURE
+   ========================= */
+
+.hrjust-page .hrjust-nav {
+  display: grid;
+  gap: 18px;
+}
+
+.hrjust-page .hrjust-nav__section {
+  display: grid;
+  gap: 10px;
+}
+
+.hrjust-page .hrjust-nav__title {
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  font-size: 10.5px;
+  color: var(--hrjust-muted-2);
+  padding: 0 6px;
+}
+
+.hrjust-page .hrjust-nav__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px; /* tighter = more modern list rhythm */
+}
+
+/* =========================
+   NAV TILE → now “list row”
+   ========================= */
+
+.hrjust-page .hrjust-nav-tile {
+  width: 100%;
+  appearance: none;
+  cursor: pointer;
+  text-align: left;
+
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--hrjust-text);
+
+  border-radius: 0;
+  padding: 10px 10px;
+
+  display: grid;
+  grid-template-columns: 6px 1fr auto;
+  align-items: center;
+  gap: 10px;
+
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+/* slim marker, not “big pill” */
+.hrjust-page .hrjust-nav-tile__mark {
+  width: 4px;
+  height: 34px;
+  background: rgba(10, 34, 59, 0.08);
+}
+
+/* text block */
+.hrjust-page .hrjust-nav-tile__text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hrjust-page .hrjust-nav-tile__label {
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hrjust-page .hrjust-nav-tile__label strong {
+  font-weight: 950;
+}
+.hrjust-page .hrjust-nav-tile__desc {
+  font-size: 12.5px;
+  color: var(--hrjust-muted);
+  font-weight: 650;
+  line-height: 1.2;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chevron more subtle */
+.hrjust-page .hrjust-nav-tile__chev {
+  font-weight: 850;
+  color: rgba(11, 31, 51, 0.38);
+  transition:
+    transform 140ms ease,
+    color 140ms ease;
+}
+
+/* Hover: calm, no “card lift” */
+.hrjust-page .hrjust-nav-tile:hover {
+  background: var(--hrjust-hover);
+  border-color: var(--hrjust-border-soft);
+}
+
+.hrjust-page .hrjust-nav-tile:hover .hrjust-nav-tile__chev {
+  transform: translateX(2px);
+  color: rgba(11, 31, 51, 0.6);
+}
+
+/* Focus */
+.hrjust-page .hrjust-nav-tile:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.hrjust-page .hrjust-nav-tile.is-active {
+  background: var(--hrjust-active);
+  border-color: rgba(174, 12, 54, 0.28);
+}
+
+.hrjust-page .hrjust-nav-tile.is-active .hrjust-nav-tile__label {
+  font-weight: 950;
+}
+
+.hrjust-page .hrjust-nav-tile.is-active .hrjust-nav-tile__mark {
+  background: linear-gradient(180deg, var(--hrjust-accent), var(--hrjust-accent-2));
+}
+
+/* Sub-items: just a tiny indent (no extra “card” feel) */
+.hrjust-page .hrjust-nav-tile--sub {
+  padding-left: 14px;
+}
+
+.hrjust-page .hrjust-nav-tile--sub .hrjust-nav-tile__mark {
+  height: 30px;
+}
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
+.hrjust-page .hrjust-empty {
+  border: 1px dashed var(--hrjust-border);
+  background: rgba(10, 34, 59, 0.02);
+  padding: 18px;
+}
+
+.hrjust-page .hrjust-empty__title {
+  font-weight: 900;
+  color: var(--hrjust-text);
+}
+
+.hrjust-page .hrjust-empty__text {
+  margin: 6px 0 0;
+  color: rgba(11, 31, 51, 0.72);
+  line-height: 1.6;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 980px) {
+  .hrjust-page .hrjust-panel {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .hrjust-page .hrjust-panel__menu {
+    height: auto;
+    overflow: visible;
+    border-right: 0;
+    border-bottom: 1px solid var(--hrjust-border-soft);
+  }
+
+  .hrjust-page .hrjust-panel__content {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* Keep your spacing helpers */
+.hrjust-page .content-block {
+  padding-top: 32px;
+  padding-bottom: 110px;
+}
+
+.hrjust-page .hrjust-hero-offset {
+  margin-top: -40px;
+  position: relative;
+  z-index: 2;
+}
