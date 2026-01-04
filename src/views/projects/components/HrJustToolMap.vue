@@ -38,23 +38,40 @@
           ×
         </button>
 
-        <div class="hrjust-map__popupHeader">{{ popupHeader }}</div>
+        <!-- ✅ Simplified popup header: no search / sort / clear -->
+        <div class="hrjust-map__popupHeader">
+          <div class="hrjust-map__popupHeaderLeft">
+            <div class="hrjust-map__popupHeaderTitle">{{ popupHeader }}</div>
+            <div class="hrjust-map__popupHeaderMeta">
+              {{ popupCases.length }} case<span v-if="popupCases.length !== 1">s</span>
+            </div>
+          </div>
+        </div>
 
         <ul class="hrjust-map__caseList">
-          <li v-for="c in popupCases" :key="c">
-            <button type="button" class="hrjust-map__caseItem" @click="showCase(c)">
-              <span class="hrjust-map__caseItemIcon" aria-hidden="true">⚖</span>
-              <span class="hrjust-map__caseItemTitle">{{ c }}</span>
+          <li v-for="c in filteredPopupCases" :key="c.caseName" class="hrjust-map__caseLi">
+            <button type="button" class="hrjust-map__caseItem" @click="showCase(c.caseName)">
+              <div class="hrjust-map__caseItemTop">
+                <div class="hrjust-map__caseItemTitle">{{ c.caseName }}</div>
+              </div>
+
+              <div v-if="c.chips?.length" class="hrjust-map__caseItemChips">
+                <span v-for="chip in c.chips" :key="chip" class="hrjust-map__chip">
+                  {{ chip }}
+                </span>
+              </div>
             </button>
           </li>
         </ul>
+
+        <div v-if="!filteredPopupCases.length" class="hrjust-map__popupEmpty">No cases found.</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import * as d3 from 'd3'
 
 /* =========================
@@ -75,7 +92,7 @@ const loadError = ref('')
    ========================= */
 const isPopupOpen = ref(false)
 const popupHeader = ref('')
-const popupCases = ref([])
+const popupCases = ref([]) // objects
 
 function closePopup() {
   isPopupOpen.value = false
@@ -158,6 +175,14 @@ function hideTooltip() {
   el.style.display = 'none'
   el.setAttribute('aria-hidden', 'true')
 }
+
+/* =========================
+   Popup list output (no search, no sort, no clear)
+   ========================= */
+const filteredPopupCases = computed(() => {
+  // No filtering / sorting: show the popup list as-is
+  return popupCases.value || []
+})
 
 function showCase(caseName) {
   const d = caseDetailsMap.get(caseName)
@@ -309,10 +334,7 @@ async function buildMap() {
     const path = d3.geoPath(projection)
     g = svg.append('g')
 
-    // IMPORTANT:
-    // If CORS blocks this in dev, replace dbURL/worldURL with proxy paths (see below).
     const base = import.meta.env.BASE_URL
-
     const worldURL = `${base}world.geojson`
     const dbURL = `${base}climate_cases2_new.json`
 
@@ -392,9 +414,32 @@ async function buildMap() {
         const name = d.properties.name
         if (!respondentCountries.has(name)) return
 
-        const cases = countryCaseMap.get(name) ?? []
-        popupHeader.value = `${name} — ${cases.length} case${cases.length > 1 ? 's' : ''}`
-        popupCases.value = cases
+        const names = countryCaseMap.get(name) ?? []
+
+        // ✅ Build structured popup cases (no search/sort UI)
+        popupCases.value = names.map((caseName) => {
+          const det = caseDetailsMap.get(caseName) || {}
+          const chips = []
+
+          if (det.submissionYear) chips.push(`Submission: ${det.submissionYear}`)
+          if (det.decisionDate) chips.push(`Decision: ${det.decisionDate}`)
+          if (det.claimantType) chips.push(`Claimant: ${det.claimantType}`)
+          if (det.respondentType) chips.push(`Respondent: ${det.respondentType}`)
+          if (det.justification) chips.push(`Typology: ${formatJustifications(det.justification)}`)
+          if (det.subtypology) chips.push(`Sub: ${det.subtypology}`)
+
+          return {
+            caseName,
+            submissionYear: det.submissionYear || '',
+            decisionDate: det.decisionDate || '',
+            courtType: det.courtType || '',
+            status: det.status || '',
+            justification: det.justification || '',
+            chips,
+          }
+        })
+
+        popupHeader.value = `${name}`
         isPopupOpen.value = true
       })
 
@@ -639,7 +684,7 @@ onBeforeUnmount(() => {
   padding: 18px;
 }
 .hrjust-map__popup {
-  width: min(820px, 92vw);
+  width: min(920px, 92vw);
   max-height: 72vh;
   overflow: auto;
   background: #fff;
@@ -662,15 +707,35 @@ onBeforeUnmount(() => {
   font-size: 20px;
   line-height: 1;
 }
+
+/* ✅ Popup header now only left block */
 .hrjust-map__popupHeader {
   border-bottom: 2px solid var(--ig-accent-2);
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   margin-bottom: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hrjust-map__popupHeaderLeft {
+  display: grid;
+  gap: 4px;
+}
+
+.hrjust-map__popupHeaderTitle {
   font-weight: 950;
-  /* ✅ header “colored text” -> accent */
   color: var(--ig-accent);
   font-size: 16px;
 }
+
+.hrjust-map__popupHeaderMeta {
+  font-size: 12px;
+  color: rgba(11, 31, 51, 0.65);
+}
+
 .hrjust-map__caseList {
   list-style: none;
   padding: 0;
@@ -678,47 +743,69 @@ onBeforeUnmount(() => {
   display: grid;
   gap: 10px;
 }
+
+.hrjust-map__caseLi {
+  margin: 0;
+}
+
+/* ✅ Case item card */
 .hrjust-map__caseItem {
   width: 100%;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-left: 3px solid var(--ig-accent);
+  border-left: 4px solid var(--ig-accent);
   padding: 12px 14px;
   cursor: pointer;
   border-radius: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   display: grid;
-  grid-template-columns: 22px 1fr;
   gap: 10px;
-  align-items: center;
   text-align: left;
-  /* Reset native button styles so visuals match previous li styling */
+
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: #fff;
+
   color: inherit;
   font: inherit;
-  border-radius: 0;
-  border-style: solid;
 }
+
 .hrjust-map__caseItem:hover {
   background: rgba(10, 34, 59, 0.02);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-.hrjust-map__caseItemIcon {
-  /* ✅ icon accent */
-  color: #ae0c36;
-  font-weight: 900;
-  display: inline-grid;
-  place-items: center;
+
+.hrjust-map__caseItemTop {
+  display: grid;
+  gap: 6px;
 }
+
 .hrjust-map__caseItemTitle {
   font-size: 14px;
-  font-weight: 900;
-  /* ✅ case list title “colored text” -> accent */
+  font-weight: 950;
   color: var(--ig-accent);
   line-height: 1.35;
+}
+
+.hrjust-map__caseItemChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hrjust-map__chip {
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 0;
+  background: rgba(10, 34, 59, 0.03);
+  border: 1px solid var(--ig-border-soft);
+  color: rgba(11, 31, 51, 0.78);
+}
+
+.hrjust-map__popupEmpty {
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(11, 31, 51, 0.65);
 }
 
 @media (max-width: 980px) {
