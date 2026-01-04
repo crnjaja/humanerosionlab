@@ -207,14 +207,14 @@ function showCase(caseName) {
       </div>
 
       <div class="hrjust-case__section">
-        <div class="hrjust-case__sectionTitle"><span class="hrjust-case__sectionIcon">📘</span> Summary</div>
+        <div class="hrjust-case__sectionTitle"></span> Summary</div>
         <div class="hrjust-case__highlight">${htmlEscape(d.summary || 'No summary provided.')}</div>
       </div>
 
       <div class="hrjust-case__divider"></div>
 
       <div class="hrjust-case__section">
-        <div class="hrjust-case__sectionTitle"><span class="hrjust-case__sectionIcon">👥</span> Parties involved</div>
+        <div class="hrjust-case__sectionTitle"> Parties involved</div>
         <div class="hrjust-case__grid">
           <div class="hrjust-case__party">
             <div class="hrjust-case__partyRole">Claimant</div>
@@ -234,7 +234,7 @@ function showCase(caseName) {
           ? `
         <div class="hrjust-case__divider"></div>
         <div class="hrjust-case__section">
-          <div class="hrjust-case__sectionTitle"><span class="hrjust-case__sectionIcon">⚖</span> Proceedings details</div>
+          <div class="hrjust-case__sectionTitle"> Proceedings details</div>
           <div class="hrjust-case__grid">${proc.join('')}</div>
         </div>
       `
@@ -243,20 +243,20 @@ function showCase(caseName) {
 
       <div class="hrjust-case__divider"></div>
       <div class="hrjust-case__section">
-        <div class="hrjust-case__sectionTitle"><span class="hrjust-case__sectionIcon">🤝</span> Civil society engagement</div>
+        <div class="hrjust-case__sectionTitle"> Civil society engagement</div>
         <div class="hrjust-case__highlight">${htmlEscape(d.civilSociety || 'N/A')}</div>
       </div>
 
       <div class="hrjust-case__divider"></div>
       <div class="hrjust-case__section">
-        <div class="hrjust-case__sectionTitle"><span class="hrjust-case__sectionIcon">⚖️</span> Human rights</div>
+        <div class="hrjust-case__sectionTitle"> Human rights</div>
         <div class="hrjust-case__highlight"><strong>Catalogue:</strong> ${htmlEscape(d.rightsCatalogue || 'N/A')}</div>
         <div class="hrjust-case__highlight"><strong>Violated Rights:</strong> ${htmlEscape(d.humanRightsViolated || 'N/A')}</div>
       </div>
 
       <div class="hrjust-case__divider"></div>
       <div class="hrjust-case__section">
-        <div class="hrjust-case__sectionTitle"><span class="hrjust-case__sectionIcon">🧩</span> Typology</div>
+        <div class="hrjust-case__sectionTitle"> Typology</div>
         <div class="hrjust-case__highlight"><strong>Justification Typology:</strong> ${htmlEscape(formatJustifications(d.justification))}</div>
         ${d.subtypology ? `<div class="hrjust-case__highlight"><strong>Subtypology:</strong> ${htmlEscape(d.subtypology)}</div>` : ''}
       </div>
@@ -266,7 +266,7 @@ function showCase(caseName) {
           ? `
         <div class="hrjust-case__divider"></div>
         <div class="hrjust-case__section">
-          <div class="hrjust-case__sectionTitle"><span class="hrjust-case__sectionIcon">📚</span> References</div>
+          <div class="hrjust-case__sectionTitle"> References</div>
           ${refs.join('')}
         </div>
       `
@@ -708,7 +708,7 @@ onBeforeUnmount(() => {
 }
 .hrjust-map__caseItemIcon {
   /* ✅ icon accent */
-  color: var(--ig-accent);
+  color: #ae0c36;
   font-weight: 900;
   display: inline-grid;
   place-items: center;
