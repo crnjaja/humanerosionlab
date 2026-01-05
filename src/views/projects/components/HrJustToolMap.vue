@@ -336,7 +336,7 @@ async function buildMap() {
 
     const base = import.meta.env.BASE_URL
     const worldURL = `${base}world.geojson`
-    const dbURL = `${base}climate_cases2_new.json`
+    const dbURL = `${base}climate_cases2.json`
 
     const [worldData, db] = await Promise.all([d3.json(worldURL), d3.json(dbURL)])
 
@@ -450,6 +450,14 @@ async function buildMap() {
       .on('zoom', ({ transform }) => g.attr('transform', transform))
 
     svg.call(zoomBehavior)
+    const initialScale = 1.3
+
+    svg.call(
+      zoomBehavior.transform,
+      d3.zoomIdentity
+        .translate((1400 * (1 - initialScale)) / 2, (700 * (1 - initialScale)) / 2)
+        .scale(initialScale),
+    )
   } catch (e) {
     console.error(e)
     loadError.value = e?.message || String(e)
