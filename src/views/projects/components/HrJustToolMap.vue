@@ -664,6 +664,9 @@ onBeforeUnmount(() => {
   color: rgba(0, 0, 0, 0.78);
   font-size: 13.5px;
   line-height: 1.55;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 :deep(.hrjust-case__divider) {
   border-bottom: 1px solid color-mix(in srgb, var(--ig-accent) 35%, transparent);
