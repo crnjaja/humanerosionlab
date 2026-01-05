@@ -200,24 +200,41 @@
   text-overflow: ellipsis;
 }
 
-/* Chevron more subtle */
 .hrjust-page .hrjust-nav-tile__chev {
-  font-weight: 850;
-  color: rgba(11, 31, 51, 0.38);
+  width: 14px;
+  height: 14px;
+  position: relative;
+  color: rgba(11, 31, 51, 0.34);
   transition:
     transform 140ms ease,
-    color 140ms ease;
+    opacity 140ms ease;
+  opacity: 0.9;
+}
+
+/* draw a corner */
+.hrjust-page .hrjust-nav-tile__chev::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-right: 2px solid currentColor;
+  border-top: 2px solid currentColor;
+}
+
+/* hover motion */
+.hrjust-page .hrjust-nav-tile:hover .hrjust-nav-tile__chev {
+  transform: translateX(2px);
+  opacity: 1;
+}
+
+/* active state slightly stronger */
+.hrjust-page .hrjust-nav-tile.is-active .hrjust-nav-tile__chev {
+  color: rgba(174, 12, 54, 0.55);
 }
 
 /* Hover: calm, no “card lift” */
 .hrjust-page .hrjust-nav-tile:hover {
   background: var(--hrjust-hover);
   border-color: var(--hrjust-border-soft);
-}
-
-.hrjust-page .hrjust-nav-tile:hover .hrjust-nav-tile__chev {
-  transform: translateX(2px);
-  color: rgba(11, 31, 51, 0.6);
 }
 
 /* Focus */

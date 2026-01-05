@@ -28,7 +28,7 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Quick snapshot + key facts</span>
                 </span>
-                <span class="hrjust-nav-tile__chev" aria-hidden="true">→</span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
@@ -47,7 +47,7 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Scope, method, outputs</span>
                 </span>
-                <span class="hrjust-nav-tile__chev" aria-hidden="true">→</span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
@@ -66,7 +66,7 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">People, roles, partners</span>
                 </span>
-                <span class="hrjust-nav-tile__chev" aria-hidden="true">→</span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
           </ul>
@@ -91,7 +91,7 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Browse and query the dataset</span>
                 </span>
-                <span class="hrjust-nav-tile__chev" aria-hidden="true">→</span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
@@ -110,7 +110,7 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Explore cases by country</span>
                 </span>
-                <span class="hrjust-nav-tile__chev" aria-hidden="true">→</span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
@@ -129,7 +129,7 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Charts and key insights</span>
                 </span>
-                <span class="hrjust-nav-tile__chev" aria-hidden="true">→</span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
           </ul>

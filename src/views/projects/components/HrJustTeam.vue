@@ -205,10 +205,6 @@ const groups = [
   --team-tint: rgba(0, 45, 71, 0.04);
 }
 
-/* Group header */
-.hrjust-teamGroup {
-  margin-top: 18px;
-}
 .hrjust-teamGroup__head {
   margin-bottom: 12px;
 }
@@ -356,5 +352,14 @@ const groups = [
   transform: translateY(-1px);
   background: var(--team-tint);
   box-shadow: 0 10px 18px rgba(10, 34, 59, 0.08);
+}
+
+.hrjust-teamGroup:first-child {
+  margin-top: 0; /* key: no “dead space” at the top */
+}
+
+.hrjust-teamGroup {
+  margin-top: 14px;
+  margin-bottom: 32px; /* NEW: space before next title */
 }
 </style>
