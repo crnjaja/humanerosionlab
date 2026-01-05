@@ -191,17 +191,6 @@
           </div>
 
           <div v-show="activeSub === 'just-rings'" class="hrjust-ig-chart">
-            <div
-              class="hrjust-ig-overlayNote"
-              role="note"
-              aria-label="Provisional sub-typology data"
-            >
-              <span class="hrjust-ig-overlayNote__icon" aria-hidden="true">!</span>
-              <span
-                >Sub-typology figures are illustrative only. Final data pending validation.</span
-              >
-            </div>
-
             <div class="hrjust-ig-chart__canvas hrjust-ig-chart__canvas--square">
               <canvas ref="justRingsEl"></canvas>
             </div>
@@ -467,7 +456,7 @@ const rightsLabels = [
 ]
 const rightsCases = [102, 133, 38, 27, 11, 19, 12, 11, 41, 30, 34, 4, 4, 10, 8, 13, 19, 9, 12]
 
-const years = Array.from({ length: 2025 - 2009 + 1 }, (_, i) => 2009 + i)
+const years = Array.from({ length: 2025 - 2005 + 1 }, (_, i) => 2005 + i)
 
 /* ✅ Sort Rights Distribution (desc) */
 const rightsSorted = computed(() => {
@@ -480,12 +469,12 @@ const rightsLabelsSorted = computed(() => rightsSorted.value.map((d) => d.label)
 const rightsCasesSorted = computed(() => rightsSorted.value.map((d) => d.value))
 
 const rawCivilKnown = {
-  amicus: [0, 0, 0, 0, 2, 0, 4, 3, 2, 3, 3, 7, 5, 4, 1, 0, 0],
-  ngosClaimants: [1, 0, 1, 0, 3, 1, 1, 3, 4, 5, 6, 14, 21, 16, 17, 8, 1],
-  supported: [0, 1, 0, 1, 0, 1, 2, 1, 1, 4, 8, 10, 15, 14, 4, 6, 0],
-  public: [1, 0, 1, 0, 0, 2, 1, 1, 1, 4, 1, 6, 5, 3, 4, 2, 0],
-  strategic: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 17, 3, 0, 2, 0],
-  youthActivism: [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 7, 15, 6, 4, 3, 0],
+  amicus: [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 4, 3, 2, 4, 3, 7, 5, 4, 1, 0, 0],
+  ngosClaimants: [0, 0, 1, 0, 1, 0, 1, 0, 3, 1, 1, 3, 4, 5, 6, 14, 21, 16, 17, 8, 1],
+  supported: [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 2, 1, 1, 4, 8, 10, 15, 14, 4, 6, 0],
+  public: [0, 0, 1, 0, 1, 0, 1, 0, 0, 2, 1, 1, 1, 4, 1, 6, 5, 3, 4, 2, 0],
+  strategic: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 17, 3, 0, 2, 0],
+  youthActivism: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 7, 15, 6, 4, 3, 0],
 }
 
 const dsCivilLines = [
@@ -528,7 +517,7 @@ const dsCivilLines = [
 ].map((d) => ({ ...d, fill: false, tension: 0.35 }))
 
 const justificationLabels = ['Promotive', 'Defensive', 'Boundaries-checking']
-const justificationData = [30, 96, 39] // placeholder
+const justificationData = [30, 96, 39]
 
 const instrumentRaw = [
   { label: 'Paris Agreement', occurrences: 123 },
@@ -540,6 +529,7 @@ const instrumentRaw = [
   { label: 'Inter-American Convention on Human Rights', occurrences: 11 },
   { label: 'Kyoto Protocol', occurrences: 9 },
   { label: 'International Covenant on Economic, Social and Cultural Rights', occurrences: 21 },
+  { label: 'GAAT 1994', occurrences: 8 },
   { label: 'Rio Declaration', occurrences: 7 },
 ].sort((a, b) => b.occurrences - a.occurrences)
 
@@ -672,8 +662,8 @@ function buildChartsIfNeeded() {
   }
 
   if (!charts.civilAmicus && civilAmicusEl.value) {
-    const amicusCasesPerYear = [0, 0, 0, 0, 2, 0, 4, 3, 2, 3, 3, 7, 5, 4, 1, 0, 0]
-    const amicusTotalsPerYear = [0, 0, 0, 0, 2, 0, 20, 4, 4, 3, 4, 38, 13, 6, 1, 0, 0]
+    const amicusCasesPerYear = [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 4, 3, 2, 4, 3, 7, 5, 4, 1, 0, 0]
+    const amicusTotalsPerYear = [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 20, 4, 4, 4, 7, 39, 13, 6, 1, 0, 0]
 
     charts.civilAmicus = new Chart(civilAmicusEl.value.getContext('2d'), {
       type: 'bar',
@@ -835,31 +825,57 @@ function buildChartsIfNeeded() {
   }
 
   if (!charts.justRings && justRingsEl.value) {
+    // =========================
+    // OUTER (Typologies)
+    // =========================
     const outerLabels = justificationLabels
-    const outerData = justificationData
-    const outerColors = ['#FFD166', '#205072', '#ae0c36']
 
-    const subLabelsPerParent = [
-      ['Rights-based', 'Policy-forward', 'Other'],
-      ['Defence on merits', 'Procedural', 'Jurisdictional'],
-      ['Separation of powers', 'Standing/justiciability', 'Other'],
-    ]
-    function splitIntoSubs(total) {
-      const a = Math.round(total * 0.6)
-      const b = Math.round(total * 0.25)
-      const c = Math.max(0, total - a - b)
-      return [a, b, c]
+    const justificationSubData = {
+      Promotive: {
+        'Human Rights': 9,
+        'Climate Action-Based': 16,
+        'Cooperative Response': 5,
+      },
+      Defensive: {
+        'Lack of Causality': 15,
+        Procedural: 37,
+        Confidentiality: 3,
+        'No Argument Available': 41,
+      },
+      'Boundaries-checking': {
+        'Public Interest': 34,
+        'Sustainable Development': 5,
+      },
     }
 
-    const innerData = outerData.flatMap(splitIntoSubs)
-    const innerLabels = outerLabels.flatMap((parent, i) =>
-      subLabelsPerParent[i].map((s) => `${parent} › ${s}`),
-    )
-    const innerColors = outerLabels.flatMap((_, i) => [
-      withAlpha(outerColors[i], 0.55),
-      withAlpha(outerColors[i], 0.35),
-      withAlpha(outerColors[i], 0.22),
-    ])
+    // ✅ Recommended: compute outer totals from sub-typologies
+    // This guarantees the outer ring matches the sum of inner slices.
+    const outerData = outerLabels.map((parent) => {
+      const subs = justificationSubData[parent] || {}
+      return Object.values(subs).reduce((a, b) => a + b, 0)
+    })
+
+    const outerColors = ['#FFD166', '#205072', '#ae0c36']
+
+    // =========================
+    // INNER (Sub-typologies)
+    // =========================
+    const innerLabels = []
+    const innerData = []
+    const innerColors = []
+
+    outerLabels.forEach((parent, i) => {
+      const subs = justificationSubData[parent] || {}
+
+      Object.entries(subs).forEach(([subLabel, value], idx) => {
+        innerLabels.push(`${parent} › ${subLabel}`)
+        innerData.push(value)
+
+        // Slightly varied tint per slice (still tied to parent color)
+        const alpha = idx === 0 ? 0.55 : idx === 1 ? 0.35 : 0.22
+        innerColors.push(withAlpha(outerColors[i], alpha))
+      })
+    })
 
     charts.justRings = new Chart(justRingsEl.value.getContext('2d'), {
       type: 'doughnut',
@@ -1437,33 +1453,6 @@ onBeforeUnmount(() => destroyAll())
   line-height: 1.6;
 }
 .accent {
-  color: var(--ig-accent);
-  font-weight: 950;
-}
-
-/* Overlay note */
-.hrjust-ig-overlayNote {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 3;
-  background: rgba(174, 12, 54, 0.08);
-  border: 1px solid rgba(174, 12, 54, 0.35);
-  color: rgba(11, 31, 51, 0.92);
-  padding: 7px 10px;
-  font-size: 12px;
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  max-width: 420px;
-  backdrop-filter: blur(2px);
-}
-.hrjust-ig-overlayNote__icon {
-  width: 18px;
-  height: 18px;
-  display: inline-grid;
-  place-items: center;
-  border: 1px solid rgba(174, 12, 54, 0.35);
   color: var(--ig-accent);
   font-weight: 950;
 }
