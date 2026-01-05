@@ -3,13 +3,6 @@
    (square corners, sticky glass toolbar, aligned heights)
    ========================= */
 
-/* Lower content (avoid overlapping hero/banner) */
-.events-page .events-hero-offset {
-  margin-top: -40px;
-  position: relative;
-  z-index: 2;
-}
-
 /* Section head (title + actions) */
 .events-page .section-head {
   display: flex;

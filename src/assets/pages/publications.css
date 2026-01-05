@@ -2,12 +2,6 @@
    PUBLICATIONS PAGE – Events toolbar + compact view
    ========================= */
 
-.publications-page .pubs-hero-offset {
-  margin-top: -40px;
-  position: relative;
-  z-index: 2;
-}
-
 /* Section head (title + actions) */
 .publications-page .section-head {
   display: flex;

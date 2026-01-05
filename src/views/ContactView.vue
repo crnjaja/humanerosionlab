@@ -359,7 +359,7 @@ async function onSubmit() {
 <style scoped>
 /* ✅ Align contact content with Events/Publications */
 .hero-offset {
-  margin-top: -65px; /* change this value and it WILL move */
+  margin-top: -35px; /* change this value and it WILL move */
   position: relative;
   z-index: 2;
 }

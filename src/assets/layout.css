@@ -53,7 +53,7 @@
 /* Opaque content block */
 .content-block {
   background: var(--panel);
-  padding: 80px 0 110px;
+  padding: 40px 0 0px;
   position: relative;
   z-index: 10;
 }

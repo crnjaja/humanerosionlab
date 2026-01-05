@@ -30,38 +30,66 @@
     <section class="content-block full-bleed">
       <div class="container">
         <!-- ✅ lowered content (no overlap on banner) -->
-        <div class="hero-offset events-hero-offset">
-          <section class="events-section" aria-labelledby="events-title">
-            <!-- ✅ Publications-like head (title + actions) -->
-            <div class="section-head">
-              <h2 id="events-title" class="section-heading">Events</h2>
 
-              <div class="section-actions" aria-label="View options">
-                <button
-                  class="chip chip--ghost"
-                  type="button"
-                  @click="toggleCompact"
-                  :aria-pressed="String(compact)"
-                  title="Toggle compact/comfort view"
-                >
-                  {{ compact ? 'Comfort view' : 'Compact view' }}
-                </button>
+        <section class="events-section" aria-labelledby="events-title">
+          <!-- ✅ Publications-like head (title + actions) -->
+          <div class="section-head">
+            <h2 id="events-title" class="section-heading">Events</h2>
 
-                <button
-                  class="chip chip--ghost"
-                  type="button"
-                  @click="clearAll"
-                  :disabled="!hasActiveFilters"
-                  title="Clear filters"
-                >
-                  Clear filters
-                </button>
-              </div>
+            <div class="section-actions" aria-label="View options">
+              <button
+                class="chip chip--ghost"
+                type="button"
+                @click="toggleCompact"
+                :aria-pressed="String(compact)"
+                title="Toggle compact/comfort view"
+              >
+                {{ compact ? 'Comfort view' : 'Compact view' }}
+              </button>
+
+              <button
+                class="chip chip--ghost"
+                type="button"
+                @click="clearAll"
+                :disabled="!hasActiveFilters"
+                title="Clear filters"
+              >
+                Clear filters
+              </button>
             </div>
+          </div>
 
-            <!-- ===== Toolbar: search + filters + sort (SAME AS PUBLICATIONS FILTERBAR) ===== -->
-            <section class="toolbar" aria-label="Filters and Search">
-              <label class="search-input" aria-label="Search events">
+          <!-- ===== Toolbar: search + filters + sort (SAME AS PUBLICATIONS FILTERBAR) ===== -->
+          <section class="toolbar" aria-label="Filters and Search">
+            <label class="search-input" aria-label="Search events">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                aria-hidden="true"
+              >
+                <path
+                  d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                />
+              </svg>
+
+              <input
+                id="q"
+                v-model="q"
+                type="search"
+                placeholder="Search title, speakers, location, keywords…"
+                autocomplete="off"
+                @keydown.esc.prevent="q = ''"
+              />
+
+              <button
+                v-if="q"
+                class="icon-btn"
+                type="button"
+                aria-label="Clear search"
+                @click="q = ''"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -70,333 +98,284 @@
                   aria-hidden="true"
                 >
                   <path
-                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                    d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29l6.3 6.31 6.3-6.31z"
                   />
                 </svg>
-
-                <input
-                  id="q"
-                  v-model="q"
-                  type="search"
-                  placeholder="Search title, speakers, location, keywords…"
-                  autocomplete="off"
-                  @keydown.esc.prevent="q = ''"
-                />
-
-                <button
-                  v-if="q"
-                  class="icon-btn"
-                  type="button"
-                  aria-label="Clear search"
-                  @click="q = ''"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="18"
-                    height="18"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29l6.3 6.31 6.3-6.31z"
-                    />
-                  </svg>
-                </button>
-              </label>
-
-              <label class="select" for="year">
-                <span class="pill" aria-hidden="true">Year</span>
-                <select id="year" v-model="year" aria-label="Filter by year">
-                  <option value="">All years</option>
-                  <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
-                </select>
-              </label>
-
-              <label class="select" for="location">
-                <span class="pill" aria-hidden="true">Location</span>
-                <select id="location" v-model="location" aria-label="Filter by location">
-                  <option value="">All locations</option>
-                  <option v-for="l in locations" :key="l" :value="l">{{ l }}</option>
-                </select>
-              </label>
-
-              <label class="sort" for="sort">
-                <span class="pill" aria-hidden="true">Sort</span>
-                <select id="sort" v-model="sort" aria-label="Sort results">
-                  <option value="date-desc">Newest first</option>
-                  <option value="date-asc">Oldest first</option>
-                  <option value="title-asc">Title A–Z</option>
-                  <option value="title-desc">Title Z–A</option>
-                </select>
-              </label>
-            </section>
-
-            <!-- ✅ Active filters chips (same behavior as Publications) -->
-            <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
-              <button v-if="year" class="chip" type="button" @click="year = ''">
-                Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
               </button>
-              <button v-if="location" class="chip" type="button" @click="location = ''">
-                Location: {{ location }} <span class="chip-x" aria-hidden="true">×</span>
-              </button>
-              <button v-if="q" class="chip" type="button" @click="q = ''">
-                Search: “{{ q }}” <span class="chip-x" aria-hidden="true">×</span>
-              </button>
-            </div>
+            </label>
 
-            <!-- ✅ Stats row (same as Publications) -->
-            <div class="stats-row" aria-live="polite">
-              <span class="stat">
-                <strong>{{ totalCount }}</strong>
-                result{{ totalCount === 1 ? '' : 's' }}
-              </span>
-              <span class="hint"
-                >Tip: click “Read more” to expand. “Add to Calendar” downloads a .ics.</span
-              >
-            </div>
+            <label class="select" for="year">
+              <span class="pill" aria-hidden="true">Year</span>
+              <select id="year" v-model="year" aria-label="Filter by year">
+                <option value="">All years</option>
+                <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
+              </select>
+            </label>
 
-            <!-- ===== Grid ===== -->
-            <section class="grid" :class="{ compact }" aria-label="Events list">
-              <article
-                v-for="(it, idx) in visibleItems"
-                :key="keyOf(it)"
-                class="event-card"
-                :data-k="keyOf(it)"
-                :class="{
-                  revealed: revealedKeys.has(keyOf(it)),
-                  expanded: !isCollapsed(it),
-                }"
-                :aria-labelledby="`e${idx}-title`"
-                ref="cardEls"
-              >
-                <!-- ✅ Solid banner like Publications -->
-                <header class="event-banner">
-                  <div class="banner-inner">
-                    <h3 :id="`e${idx}-title`" class="event-title">
-                      {{ it.title }}
-                    </h3>
+            <label class="select" for="location">
+              <span class="pill" aria-hidden="true">Location</span>
+              <select id="location" v-model="location" aria-label="Filter by location">
+                <option value="">All locations</option>
+                <option v-for="l in locations" :key="l" :value="l">{{ l }}</option>
+              </select>
+            </label>
 
-                    <div class="event-meta">
-                      <span class="event-speakers" v-if="(it.speakers || []).length">
-                        {{ (it.speakers || []).join(', ') }}
-                      </span>
-                      <span class="event-date">· {{ formatDateRange(it.start, it.end) }}</span>
-                      <span v-if="timeRange(it.start, it.end)" class="event-time">
-                        · {{ timeRange(it.start, it.end) }}
-                      </span>
-                    </div>
-                  </div>
-                </header>
-
-                <div class="event-body">
-                  <!-- Meta pills row -->
-                  <div class="meta-row meta-row--pills" aria-label="Event meta">
-                    <span class="pill-chip">
-                      <span class="pill-label">Location</span>
-                      <span class="pill-value">{{ it.location }}</span>
-                    </span>
-
-                    <span class="pill-chip">
-                      <span class="pill-label">Category</span>
-                      <span class="pill-value">{{ it.category }}</span>
-                    </span>
-                  </div>
-
-                  <div v-if="(it.tags || []).length" class="tags-row" aria-label="Tags">
-                    <span v-for="t in it.tags" :key="t" class="tag">{{ t }}</span>
-                  </div>
-
-                  <div class="summary-wrap" :data-collapsed="isCollapsed(it) ? 'true' : 'false'">
-                    <p class="summary" :id="`e${idx}-summary`">{{ it.summary }}</p>
-                  </div>
-
-                  <!-- Media strip -->
-                  <fieldset class="media-strip">
-                    <legend class="visually-hidden">Event media</legend>
-
-                    <a
-                      v-if="it.links?.program"
-                      class="chip"
-                      :href="it.links.program"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5L14 3.5z"
-                        />
-                      </svg>
-                      Program
-                    </a>
-
-                    <a
-                      v-if="it.links?.flyer"
-                      class="chip"
-                      :href="it.links.flyer"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14l4-4 4 4 4-4 6 6zM8.5 11A1.5 1.5 0 1 1 10 9.5 1.5 1.5 0 0 1 8.5 11z"
-                        />
-                      </svg>
-                      Flyer
-                    </a>
-
-                    <button
-                      v-if="it.links?.video"
-                      class="chip"
-                      type="button"
-                      @click="openLightbox(it)"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M17 10.5V7a2 2 0 0 0-2-2H5A2 2 0 0 0 3 7v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4z"
-                        />
-                      </svg>
-                      Video
-                    </button>
-
-                    <button
-                      v-if="(it.gallery || []).length"
-                      class="chip"
-                      type="button"
-                      @click="openLightbox(it)"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M1 7a2 2 0 0 1 2-2h12v2H3v10h12v2H3a2 2 0 0 1-2-2V7zm20-2h-8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm-3 4 3 4h-6l-2 3-2-3-3 4h12l-2-3-2-2z"
-                        />
-                      </svg>
-                      Gallery ({{ it.gallery.length }})
-                    </button>
-                  </fieldset>
-
-                  <!-- Thumbs -->
-                  <div
-                    v-if="(it.gallery || []).length"
-                    class="thumbs"
-                    aria-label="Gallery previews"
-                  >
-                    <button
-                      v-for="(src, tIdx) in (it.gallery || []).slice(0, 6)"
-                      :key="`${src}-${tIdx}`"
-                      class="thumb"
-                      type="button"
-                      :style="{ backgroundImage: `url('${src}')` }"
-                      aria-label="Open gallery"
-                      @click="openLightbox(it)"
-                    />
-                  </div>
-
-                  <!-- Publications-like bottom actions -->
-                  <footer class="event-actions event-actions--split" aria-label="Event actions">
-                    <button
-                      class="action action--read"
-                      type="button"
-                      :aria-controls="`e${idx}-summary`"
-                      :aria-expanded="String(!isCollapsed(it))"
-                      @click="toggle(it)"
-                    >
-                      <span class="action-label">{{
-                        isCollapsed(it) ? 'Read more' : 'Show less'
-                      }}</span>
-                      <svg
-                        class="action-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path d="M7 10l5 5 5-5H7z" />
-                      </svg>
-                    </button>
-
-                    <button class="action action--ics" type="button" @click="downloadICS(it)">
-                      <span class="action-label">Add to Calendar</span>
-                      <svg
-                        class="action-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4V2zm14 8H3v10h18V10zM5 12h4v4H5v-4z"
-                        />
-                      </svg>
-                    </button>
-                  </footer>
-                </div>
-              </article>
-            </section>
-
-            <!-- ===== Pagination ===== -->
-            <nav class="pager" aria-label="Pagination">
-              <button
-                class="btn btn--load"
-                type="button"
-                @click="loadMore"
-                :disabled="totalCount === 0 || !canLoadMore"
-                v-show="canLoadMore || totalCount === 0"
-              >
-                {{
-                  totalCount === 0 ? 'No results' : canLoadMore ? 'Load more' : 'All results shown'
-                }}
-              </button>
-            </nav>
-
-            <!-- Lightbox -->
-            <dialog class="lightbox" ref="lbEl" @click="onBackdrop" @cancel.prevent="closeLightbox">
-              <div class="lightbox-header">
-                <h4 class="lightbox-title">{{ lbTitle }}</h4>
-                <button
-                  class="close-btn"
-                  type="button"
-                  @click="closeLightbox"
-                  aria-label="Close media dialog"
-                >
-                  Close
-                </button>
-              </div>
-
-              <div class="lightbox-body">
-                <iframe
-                  v-if="lbItem?.links?.video"
-                  class="video-embed"
-                  :src="lbItem.links.video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  title="Event video"
-                ></iframe>
-
-                <ul v-if="(lbItem?.gallery || []).length" class="gallery">
-                  <li
-                    v-for="(src, gIdx) in lbItem.gallery"
-                    :key="`${src}-${gIdx}`"
-                    class="gallery-item"
-                    :style="{ backgroundImage: `url('${src}')` }"
-                  ></li>
-                </ul>
-              </div>
-            </dialog>
+            <label class="sort" for="sort">
+              <span class="pill" aria-hidden="true">Sort</span>
+              <select id="sort" v-model="sort" aria-label="Sort results">
+                <option value="date-desc">Newest first</option>
+                <option value="date-asc">Oldest first</option>
+                <option value="title-asc">Title A–Z</option>
+                <option value="title-desc">Title Z–A</option>
+              </select>
+            </label>
           </section>
-        </div>
+
+          <!-- ✅ Active filters chips (same behavior as Publications) -->
+          <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
+            <button v-if="year" class="chip" type="button" @click="year = ''">
+              Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
+            </button>
+            <button v-if="location" class="chip" type="button" @click="location = ''">
+              Location: {{ location }} <span class="chip-x" aria-hidden="true">×</span>
+            </button>
+            <button v-if="q" class="chip" type="button" @click="q = ''">
+              Search: “{{ q }}” <span class="chip-x" aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <!-- ✅ Stats row (same as Publications) -->
+          <div class="stats-row" aria-live="polite">
+            <span class="stat">
+              <strong>{{ totalCount }}</strong>
+              result{{ totalCount === 1 ? '' : 's' }}
+            </span>
+            <span class="hint"
+              >Tip: click “Read more” to expand. “Add to Calendar” downloads a .ics.</span
+            >
+          </div>
+
+          <!-- ===== Grid ===== -->
+          <section class="grid" :class="{ compact }" aria-label="Events list">
+            <article
+              v-for="(it, idx) in visibleItems"
+              :key="keyOf(it)"
+              class="event-card"
+              :data-k="keyOf(it)"
+              :class="{
+                revealed: revealedKeys.has(keyOf(it)),
+                expanded: !isCollapsed(it),
+              }"
+              :aria-labelledby="`e${idx}-title`"
+              ref="cardEls"
+            >
+              <!-- ✅ Solid banner like Publications -->
+              <header class="event-banner">
+                <div class="banner-inner">
+                  <h3 :id="`e${idx}-title`" class="event-title">
+                    {{ it.title }}
+                  </h3>
+
+                  <div class="event-meta">
+                    <span class="event-speakers" v-if="(it.speakers || []).length">
+                      {{ (it.speakers || []).join(', ') }}
+                    </span>
+                    <span class="event-date">· {{ formatDateRange(it.start, it.end) }}</span>
+                    <span v-if="timeRange(it.start, it.end)" class="event-time">
+                      · {{ timeRange(it.start, it.end) }}
+                    </span>
+                  </div>
+                </div>
+              </header>
+
+              <div class="event-body">
+                <!-- Meta pills row -->
+                <div class="meta-row meta-row--pills" aria-label="Event meta">
+                  <span class="pill-chip">
+                    <span class="pill-label">Location</span>
+                    <span class="pill-value">{{ it.location }}</span>
+                  </span>
+
+                  <span class="pill-chip">
+                    <span class="pill-label">Category</span>
+                    <span class="pill-value">{{ it.category }}</span>
+                  </span>
+                </div>
+
+                <div v-if="(it.tags || []).length" class="tags-row" aria-label="Tags">
+                  <span v-for="t in it.tags" :key="t" class="tag">{{ t }}</span>
+                </div>
+
+                <div class="summary-wrap" :data-collapsed="isCollapsed(it) ? 'true' : 'false'">
+                  <p class="summary" :id="`e${idx}-summary`">{{ it.summary }}</p>
+                </div>
+
+                <!-- Media strip -->
+                <fieldset class="media-strip">
+                  <legend class="visually-hidden">Event media</legend>
+
+                  <a
+                    v-if="it.links?.program"
+                    class="chip"
+                    :href="it.links.program"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5L14 3.5z"
+                      />
+                    </svg>
+                    Program
+                  </a>
+
+                  <a
+                    v-if="it.links?.flyer"
+                    class="chip"
+                    :href="it.links.flyer"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14l4-4 4 4 4-4 6 6zM8.5 11A1.5 1.5 0 1 1 10 9.5 1.5 1.5 0 0 1 8.5 11z"
+                      />
+                    </svg>
+                    Flyer
+                  </a>
+
+                  <button
+                    v-if="it.links?.video"
+                    class="chip"
+                    type="button"
+                    @click="openLightbox(it)"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M17 10.5V7a2 2 0 0 0-2-2H5A2 2 0 0 0 3 7v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4z"
+                      />
+                    </svg>
+                    Video
+                  </button>
+
+                  <button
+                    v-if="(it.gallery || []).length"
+                    class="chip"
+                    type="button"
+                    @click="openLightbox(it)"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M1 7a2 2 0 0 1 2-2h12v2H3v10h12v2H3a2 2 0 0 1-2-2V7zm20-2h-8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm-3 4 3 4h-6l-2 3-2-3-3 4h12l-2-3-2-2z"
+                      />
+                    </svg>
+                    Gallery ({{ it.gallery.length }})
+                  </button>
+                </fieldset>
+
+                <!-- Thumbs -->
+                <div v-if="(it.gallery || []).length" class="thumbs" aria-label="Gallery previews">
+                  <button
+                    v-for="(src, tIdx) in (it.gallery || []).slice(0, 6)"
+                    :key="`${src}-${tIdx}`"
+                    class="thumb"
+                    type="button"
+                    :style="{ backgroundImage: `url('${src}')` }"
+                    aria-label="Open gallery"
+                    @click="openLightbox(it)"
+                  />
+                </div>
+
+                <!-- Publications-like bottom actions -->
+                <footer class="event-actions event-actions--split" aria-label="Event actions">
+                  <button
+                    class="action action--read"
+                    type="button"
+                    :aria-controls="`e${idx}-summary`"
+                    :aria-expanded="String(!isCollapsed(it))"
+                    @click="toggle(it)"
+                  >
+                    <span class="action-label">{{
+                      isCollapsed(it) ? 'Read more' : 'Show less'
+                    }}</span>
+                    <svg
+                      class="action-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path d="M7 10l5 5 5-5H7z" />
+                    </svg>
+                  </button>
+
+                  <button class="action action--ics" type="button" @click="downloadICS(it)">
+                    <span class="action-label">Add to Calendar</span>
+                    <svg
+                      class="action-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4V2zm14 8H3v10h18V10zM5 12h4v4H5v-4z"
+                      />
+                    </svg>
+                  </button>
+                </footer>
+              </div>
+            </article>
+          </section>
+
+          <!-- ===== Pagination ===== -->
+          <nav class="pager" aria-label="Pagination">
+            <button
+              class="btn btn--load"
+              type="button"
+              @click="loadMore"
+              :disabled="totalCount === 0 || !canLoadMore"
+              v-show="canLoadMore || totalCount === 0"
+            >
+              {{
+                totalCount === 0 ? 'No results' : canLoadMore ? 'Load more' : 'All results shown'
+              }}
+            </button>
+          </nav>
+
+          <!-- Lightbox -->
+          <dialog class="lightbox" ref="lbEl" @click="onBackdrop" @cancel.prevent="closeLightbox">
+            <div class="lightbox-header">
+              <h4 class="lightbox-title">{{ lbTitle }}</h4>
+              <button
+                class="close-btn"
+                type="button"
+                @click="closeLightbox"
+                aria-label="Close media dialog"
+              >
+                Close
+              </button>
+            </div>
+
+            <div class="lightbox-body">
+              <iframe
+                v-if="lbItem?.links?.video"
+                class="video-embed"
+                :src="lbItem.links.video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                title="Event video"
+              ></iframe>
+
+              <ul v-if="(lbItem?.gallery || []).length" class="gallery">
+                <li
+                  v-for="(src, gIdx) in lbItem.gallery"
+                  :key="`${src}-${gIdx}`"
+                  class="gallery-item"
+                  :style="{ backgroundImage: `url('${src}')` }"
+                ></li>
+              </ul>
+            </div>
+          </dialog>
+        </section>
       </div>
     </section>
   </div>
