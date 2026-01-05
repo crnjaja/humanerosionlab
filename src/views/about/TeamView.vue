@@ -39,17 +39,7 @@
             aria-labelledby="core-team-title"
             aria-describedby="core-team-desc"
           >
-            <header class="team-head">
-              <div class="team-rail" aria-hidden="true"></div>
-              <div class="team-head-inner">
-                <span class="pill">TEAM</span>
-                <h2 id="core-team-title" class="team-title">Core Team</h2>
-                <p id="core-team-desc" class="team-desc">
-                  The core team leads research, coordination, and daily operations.
-                </p>
-                <div class="team-accent" aria-hidden="true"></div>
-              </div>
-            </header>
+            <h2 class="section-heading">Core Team</h2>
 
             <ul class="team-grid" aria-label="Core team members">
               <li v-for="member in coreTeam" :key="member.key" class="member-card">
@@ -133,17 +123,7 @@
             aria-labelledby="visiting-current-title"
             aria-describedby="visiting-current-desc"
           >
-            <header class="team-head">
-              <div class="team-rail" aria-hidden="true"></div>
-              <div class="team-head-inner">
-                <span class="pill">FELLOWS</span>
-                <h2 id="visiting-current-title" class="team-title">Visiting Fellows — Current</h2>
-                <p id="visiting-current-desc" class="team-desc">
-                  Current visiting fellows collaborating with the team for ongoing projects.
-                </p>
-                <div class="team-accent" aria-hidden="true"></div>
-              </div>
-            </header>
+            <h2 class="section-heading">Visiting Fellows</h2>
 
             <ul class="team-grid" aria-label="Current visiting fellows">
               <li v-for="member in visitingCurrent" :key="member.key" class="member-card">
@@ -227,17 +207,7 @@
             aria-labelledby="visiting-former-title"
             aria-describedby="visiting-former-desc"
           >
-            <header class="team-head">
-              <div class="team-rail" aria-hidden="true"></div>
-              <div class="team-head-inner">
-                <span class="pill">FELLOWS</span>
-                <h2 id="visiting-former-title" class="team-title">Visiting Fellows — Alumni</h2>
-                <p id="visiting-former-desc" class="team-desc">
-                  Former visiting fellows who contributed to the lab and remain part of our network.
-                </p>
-                <div class="team-accent" aria-hidden="true"></div>
-              </div>
-            </header>
+            <h2 class="section-heading">Alumni</h2>
 
             <ul class="team-grid" aria-label="Former visiting fellows">
               <li v-for="member in visitingAlumni" :key="member.key" class="member-card">
@@ -498,33 +468,6 @@ const visitingAlumni = [
   padding: clamp(10px, 1.6vw, 18px) 0;
 }
 
-/* ✅ Header block must stretch full width (no shrink-to-content) */
-.team-head {
-  width: 100%;
-  justify-self: stretch;
-  box-sizing: border-box;
-
-  display: grid;
-  grid-template-columns: 6px 1fr;
-  gap: 18px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
-  padding: clamp(16px, 2.4vw, 24px);
-  align-items: start;
-}
-
-.team-rail {
-  background: linear-gradient(180deg, var(--accent), var(--accent-2));
-  opacity: 0.9;
-  min-height: 100%;
-}
-
-.team-head-inner {
-  display: grid;
-  gap: 8px;
-}
-
 /* Use your pill styling (already defined globally in cards.css for .feature-section etc),
    but we also support it here in case the team page is outside those sections. */
 .pill {
@@ -558,13 +501,6 @@ const visitingAlumni = [
   font-size: clamp(14px, 1.35vw, 16px);
   line-height: 1.6;
   text-wrap: pretty;
-}
-
-.team-accent {
-  height: 3px;
-  width: clamp(80px, 12vw, 140px);
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  margin-top: 10px;
 }
 
 /* ✅ Grid must also stretch full width (same reference as header) */
@@ -776,5 +712,10 @@ const visitingAlumni = [
 
 :deep(.stage--top--flat::after) {
   content: none !important;
+}
+
+.section-heading {
+  display: inline-block;
+  width: max-content;
 }
 </style>

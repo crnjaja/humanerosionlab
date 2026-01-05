@@ -91,7 +91,7 @@
         <div class="hero-offset">
           <!-- ================== TOP ROW: FOCUS (NEWS + PUBLICATION stacked) + AGENDA ================== -->
           <section class="feature-section" aria-label="Highlights">
-            <h2 class="section-heading">LATEST</h2>
+            <h2 class="section-heading">Latest</h2>
 
             <div class="feature-grid focus-grid">
               <!-- ===== LEFT: stacked cards ===== -->
