@@ -705,7 +705,7 @@ function buildChartsIfNeeded() {
               footer: (items) => {
                 if (!items?.length) return ''
                 const i = items[0].dataIndex
-                return `→ ${amicusCasesPerYear[i]} cases, ${amicusTotalsPerYear[i]} total amicus curiae`
+                return `${amicusTotalsPerYear[i]} total amicus curiae in ${amicusCasesPerYear[i]} case(s) `
               },
               label: () => '',
             },
@@ -868,7 +868,7 @@ function buildChartsIfNeeded() {
       const subs = justificationSubData[parent] || {}
 
       Object.entries(subs).forEach(([subLabel, value], idx) => {
-        innerLabels.push(`${parent} › ${subLabel}`)
+        innerLabels.push(`${subLabel}`)
         innerData.push(value)
 
         // Slightly varied tint per slice (still tied to parent color)
@@ -908,10 +908,13 @@ function buildChartsIfNeeded() {
           },
           tooltip: {
             callbacks: {
+              // ✅ remove the default top title line (the repeated label)
+              title: () => '',
+
               label: (ctx) =>
                 ctx.datasetIndex === 1
-                  ? `${innerLabels[ctx.dataIndex]} — ${ctx.parsed} cases`
-                  : `${outerLabels[ctx.dataIndex]}: ${outerData[ctx.dataIndex]} cases (total)`,
+                  ? `${innerLabels[ctx.dataIndex]}: ${ctx.parsed} cases`
+                  : `${outerLabels[ctx.dataIndex]}: ${outerData[ctx.dataIndex]} cases`,
             },
           },
         },
@@ -1008,10 +1011,19 @@ function buildChartsIfNeeded() {
         indexAxis: 'y',
         plugins: {
           legend: { display: false },
-          title: { display: true, text: 'Legal Instruments by Occurrence (n = 285)' },
+          tooltip: {
+            callbacks: {
+              // Ligne 1 (titre du hover)
+              title: (items) => items?.[0]?.raw?.y || '',
+
+              // Ligne 2
+              label: (ctx) => `${ctx.raw?.x ?? ctx.parsed?.x} cases`,
+            },
+          },
         },
+
         scales: {
-          x: { beginAtZero: true, title: { display: true, text: 'Occurrences' } },
+          x: { beginAtZero: true, title: { display: true, text: 'Cases' } },
           y: { ticks: { autoSkip: false } },
         },
         layout: { padding: { right: 24 } },
@@ -1061,13 +1073,20 @@ function buildChartsIfNeeded() {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: (ctx) =>
-                `${ctx.dataset.label}: ${ctx.raw.x} occurrences • ${ctx.raw.y}% share`,
+              // Ligne 1 : nom de l’instrument
+              title: (items) => items?.[0]?.dataset?.label || '',
+
+              // Ligne 2 : valeur + pourcentage
+              label: (ctx) => {
+                const occ = ctx.raw?.x ?? ctx.parsed?.x
+                const share = ctx.raw?.y ?? ctx.parsed?.y
+                return `${occ} cases – ${share}% share`
+              },
             },
           },
         },
         scales: {
-          x: { title: { display: true, text: 'Occurrences' }, beginAtZero: true },
+          x: { title: { display: true, text: 'Cases' }, beginAtZero: true },
           y: {
             title: { display: true, text: 'Share (%)' },
             beginAtZero: true,
