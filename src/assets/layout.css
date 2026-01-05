@@ -25,7 +25,7 @@
 
 /* TOP HERO wrapper stage */
 .stage--top {
-  min-height: 72vh;
+  min-height: 80vh;
   padding-top: calc(var(--header-h) + 64px);
   padding-bottom: calc(64px + var(--v-h));
   display: grid;
