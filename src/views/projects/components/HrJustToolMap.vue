@@ -497,13 +497,12 @@ onBeforeUnmount(() => {
 }
 
 .hrjust-tool--map {
-  border: 1px solid var(--ig-border);
-  background: #fff;
-  border-radius: 0;
-  padding: 16px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
 
-  /* ✅ IMPORTANT: anchor for tooltip absolute positioning */
+  /* ⚠️ important : on garde le positionnement pour le tooltip */
   position: relative;
 }
 
