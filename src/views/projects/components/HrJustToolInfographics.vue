@@ -1173,8 +1173,8 @@ onBeforeUnmount(() => destroyAll())
   overflow: visible;
   background: #fff;
   border-bottom: 1px solid var(--ig-border-soft);
-  padding: 10px 0 8px;
-  margin: 0 0 10px;
+  padding: 0px 0 6px;
+  margin: 0 0 8px;
 
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1201,7 +1201,7 @@ onBeforeUnmount(() => destroyAll())
   gap: 8px;
   align-items: center;
   white-space: nowrap;
-  padding: 0 0 6px;
+  padding: 0;
   min-height: 44px;
 }
 
