@@ -919,22 +919,32 @@ onMounted(async () => {
   height: 16px;
 }
 
+/* Make buttons less flashy by default */
 .hrjust-db__btn {
-  border: 1px solid var(--ig-border-soft);
-  background: var(--ig-accent-2);
-  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--ig-accent-2) 35%, transparent);
+  background: color-mix(in srgb, var(--ig-accent-2) 6%, transparent);
+  color: rgba(11, 31, 51, 0.86);
   border-radius: 0;
   padding: 9px 12px;
   font-size: 13px;
   cursor: pointer;
   height: 36px;
 }
+
 .hrjust-db__btn:hover {
-  filter: brightness(0.95);
+  background: color-mix(in srgb, var(--ig-accent-2) 10%, transparent);
 }
+
+.hrjust-db__btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ig-accent) 18%, transparent);
+}
+
+/* Keep Reset as a "ghost" but consistent */
 .hrjust-db__btn--ghost {
-  background: #fff;
-  color: rgba(11, 31, 51, 0.86);
+  border: 1px solid var(--ig-border-soft);
+  background: transparent;
+  color: rgba(11, 31, 51, 0.78);
 }
 .hrjust-db__btn--ghost:hover {
   background: rgba(10, 34, 59, 0.03);
