@@ -9,7 +9,7 @@
         </div>
 
         <p class="hrjust-tool__note">
-          Use the filters to narrow down results. “Advanced filters” are collapsed by.
+          Note: use the filters to narrow down results. “Advanced filters” are collapsed by.
         </p>
       </div>
 

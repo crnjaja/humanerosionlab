@@ -9,7 +9,7 @@
         </div>
 
         <p class="hrjust-tool__note">
-          Note: Click a country to open its case list, then select a case to view details below. Map
+          Note: click a country to open its case list, then select a case to view details below. Map
           is zoomable. Blue countries are <strong>Core Case</strong> Countries.
         </p>
       </div>
