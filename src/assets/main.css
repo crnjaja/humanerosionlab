@@ -18,5 +18,6 @@
 @import './pages/events.css' layer(pages);
 
 @import './pages/hrjust.css' layer(pages);
+@import './pages/gem.css' layer(pages);
 
 @import './utilities.css' layer(utilities);

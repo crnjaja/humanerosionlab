@@ -29,7 +29,7 @@
       <div class="container">
         <div class="hero-offset hrjust-hero-offset">
           <section class="feature-section">
-            <h2 class="section-heading">Overview</h2>
+            <h2 class="section-heading">Explore</h2>
 
             <!-- ✅ Single block menu + content -->
             <HrJustPanel />
