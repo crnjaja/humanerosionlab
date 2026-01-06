@@ -159,7 +159,7 @@
         <div class="wps-head">
           <div class="wps-icon"><i class="fas fa-layer-group"></i></div>
           <div class="wps-title-wrap">
-            <h4 class="wps-title">Work Packages</h4>
+            <h4 class="wps-title">WORK PACKAGES</h4>
           </div>
         </div>
 

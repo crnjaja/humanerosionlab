@@ -44,7 +44,7 @@
                 aria-label="Email"
                 title="Email"
               >
-                <span aria-hidden="true">@</span>
+                <span aria-hidden="true">✉</span>
               </a>
             </div>
           </div>
@@ -205,6 +205,15 @@ const groups = [
   --team-tint: rgba(0, 45, 71, 0.04);
 }
 
+/* Group spacing */
+.hrjust-teamGroup:first-child {
+  margin-top: 0;
+}
+.hrjust-teamGroup {
+  margin-top: 14px;
+  margin-bottom: 32px;
+}
+
 .hrjust-teamGroup__head {
   margin-bottom: 12px;
 }
@@ -215,12 +224,6 @@ const groups = [
   text-transform: uppercase;
   color: var(--team-accent);
   margin: 0;
-}
-
-.hrjust-teamGroup__desc {
-  margin-top: 6px;
-  font-size: 13px;
-  color: var(--team-muted);
 }
 
 /* Grid */
@@ -344,14 +347,5 @@ const groups = [
   transform: translateY(-1px);
   background: var(--team-tint);
   box-shadow: 0 10px 18px rgba(10, 34, 59, 0.08);
-}
-
-.hrjust-teamGroup:first-child {
-  margin-top: 0; /* key: no “dead space” at the top */
-}
-
-.hrjust-teamGroup {
-  margin-top: 14px;
-  margin-bottom: 32px; /* NEW: space before next title */
 }
 </style>
