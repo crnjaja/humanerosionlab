@@ -2,7 +2,7 @@
   <div class="hrjust-content">
     <header class="hrjust-content__head">
       <div class="hrjust-content__kicker">Project snapshot</div>
-      <h3 class="hrjust-content__title">At a glance</h3>
+      <h3 class="hrjust-content__title">Work Package 6</h3>
     </header>
 
     <div class="hrjust-layout">

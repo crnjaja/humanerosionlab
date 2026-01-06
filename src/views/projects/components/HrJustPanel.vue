@@ -17,25 +17,6 @@
               <button
                 type="button"
                 class="hrjust-nav-tile"
-                :class="{ 'is-active': active === 'glance' }"
-                @click="setActive('glance')"
-              >
-                <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
-                <span class="hrjust-nav-tile__text">
-                  <span class="hrjust-nav-tile__label">
-                    <strong v-if="active === 'glance'">At a glance</strong>
-                    <span v-else>At a glance</span>
-                  </span>
-                  <span class="hrjust-nav-tile__desc">Quick snapshot + key facts</span>
-                </span>
-                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
-              </button>
-            </li>
-
-            <li>
-              <button
-                type="button"
-                class="hrjust-nav-tile"
                 :class="{ 'is-active': active === 'description' }"
                 @click="setActive('description')"
               >
@@ -46,6 +27,25 @@
                     <span v-else>Description</span>
                   </span>
                   <span class="hrjust-nav-tile__desc">Scope, method, outputs</span>
+                </span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                type="button"
+                class="hrjust-nav-tile"
+                :class="{ 'is-active': active === 'glance' }"
+                @click="setActive('glance')"
+              >
+                <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+                <span class="hrjust-nav-tile__text">
+                  <span class="hrjust-nav-tile__label">
+                    <strong v-if="active === 'glance'">Work Package 6</strong>
+                    <span v-else>Work Package 6</span>
+                  </span>
+                  <span class="hrjust-nav-tile__desc">Quick snapshot + key facts</span>
                 </span>
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
@@ -139,9 +139,22 @@
 
     <!-- RIGHT CONTENT (scrolls inside the panel only) -->
     <section class="hrjust-panel__content" aria-live="polite">
-      <div v-if="!active" class="hrjust-empty">
-        <div class="hrjust-empty__title">Choose a section</div>
-        <p class="hrjust-empty__text">Select an item on the left to display its content.</p>
+      <!-- ✅ NEW: 9 tiles launcher (instead of "Choose a section") -->
+      <div v-if="!active" class="hrjust-launch" aria-label="Quick access tiles">
+        <button
+          v-for="tile in launchTiles"
+          :key="tile.id"
+          type="button"
+          class="hrjust-launch-tile"
+          :style="tile.bgStyle"
+          @click="setActive(tile.target)"
+        >
+          <span class="hrjust-launch-tile__overlay" aria-hidden="true"></span>
+
+          <span class="hrjust-launch-tile__ribbon">
+            <span class="hrjust-launch-tile__title">{{ tile.title }}</span>
+          </span>
+        </button>
       </div>
 
       <KeepAlive v-else>
@@ -161,6 +174,9 @@ import HrJustToolDatabase from './HrJustToolDatabase.vue'
 import HrJustToolMap from './HrJustToolMap.vue'
 import HrJustToolInfographics from './HrJustToolInfographics.vue'
 
+/**
+ * Active tab key (controls right content + left nav highlight)
+ */
 const active = ref(null)
 
 const componentMap = {
@@ -177,4 +193,137 @@ const activeComponent = computed(() => (active.value ? componentMap[active.value
 function setActive(key) {
   active.value = key
 }
+
+const tileImages = {
+  wp6: '/images/tiles/wp6.jpg',
+  description: '/images/tiles/description.jpg',
+  team: '/images/tiles/team.jpg',
+  events: '/images/tiles/events.png',
+  database: '/images/tiles/db.jpg',
+  map: '/images/tiles/map.jpg',
+  infographics: '/images/tiles/infographics.jpg',
+  observatory: '/images/tiles/observatory.jpg',
+  publications: '/images/tiles/publications.jpg',
+}
+
+const launchTiles = computed(() => {
+  const tiles = [
+    { id: 't1', title: 'Description', target: 'description', img: tileImages.description },
+    { id: 't2', title: 'Work Package 6', target: 'glance', img: tileImages.wp6 },
+    { id: 't3', title: 'Observatory', target: 'observatory', img: tileImages.observatory },
+    { id: 't4', title: 'Team', target: 'team', img: tileImages.team },
+    { id: 't5', title: 'Publications', target: 'publications', img: tileImages.publications },
+    { id: 't6', title: 'Events', target: 'events', img: tileImages.events },
+    { id: 't7', title: 'Database', target: 'db', img: tileImages.database },
+    { id: 't8', title: 'Interactive Map', target: 'map', img: tileImages.map },
+    { id: 't9', title: 'Infographics', target: 'info', img: tileImages.infographics },
+  ]
+
+  return tiles.map((t) => ({
+    ...t,
+    bgStyle: t.img
+      ? { backgroundImage: `url("${t.img}")` }
+      : { backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,.35), rgba(0,0,0,.05))' },
+  }))
+})
 </script>
+
+<style scoped>
+/* ===========================
+   QUICK ACCESS TILE GRID
+   (square corners, modern)
+   =========================== */
+.hrjust-launch {
+  padding: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* Responsive: 2 columns on medium, 1 on small */
+@media (max-width: 1100px) {
+  .hrjust-launch {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 680px) {
+  .hrjust-launch {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hrjust-launch-tile {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  min-height: 170px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0; /* ✅ no rounded corners */
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.hrjust-launch-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.hrjust-launch-tile:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Darken slightly for readability */
+.hrjust-launch-tile__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12));
+}
+
+/* Bottom ribbon like your screenshot (blue bar) */
+.hrjust-launch-tile__ribbon {
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 14px;
+  background: color-mix(in srgb, var(--accentbis) 78%, transparent);
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hrjust-launch-tile__title {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+/* Keyboard focus */
+.hrjust-launch-tile:focus-visible {
+  outline: 3px solid rgba(0, 156, 210, 0.55);
+  outline-offset: 2px;
+}
+
+/* Optional: keep launcher aligned nicely in your content panel */
+.hrjust-panel__content {
+  overflow: auto;
+}
+</style>
