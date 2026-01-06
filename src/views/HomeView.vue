@@ -352,7 +352,7 @@
     <section class="stage stage--bottom full-bleed">
       <div class="container stage-inner stage-inner--bottom">
         <div class="partners">
-          <div class="partners-kicker">THE PROJECT IS A JOINT INITIATIVE BY</div>
+          <div class="partners-kicker">THE PROJECT IS A COLLABORATIVE INITIATIVE BY</div>
 
           <div class="logos">
             <a

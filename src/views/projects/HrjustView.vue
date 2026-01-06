@@ -9,7 +9,7 @@
           </div>
 
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
-            HRJUST <span class="accent">Human Rights Justification</span>
+            <span class="accent">Human Rights</span> Justification
           </h1>
 
           <p class="hero-subtitle">

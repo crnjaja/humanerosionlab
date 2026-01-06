@@ -9,7 +9,7 @@
           </div>
 
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
-            GEM <span class="accent">Gender Equality in the Mirror</span>
+            <span class="accent">Gender Equality</span> in the Mirror
           </h1>
 
           <p class="hero-subtitle">

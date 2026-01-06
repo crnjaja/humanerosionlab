@@ -12,8 +12,8 @@
         <!-- ✅ Legend removed: simple note instead -->
         <p class="hrjust-tool__note">
           Note: Click a country to open its case list, then select a case to view details below. Map
-          is zoomable. <span class="hrjust-accentText">Blue countries</span> are
-          <strong>Core Case Countries</strong>.
+          is zoomable. Blue countries are
+          <strong>Core Case </strong>Countries.
         </p>
       </div>
 

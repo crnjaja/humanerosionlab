@@ -1413,14 +1413,16 @@ onBeforeUnmount(() => destroyAll())
 }
 
 /* Chart card */
+/* Chart card — ✅ remove the outer container frame */
 .hrjust-ig-chart {
-  border: 1px solid var(--ig-border);
-  background: #fff;
+  border: none;
+  background: transparent;
   border-radius: 0;
-  padding: 14px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  padding: 0;
+  box-shadow: none;
   position: relative;
 }
+
 .hrjust-ig-chart__canvas {
   border: 1px solid var(--ig-border-soft);
   background: #fff;

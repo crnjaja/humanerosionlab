@@ -11,7 +11,7 @@
 
           <!-- SAME WORD ANIMATION AS HOMEPAGE -->
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
-            HEL <span class="accent">Human Erosion Lab</span>
+            <span class="accent">Human Erosion</span> Lab
           </h1>
 
           <p class="hero-subtitle">
