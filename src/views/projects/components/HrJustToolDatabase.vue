@@ -1021,7 +1021,7 @@ onMounted(async () => {
 }
 
 :deep(.hrjust-case__country) {
-  color: var(--ig-accent);
+  color: var(--ig-accent-2);
 }
 
 :deep(.hrjust-case__sectionTitle) {
