@@ -5,7 +5,6 @@
     <div class="hrjust-tool hrjust-tool--map">
       <div class="hrjust-tool__head">
         <div class="hrjust-tool__titleWrap">
-          <span class="hrjust-tool__icon" aria-hidden="true">i</span>
           <h4 class="hrjust-tool__title">Worldwide cases visualization</h4>
         </div>
 

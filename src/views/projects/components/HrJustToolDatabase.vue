@@ -5,7 +5,6 @@
     <div class="hrjust-tool hrjust-tool--db">
       <div class="hrjust-tool__head">
         <div class="hrjust-tool__titleWrap">
-          <span class="hrjust-tool__icon" aria-hidden="true">i</span>
           <h4 class="hrjust-tool__title">Case Law Database</h4>
         </div>
 
@@ -58,7 +57,7 @@
                 v-model.trim="filters.search"
                 class="hrjust-db__input"
                 type="text"
-                placeholder="Search case name or summary..."
+                placeholder="Search by key words..."
               />
               <span class="hrjust-db__searchIcon" aria-hidden="true">⌕</span>
             </div>
@@ -399,6 +398,27 @@
           </template>
         </div>
       </div>
+      <!-- Bottom summary + pagination -->
+      <div class="hrjust-db__summaryBar hrjust-db__summaryBar--bottom" aria-live="polite">
+        <div class="hrjust-db__summaryText">
+          Displaying {{ pageCountShown }} case notes of {{ filteredCases.length }} (Page
+          {{ currentPage }} of {{ totalPages }})
+        </div>
+
+        <div class="hrjust-db__pager" v-if="totalPages > 1">
+          <button class="hrjust-db__pagerBtn" :disabled="currentPage === 1" @click="currentPage--">
+            Previous
+          </button>
+          <div class="hrjust-db__pagerMid">Page {{ currentPage }} / {{ totalPages }}</div>
+          <button
+            class="hrjust-db__pagerBtn"
+            :disabled="currentPage === totalPages"
+            @click="currentPage++"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -482,14 +502,16 @@ function removeChip(field, value) {
 function remainingOptions(field) {
   const selected = new Set((filters[field] || []).map(String))
 
-  const source =
-    field === 'civilSociety'
-      ? options.value.civilSociety
-      : field === 'humanRights'
-        ? options.value.humanRights
-        : field === 'justifications'
-          ? options.value.justifications
-          : options.value.subtopics
+  let source
+  if (field === 'civilSociety') {
+    source = options.value.civilSociety
+  } else if (field === 'humanRights') {
+    source = options.value.humanRights
+  } else if (field === 'justifications') {
+    source = options.value.justifications
+  } else {
+    source = options.value.subtopics
+  }
 
   return source.filter((x) => !selected.has(x))
 }
@@ -650,26 +672,21 @@ const filteredCases = computed(() => {
         .toLowerCase()
         .includes(nature)
 
-    const matchCS =
-      cs.length === 0 ||
-      cs.every((needle) =>
-        String(c.civil_society_engagement || '')
-          .toLowerCase()
-          .includes(needle),
-      )
+    const matchCS = cs.every((needle) =>
+      String(c.civil_society_engagement || '')
+        .toLowerCase()
+        .includes(needle),
+    )
 
     // Human rights keyword catalogue match (same logic)
     const rightsCatalogue = String(c.rights_catalogue || '').toLowerCase()
-    const matchRights =
-      rights.length === 0 ||
-      rights.every((label) => {
-        const keywords = HUMAN_RIGHTS_KEYWORDS[label] || []
-        return keywords.some((kw) => rightsCatalogue.includes(kw))
-      })
+    const matchRights = rights.every((label) => {
+      const keywords = HUMAN_RIGHTS_KEYWORDS[label] || []
+      return keywords.some((kw) => rightsCatalogue.includes(kw))
+    })
 
     const justificationField = String(c.justification_typology || '').toLowerCase()
-    const matchJustification =
-      justs.length === 0 || justs.every((j) => justificationField.includes(j))
+    const matchJustification = justs.every((j) => justificationField.includes(j))
 
     // Subtopics logic (same as your Joomla code)
     const isInternational = String(c.nature_of_case || '')
@@ -680,7 +697,7 @@ const filteredCases = computed(() => {
       if (subtopics.includes('trade & hr')) matchSubtopics = isInternational
       else if (subtopics.includes('climate change & hr')) matchSubtopics = !isInternational
     } else if (subtopics.length === 2) {
-      matchSubtopics = true
+      // matchSubtopics is already true by default, no assignment needed
     }
 
     return (
@@ -836,8 +853,8 @@ onMounted(async () => {
 }
 
 .hrjust-db__field--search {
-  min-width: 220px;
-  flex: 2 1 240px;
+  flex: 999 1 320px; /* grow a lot, still wrap on small screens */
+  min-width: 260px;
 }
 
 .hrjust-db__label {
@@ -867,14 +884,23 @@ onMounted(async () => {
 
 .hrjust-db__searchWrap {
   position: relative;
+  width: 100%;
 }
+
+.hrjust-db__field--search .hrjust-db__input {
+  width: 100%;
+  padding-right: 44px; /* was 34px */
+}
+
 .hrjust-db__searchIcon {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 13px;
+  font-size: 18px; /* bigger */
+  line-height: 1;
   color: rgba(11, 31, 51, 0.45);
+  pointer-events: none;
 }
 
 .hrjust-db__toggle {
@@ -1216,5 +1242,11 @@ onMounted(async () => {
   padding: 10px;
   font-size: 12.5px;
   color: rgba(11, 31, 51, 0.6);
+}
+
+.hrjust-db__summaryBar--bottom {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ig-border-soft);
 }
 </style>
