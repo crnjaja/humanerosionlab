@@ -9,11 +9,9 @@
           <h4 class="hrjust-tool__title">Worldwide cases visualization</h4>
         </div>
 
-        <!-- ✅ Legend removed: simple note instead -->
         <p class="hrjust-tool__note">
           Note: Click a country to open its case list, then select a case to view details below. Map
-          is zoomable. Blue countries are
-          <strong>Core Case </strong>Countries.
+          is zoomable. Blue countries are <strong>Core Case</strong> Countries.
         </p>
       </div>
 
@@ -27,7 +25,7 @@
       <!-- Case details output -->
       <div ref="caseEl" class="hrjust-map__case" aria-live="polite"></div>
 
-      <!-- ✅ Tooltip anchored INSIDE the tool container -->
+      <!-- Tooltip anchored INSIDE the tool container -->
       <div ref="tooltipEl" class="hrjust-map__tooltip" role="tooltip" aria-hidden="true"></div>
     </div>
 
@@ -38,7 +36,6 @@
           ×
         </button>
 
-        <!-- ✅ Simplified popup header: no search / sort / clear -->
         <div class="hrjust-map__popupHeader">
           <div class="hrjust-map__popupHeaderLeft">
             <div class="hrjust-map__popupHeaderTitle">{{ popupHeader }}</div>
@@ -49,7 +46,7 @@
         </div>
 
         <ul class="hrjust-map__caseList">
-          <li v-for="c in filteredPopupCases" :key="c.caseName" class="hrjust-map__caseLi">
+          <li v-for="c in popupCases" :key="c.caseName" class="hrjust-map__caseLi">
             <button type="button" class="hrjust-map__caseItem" @click="showCase(c.caseName)">
               <div class="hrjust-map__caseItemTop">
                 <div class="hrjust-map__caseItemTitle">{{ c.caseName }}</div>
@@ -64,14 +61,14 @@
           </li>
         </ul>
 
-        <div v-if="!filteredPopupCases.length" class="hrjust-map__popupEmpty">No cases found.</div>
+        <div v-if="!popupCases.length" class="hrjust-map__popupEmpty">No cases found.</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import * as d3 from 'd3'
 
 /* =========================
@@ -82,17 +79,11 @@ const caseEl = ref(null)
 const tooltipEl = ref(null)
 
 /* =========================
-   Status
-   ========================= */
-const isLoading = ref(true)
-const loadError = ref('')
-
-/* =========================
    Popup state
    ========================= */
 const isPopupOpen = ref(false)
 const popupHeader = ref('')
-const popupCases = ref([]) // objects
+const popupCases = ref([]) // [{ caseName, chips: [] }]
 
 function closePopup() {
   isPopupOpen.value = false
@@ -132,19 +123,15 @@ function formatJustifications(input) {
 }
 
 /* =========================================================
-   ✅ Tooltip positioning FIX
-   - We position tooltip relative to the .hrjust-tool--map box
-   - Using clientX/clientY (viewport coords) and subtracting rect
+   Tooltip positioning
+   - position relative to the .hrjust-tool--map box
    ========================================================= */
 function getTooltipPoint(event) {
   const host = mapEl.value?.closest?.('.hrjust-tool--map') || mapEl.value
   if (!host) return { x: event.clientX, y: event.clientY }
 
   const r = host.getBoundingClientRect()
-  return {
-    x: event.clientX - r.left,
-    y: event.clientY - r.top,
-  }
+  return { x: event.clientX - r.left, y: event.clientY - r.top }
 }
 
 function showTooltip(html, event) {
@@ -175,14 +162,6 @@ function hideTooltip() {
   el.style.display = 'none'
   el.setAttribute('aria-hidden', 'true')
 }
-
-/* =========================
-   Popup list output (no search, no sort, no clear)
-   ========================= */
-const filteredPopupCases = computed(() => {
-  // No filtering / sorting: show the popup list as-is
-  return popupCases.value || []
-})
 
 function showCase(caseName) {
   const d = caseDetailsMap.get(caseName)
@@ -232,7 +211,7 @@ function showCase(caseName) {
       </div>
 
       <div class="hrjust-case__section">
-        <div class="hrjust-case__sectionTitle"></span> Summary</div>
+        <div class="hrjust-case__sectionTitle"> Summary</div>
         <div class="hrjust-case__highlight">${htmlEscape(d.summary || 'No summary provided.')}</div>
       </div>
 
@@ -306,9 +285,6 @@ function showCase(caseName) {
 }
 
 async function buildMap() {
-  isLoading.value = true
-  loadError.value = ''
-
   try {
     if (!mapEl.value) throw new Error('Map container ref is null.')
 
@@ -331,6 +307,7 @@ async function buildMap() {
       .geoMercator()
       .scale(165)
       .translate([1400 / 2, 700 / 1.5])
+
     const path = d3.geoPath(projection)
     g = svg.append('g')
 
@@ -345,7 +322,6 @@ async function buildMap() {
 
     const table = db.find((d) => d.type === 'table' && d.name === 'climate_cases2')
     const rows = table?.data ?? []
-
     if (!rows.length) throw new Error('climate_cases2 table not found or empty in JSON.')
 
     rows.forEach((row) => {
@@ -355,7 +331,6 @@ async function buildMap() {
 
       if (!countryCaseMap.has(country)) countryCaseMap.set(country, [])
       countryCaseMap.get(country).push(caseName)
-
       respondentCountries.add(country)
 
       caseDetailsMap.set(caseName, {
@@ -416,7 +391,6 @@ async function buildMap() {
 
         const names = countryCaseMap.get(name) ?? []
 
-        // ✅ Build structured popup cases (no search/sort UI)
         popupCases.value = names.map((caseName) => {
           const det = caseDetailsMap.get(caseName) || {}
           const chips = []
@@ -428,15 +402,7 @@ async function buildMap() {
           if (det.justification) chips.push(`Typology: ${formatJustifications(det.justification)}`)
           if (det.subtypology) chips.push(`Sub: ${det.subtypology}`)
 
-          return {
-            caseName,
-            submissionYear: det.submissionYear || '',
-            decisionDate: det.decisionDate || '',
-            courtType: det.courtType || '',
-            status: det.status || '',
-            justification: det.justification || '',
-            chips,
-          }
+          return { caseName, chips }
         })
 
         popupHeader.value = `${name}`
@@ -450,8 +416,8 @@ async function buildMap() {
       .on('zoom', ({ transform }) => g.attr('transform', transform))
 
     svg.call(zoomBehavior)
-    const initialScale = 1.3
 
+    const initialScale = 1.3
     svg.call(
       zoomBehavior.transform,
       d3.zoomIdentity
@@ -460,9 +426,6 @@ async function buildMap() {
     )
   } catch (e) {
     console.error(e)
-    loadError.value = e?.message || String(e)
-  } finally {
-    isLoading.value = false
   }
 }
 
@@ -480,17 +443,14 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .hrjust-map {
-  /* ✅ Accent variable requested */
-  --accent: #d84b8b;
+  /* Single source of truth for accents */
+  --accent: var(--hrjust-accent-3, #d84b8b);
 
   --ig-border: var(--hrjust-border, rgba(10, 34, 59, 0.12));
   --ig-border-soft: var(--hrjust-border-soft, rgba(10, 34, 59, 0.08));
-  --ig-text: var(--hrjust-text, rgba(11, 31, 51, 0.92));
-  --ig-muted: var(--hrjust-muted, rgba(11, 31, 51, 0.62));
-  --ig-hover: var(--hrjust-hover, rgba(10, 34, 59, 0.035));
 
-  /* ✅ Use --accent for all “colored text” accents */
-  --ig-accent: var(--hrjust-accent-3);
+  /* Use accent everywhere for “colored text” */
+  --ig-accent: var(--accent);
 
   /* keep the blue for core countries */
   --ig-accent-2: var(--hrjust-accent-2, #002d47);
@@ -502,7 +462,7 @@ onBeforeUnmount(() => {
   padding: 0;
   box-shadow: none;
 
-  /* ⚠️ important : on garde le positionnement pour le tooltip */
+  /* important: keep relative positioning for tooltip */
   position: relative;
 }
 
@@ -540,21 +500,6 @@ onBeforeUnmount(() => {
   color: rgba(11, 31, 51, 0.78);
 }
 
-.hrjust-accentText {
-  color: var(--ig-accent-3);
-  font-weight: 900;
-}
-
-.hrjust-map__status {
-  font-size: 13px;
-  color: rgba(11, 31, 51, 0.75);
-  margin: 2px 0 0;
-}
-.hrjust-map__status--error {
-  color: var(--ig-accent);
-  font-weight: 900;
-}
-
 .hrjust-map__stage {
   display: grid;
   grid-template-columns: 1fr;
@@ -565,7 +510,7 @@ onBeforeUnmount(() => {
   gap: 12px;
 }
 
-/* ✅ GUARANTEED HEIGHT: without this you can get “nothing visible” */
+/* Guaranteed height: without this you can get “nothing visible” */
 .hrjust-map__map {
   height: clamp(420px, 55vh, 560px);
   min-height: 420px;
@@ -615,13 +560,11 @@ onBeforeUnmount(() => {
 :deep(.hrjust-case__title) {
   font-size: 18px;
   font-weight: 950;
-  /* ✅ “Colored text” -> accent */
   color: var(--ig-accent);
   text-align: center;
   margin-bottom: 14px;
 }
 :deep(.hrjust-case__country) {
-  /* keep country in accent too, for consistency */
   color: var(--ig-accent);
 }
 :deep(.hrjust-case__sectionTitle) {
@@ -629,7 +572,6 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 8px;
   font-weight: 950;
-  /* ✅ headings in accent */
   color: var(--ig-accent);
   margin-bottom: 10px;
 }
@@ -645,7 +587,6 @@ onBeforeUnmount(() => {
 }
 :deep(.hrjust-case__partyRole) {
   font-weight: 950;
-  /* ✅ role label in accent */
   color: var(--ig-accent);
 }
 :deep(.hrjust-case__partyType) {
@@ -679,7 +620,6 @@ onBeforeUnmount(() => {
   background: rgba(0, 0, 0, 0.06);
   padding: 2px 6px;
   border-radius: 0;
-  /* ✅ code text in accent (requested) */
   color: var(--ig-accent);
 }
 
@@ -718,7 +658,6 @@ onBeforeUnmount(() => {
   line-height: 1;
 }
 
-/* ✅ Popup header now only left block */
 .hrjust-map__popupHeader {
   border-bottom: 2px solid var(--ig-accent-2);
   padding-bottom: 12px;
@@ -758,7 +697,6 @@ onBeforeUnmount(() => {
   margin: 0;
 }
 
-/* ✅ Case item card */
 .hrjust-map__caseItem {
   width: 100%;
   background: #fff;
@@ -819,12 +757,6 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 980px) {
-  .hrjust-map__stage {
-    grid-template-columns: 1fr;
-  }
-  .hrjust-map__side {
-    position: static;
-  }
   :deep(.hrjust-case__grid) {
     grid-template-columns: 1fr;
   }
