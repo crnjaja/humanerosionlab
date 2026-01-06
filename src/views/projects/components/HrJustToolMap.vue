@@ -5,7 +5,7 @@
     <div class="hrjust-tool hrjust-tool--map">
       <div class="hrjust-tool__head">
         <div class="hrjust-tool__titleWrap">
-          <h4 class="hrjust-tool__title">Worldwide cases visualization</h4>
+          <h4 class="hrjust-tool__title">Worldwide Cases Visualization</h4>
         </div>
 
         <p class="hrjust-tool__note">

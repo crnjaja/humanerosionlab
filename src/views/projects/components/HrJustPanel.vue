@@ -107,8 +107,8 @@
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
-                    <strong v-if="active === 'db'">Database</strong>
-                    <span v-else>Database</span>
+                    <strong v-if="active === 'db'">Case Law Database</strong>
+                    <span v-else>Case Law Database</span>
                   </span>
                   <span class="hrjust-nav-tile__desc">Browse and query the dataset</span>
                 </span>
@@ -279,7 +279,7 @@ const launchTiles = computed(() => {
     { id: 't4', title: 'Team', target: 'team', img: tileImages.team },
     { id: 't5', title: 'Publications', target: 'publications', img: tileImages.publications },
     { id: 't6', title: 'Events', target: 'events', img: tileImages.events },
-    { id: 't7', title: 'Database', target: 'db', img: tileImages.database },
+    { id: 't7', title: 'Case Law Database', target: 'db', img: tileImages.database },
     { id: 't8', title: 'Interactive Map', target: 'map', img: tileImages.map },
     { id: 't9', title: 'Infographics', target: 'info', img: tileImages.infographics },
   ]
