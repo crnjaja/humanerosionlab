@@ -13,6 +13,26 @@
           <div class="hrjust-nav__title">Details</div>
 
           <ul class="hrjust-nav__list">
+            <!-- ✅ NEW: Overview (Tile launcher) -->
+            <li>
+              <button
+                type="button"
+                class="hrjust-nav-tile"
+                :class="{ 'is-active': active === 'overview' }"
+                @click="setActive('overview')"
+              >
+                <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+                <span class="hrjust-nav-tile__text">
+                  <span class="hrjust-nav-tile__label">
+                    <strong v-if="active === 'overview'">Overview</strong>
+                    <span v-else>Overview</span>
+                  </span>
+                  <span class="hrjust-nav-tile__desc">Quick access to key sections</span>
+                </span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
+              </button>
+            </li>
+
             <li>
               <button
                 type="button"
@@ -42,6 +62,7 @@
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
+                    <!-- ✅ RENAMED: Work Package 6 -> WP6 Snapshot -->
                     <strong v-if="active === 'glance'">Work Package 6</strong>
                     <span v-else>Work Package 6</span>
                   </span>
@@ -139,8 +160,8 @@
 
     <!-- RIGHT CONTENT (scrolls inside the panel only) -->
     <section class="hrjust-panel__content" aria-live="polite">
-      <!-- ✅ NEW: 9 tiles launcher (instead of "Choose a section") -->
-      <div v-if="!active" class="hrjust-launch" aria-label="Quick access tiles">
+      <!-- ✅ Overview is now the tile launcher and is selected by default -->
+      <div v-if="active === 'overview'" class="hrjust-launch" aria-label="Quick access tiles">
         <button
           v-for="tile in launchTiles"
           :key="tile.id"
@@ -176,8 +197,9 @@ import HrJustToolInfographics from './HrJustToolInfographics.vue'
 
 /**
  * Active tab key (controls right content + left nav highlight)
+ * ✅ Default is "overview" so the tile launcher is shown on page load
  */
-const active = ref(null)
+const active = ref('overview')
 
 const componentMap = {
   glance: HrJustAtGlance,
@@ -188,7 +210,13 @@ const componentMap = {
   info: HrJustToolInfographics,
 }
 
-const activeComponent = computed(() => (active.value ? componentMap[active.value] : null))
+/**
+ * ✅ Overview is not a component; it renders the tile launcher.
+ */
+const activeComponent = computed(() => {
+  if (!active.value || active.value === 'overview') return null
+  return componentMap[active.value] ?? null
+})
 
 function setActive(key) {
   active.value = key
