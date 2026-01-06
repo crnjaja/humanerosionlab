@@ -260,8 +260,8 @@
 
               <div class="hrjust-db__advFoot">
                 <span class="hrjust-db__hint">
-                  Same logic as Joomla (Trade &amp; HR → International; Climate Change &amp; HR →
-                  others)
+                  The advanced filters allow you to select multiple options. Click on a selected
+                  option to remove it.
                 </span>
               </div>
             </div>
