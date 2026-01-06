@@ -162,20 +162,48 @@
     <section class="hrjust-panel__content" aria-live="polite">
       <!-- ✅ Overview is now the tile launcher and is selected by default -->
       <div v-if="active === 'overview'" class="hrjust-launch" aria-label="Quick access tiles">
-        <button
-          v-for="tile in launchTiles"
-          :key="tile.id"
-          type="button"
-          class="hrjust-launch-tile"
-          :style="tile.bgStyle"
-          @click="setActive(tile.target)"
-        >
-          <span class="hrjust-launch-tile__overlay" aria-hidden="true"></span>
+        <template v-for="tile in launchTiles" :key="tile.id">
+          <!-- ✅ External link tile (opens new tab) -->
+          <a
+            v-if="tile.isExternal"
+            class="hrjust-launch-tile"
+            :style="tile.bgStyle"
+            :href="tile.href"
+            target="_blank"
+            rel="noopener noreferrer"
+            :aria-label="`${tile.title} (opens in new tab)`"
+          >
+            <span class="hrjust-launch-tile__overlay" aria-hidden="true"></span>
 
-          <span class="hrjust-launch-tile__ribbon">
-            <span class="hrjust-launch-tile__title">{{ tile.title }}</span>
-          </span>
-        </button>
+            <span class="hrjust-launch-tile__ribbon">
+              <span class="hrjust-launch-tile__title">
+                {{ tile.title }}
+                <span class="hrjust-launch-tile__ext" aria-hidden="true">
+                  <!-- external link icon -->
+                  <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                    <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z" />
+                    <path d="M5 5h6v2H7v10h10v-4h2v6H5V5z" />
+                  </svg>
+                </span>
+              </span>
+            </span>
+          </a>
+
+          <!-- ✅ Internal tile (switches component) -->
+          <button
+            v-else
+            type="button"
+            class="hrjust-launch-tile"
+            :style="tile.bgStyle"
+            @click="setActive(tile.target)"
+          >
+            <span class="hrjust-launch-tile__overlay" aria-hidden="true"></span>
+
+            <span class="hrjust-launch-tile__ribbon">
+              <span class="hrjust-launch-tile__title">{{ tile.title }}</span>
+            </span>
+          </button>
+        </template>
       </div>
 
       <KeepAlive v-else>
@@ -238,7 +266,16 @@ const launchTiles = computed(() => {
   const tiles = [
     { id: 't1', title: 'Description', target: 'description', img: tileImages.description },
     { id: 't2', title: 'Work Package 6', target: 'glance', img: tileImages.wp6 },
-    { id: 't3', title: 'Observatory', target: 'observatory', img: tileImages.observatory },
+
+    // ✅ Observatory opens in new tab
+    {
+      id: 't3',
+      title: 'Observatory',
+      isExternal: true,
+      href: 'https://hrjust-intersect-observatory.eu/',
+      img: tileImages.observatory,
+    },
+
     { id: 't4', title: 'Team', target: 'team', img: tileImages.team },
     { id: 't5', title: 'Publications', target: 'publications', img: tileImages.publications },
     { id: 't6', title: 'Events', target: 'events', img: tileImages.events },
@@ -353,5 +390,27 @@ const launchTiles = computed(() => {
 /* Optional: keep launcher aligned nicely in your content panel */
 .hrjust-panel__content {
   overflow: auto;
+}
+
+/* Make <a> tiles look exactly like buttons */
+a.hrjust-launch-tile {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* External link icon next to title */
+.hrjust-launch-tile__ext {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: px;
+  transform: translateY(1px);
+  opacity: 0.95;
+}
+
+.hrjust-launch-tile__ext svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
 }
 </style>
