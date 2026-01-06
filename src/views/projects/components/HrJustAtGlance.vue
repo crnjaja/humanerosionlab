@@ -321,7 +321,7 @@
 }
 
 .wp6-overview-title {
-  margin: 0;
+  margin-top: 4px;
   color: #002d47;
   line-height: 1.15;
 }
