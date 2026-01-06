@@ -260,14 +260,6 @@ const groups = [
     border-color 180ms ease;
 }
 
-.hrjust-teamCard::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: var(--team-accent);
-}
-
 .hrjust-teamCard:hover {
   transform: translateY(-2px);
   border-color: var(--team-border);
