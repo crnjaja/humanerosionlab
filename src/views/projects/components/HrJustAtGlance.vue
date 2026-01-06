@@ -8,7 +8,7 @@
             <i class="fas fa-leaf" aria-hidden="true"></i>
           </div>
           <div class="wp6-overview-titles">
-            <h4 class="wp6-overview-title">WP 6 - climate</h4>
+            <h4 class="wp6-overview-title">WP 6 - Climate</h4>
           </div>
         </div>
 
