@@ -19,5 +19,6 @@
 
 @import './pages/hrjust.css' layer(pages);
 @import './pages/gem.css' layer(pages);
+@import './pages/climco2.css' layer(pages);
 
 @import './utilities.css' layer(utilities);

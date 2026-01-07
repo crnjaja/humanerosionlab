@@ -1,16 +1,13 @@
 /* =========================
-   HRJUST PAGE – Minimal modern panel
-   - Clean layout, square corners
-   - Right side scrolls inside panel
-   - Left menu pinned inside panel
+   CLI-M-CO2 PAGE – Minimal modern panel
+   (clone of GEM / HRJust)
    ========================= */
 
-.hrjust-page {
+.climco2-page {
   --hrjust-nav-w: 300px;
   --hrjust-panel-top: calc(var(--header-h, 72px) + 12px);
   --hrjust-panel-h: calc(100vh - var(--hrjust-panel-top) - 12px);
 
-  /* New tokens (safe defaults) */
   --hrjust-surface: #ffffff;
   --hrjust-border: rgba(10, 34, 59, 0.12);
   --hrjust-border-soft: rgba(10, 34, 59, 0.08);
@@ -22,7 +19,7 @@
 }
 
 /* Panel frame */
-.hrjust-page .hrjust-panel {
+.climco2-page .hrjust-panel {
   display: grid;
   grid-template-columns: var(--hrjust-nav-w) minmax(0, 1fr);
   gap: 0;
@@ -32,15 +29,12 @@
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
   border-radius: 0;
 
-  height: auto; /* was: var(--hrjust-panel-h) */
-  overflow: visible; /* was: hidden */
+  height: auto;
+  overflow: visible;
 }
 
-/* =========================
-   LEFT MENU
-   ========================= */
-
-.hrjust-page .hrjust-panel__menu {
+/* LEFT MENU */
+.climco2-page .hrjust-panel__menu {
   position: relative;
   height: 100%;
   overflow: auto;
@@ -52,24 +46,18 @@
   overscroll-behavior: contain;
 }
 
-/* =========================
-   RIGHT CONTENT (only scroller)
-   ========================= */
-
-.hrjust-page .hrjust-panel__content {
-  height: auto; /* was: 100% */
-  overflow: visible; /* was: auto */
+/* RIGHT CONTENT */
+.climco2-page .hrjust-panel__content {
+  height: auto;
+  overflow: visible;
   overscroll-behavior: contain;
 
   padding: clamp(18px, 2.2cqw, 26px);
   background: #ffffff;
 }
 
-/* =========================
-   NAV HEADER
-   ========================= */
-
-.hrjust-page .hrjust-navhead {
+/* NAV HEADER */
+.climco2-page .hrjust-navhead {
   display: grid;
   gap: 6px;
 
@@ -79,7 +67,7 @@
   border-bottom: 1px solid var(--hrjust-border-soft);
 }
 
-.hrjust-page .hrjust-navhead__kicker {
+.climco2-page .hrjust-navhead__kicker {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -87,7 +75,7 @@
   color: var(--hrjust-muted-2);
 }
 
-.hrjust-page .hrjust-navhead__title {
+.climco2-page .hrjust-navhead__title {
   font-weight: 900;
   letter-spacing: -0.02em;
   font-size: 18px;
@@ -95,8 +83,7 @@
   line-height: 1.1;
 }
 
-/* Make the rule subtle (less “banner-ish”) */
-.hrjust-page .hrjust-navhead__rule {
+.climco2-page .hrjust-navhead__rule {
   height: 2px;
   width: 42px;
   background: linear-gradient(90deg, var(--hrjust-accent), var(--hrjust-accent-2));
@@ -104,21 +91,18 @@
   margin-top: 4px;
 }
 
-/* =========================
-   NAV STRUCTURE
-   ========================= */
-
-.hrjust-page .hrjust-nav {
+/* NAV STRUCTURE */
+.climco2-page .hrjust-nav {
   display: grid;
   gap: 18px;
 }
 
-.hrjust-page .hrjust-nav__section {
+.climco2-page .hrjust-nav__section {
   display: grid;
   gap: 10px;
 }
 
-.hrjust-page .hrjust-nav__title {
+.climco2-page .hrjust-nav__title {
   font-weight: 850;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -127,19 +111,16 @@
   padding: 0 6px;
 }
 
-.hrjust-page .hrjust-nav__list {
+.climco2-page .hrjust-nav__list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 6px; /* tighter = more modern list rhythm */
+  gap: 6px;
 }
 
-/* =========================
-   NAV TILE → now “list row”
-   ========================= */
-
-.hrjust-page .hrjust-nav-tile {
+/* NAV TILE */
+.climco2-page .hrjust-nav-tile {
   width: 100%;
   appearance: none;
   cursor: pointer;
@@ -163,23 +144,20 @@
     transform 140ms ease;
 }
 
-/* slim marker, not “big pill” */
-.hrjust-page .hrjust-nav-tile__mark {
+.climco2-page .hrjust-nav-tile__mark {
   width: 4px;
   height: 34px;
   background: rgba(10, 34, 59, 0.08);
 }
 
-/* text block */
-.hrjust-page .hrjust-nav-tile__text {
+.climco2-page .hrjust-nav-tile__text {
   display: grid;
   gap: 2px;
   min-width: 0;
 }
 
-.hrjust-page .hrjust-nav-tile__label {
+.climco2-page .hrjust-nav-tile__label {
   line-height: 1.22;
-  font-weight: 750;
   font-weight: 850;
   letter-spacing: -0.01em;
 
@@ -187,10 +165,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.hrjust-page .hrjust-nav-tile__label strong {
+
+.climco2-page .hrjust-nav-tile__label strong {
   font-weight: 950;
 }
-.hrjust-page .hrjust-nav-tile__desc {
+
+.climco2-page .hrjust-nav-tile__desc {
   line-height: 1.35;
   font-weight: 500;
   font-size: 12.5px;
@@ -201,7 +181,7 @@
   text-overflow: ellipsis;
 }
 
-.hrjust-page .hrjust-nav-tile__chev {
+.climco2-page .hrjust-nav-tile__chev {
   width: 14px;
   height: 14px;
   position: relative;
@@ -212,8 +192,7 @@
   opacity: 0.9;
 }
 
-/* draw a corner */
-.hrjust-page .hrjust-nav-tile__chev::before {
+.climco2-page .hrjust-nav-tile__chev::before {
   content: '';
   position: absolute;
   inset: 2px;
@@ -221,103 +200,84 @@
   border-top: 2px solid currentColor;
 }
 
-/* hover motion */
-.hrjust-page .hrjust-nav-tile:hover .hrjust-nav-tile__chev {
+.climco2-page .hrjust-nav-tile:hover .hrjust-nav-tile__chev {
   transform: translateX(2px);
   opacity: 1;
 }
 
-/* active state slightly stronger */
-.hrjust-page .hrjust-nav-tile.is-active .hrjust-nav-tile__chev {
+.climco2-page .hrjust-nav-tile.is-active .hrjust-nav-tile__chev {
   color: rgba(174, 12, 54, 0.55);
 }
 
-/* Hover: calm, no “card lift” */
-.hrjust-page .hrjust-nav-tile:hover {
+.climco2-page .hrjust-nav-tile:hover {
   background: var(--hrjust-hover);
   border-color: var(--hrjust-border-soft);
 }
 
-/* Focus */
-.hrjust-page .hrjust-nav-tile:focus-visible {
+.climco2-page .hrjust-nav-tile:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
-.hrjust-page .hrjust-nav-tile.is-active {
+.climco2-page .hrjust-nav-tile.is-active {
   background: var(--hrjust-active);
   border-color: rgba(174, 12, 54, 0.28);
 }
 
-.hrjust-page .hrjust-nav-tile.is-active .hrjust-nav-tile__label {
+.climco2-page .hrjust-nav-tile.is-active .hrjust-nav-tile__label {
   font-weight: 950;
 }
 
-.hrjust-page .hrjust-nav-tile.is-active .hrjust-nav-tile__mark {
+.climco2-page .hrjust-nav-tile.is-active .hrjust-nav-tile__mark {
   background: linear-gradient(180deg, var(--hrjust-accent), var(--hrjust-accent-2));
 }
 
-/* Sub-items: just a tiny indent (no extra “card” feel) */
-.hrjust-page .hrjust-nav-tile--sub {
-  padding-left: 14px;
-}
-
-.hrjust-page .hrjust-nav-tile--sub .hrjust-nav-tile__mark {
-  height: 30px;
-}
-
-/* =========================
-   EMPTY STATE
-   ========================= */
-
-.hrjust-page .hrjust-empty {
+/* EMPTY STATE */
+.climco2-page .hrjust-empty {
   border: 1px dashed var(--hrjust-border);
   background: rgba(10, 34, 59, 0.02);
   padding: 18px;
 }
 
-.hrjust-page .hrjust-empty__title {
+.climco2-page .hrjust-empty__title {
   font-weight: 900;
   color: var(--hrjust-text);
 }
 
-.hrjust-page .hrjust-empty__text {
+.climco2-page .hrjust-empty__text {
   margin: 6px 0 0;
   color: rgba(11, 31, 51, 0.72);
   line-height: 1.6;
 }
 
-/* =========================
-   RESPONSIVE
-   ========================= */
-
+/* RESPONSIVE */
 @media (max-width: 980px) {
-  .hrjust-page .hrjust-panel {
+  .climco2-page .hrjust-panel {
     grid-template-columns: 1fr;
     height: auto;
     overflow: visible;
   }
 
-  .hrjust-page .hrjust-panel__menu {
-    height: auto; /* was: 100% */
-    overflow: visible; /* was: auto */
+  .climco2-page .hrjust-panel__menu {
+    height: auto;
+    overflow: visible;
     border-right: 0;
     border-bottom: 1px solid var(--hrjust-border-soft);
   }
 
-  .hrjust-page .hrjust-panel__content {
+  .climco2-page .hrjust-panel__content {
     height: auto;
     overflow: visible;
   }
 }
 
-/* Keep your spacing helpers */
-.hrjust-page .content-block {
+/* Keep spacing helpers (same behavior as GEM) */
+.climco2-page .content-block {
   padding-top: 32px;
   padding-bottom: 110px;
 }
 
-.hrjust-page .hrjust-hero-offset {
+.climco2-page .climco2-hero-offset {
   margin-top: -40px;
   position: relative;
   z-index: 2;

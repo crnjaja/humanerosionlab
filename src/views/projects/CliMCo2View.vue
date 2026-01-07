@@ -1,5 +1,5 @@
 <template>
-  <div class="project-page">
+  <div class="project-page climco2-page">
     <section class="stage stage--top stage--top--compact stage--top--flat full-bleed">
       <div class="container stage-inner">
         <div class="hero">
@@ -27,60 +27,12 @@
 
     <section class="content-block full-bleed">
       <div class="container">
-        <div class="hero-offset">
+        <div class="hero-offset climco2-hero-offset">
           <section class="feature-section">
             <h2 class="section-heading">Explore</h2>
 
-            <div class="project-layout">
-              <article class="project-copy">
-                <p>Présentation CLI-M-CO2…</p>
-                <p>Ajoute: objectifs, périmètre, livrables, résultats.</p>
-              </article>
-
-              <aside class="project-facts">
-                <div class="pill">Project Facts</div>
-                <ul class="facts-list">
-                  <li><strong>Focus:</strong> …</li>
-                  <li><strong>Status:</strong> …</li>
-                  <li><strong>Lead:</strong> …</li>
-                  <li><strong>Links:</strong> …</li>
-                </ul>
-              </aside>
-            </div>
-
-            <h2 class="section-heading" style="margin-top: 26px">Highlights</h2>
-
-            <div class="projects-grid">
-              <article class="project-row">
-                <figure class="project-media">
-                  <img src="/images/vert.png" alt="CLI-M-CO2 highlight" loading="lazy" />
-                </figure>
-                <div class="project-card">
-                  <div>
-                    <h3 class="project-title">Key output #1</h3>
-                    <p class="project-text">Description courte, style homepage.</p>
-                  </div>
-                  <p class="project-actions actions-right">
-                    <a class="feature-link" href="#">Read more →</a>
-                  </p>
-                </div>
-              </article>
-
-              <article class="project-row">
-                <figure class="project-media">
-                  <img src="/images/background4.jpg" alt="CLI-M-CO2 highlight 2" loading="lazy" />
-                </figure>
-                <div class="project-card">
-                  <div>
-                    <h3 class="project-title">Key output #2</h3>
-                    <p class="project-text">Publication / event / brief…</p>
-                  </div>
-                  <p class="project-actions actions-right">
-                    <a class="feature-link" href="#">Read more →</a>
-                  </p>
-                </div>
-              </article>
-            </div>
+            <!-- ✅ Same disposition as GEM -->
+            <ClimCo2Panel />
           </section>
         </div>
       </div>
@@ -90,6 +42,7 @@
 
 <script setup>
 import { useWordReveal } from '@/composables/useWordReveal'
+import ClimCo2Panel from './components/ClimCo2Panel.vue'
 
 /* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
@@ -99,52 +52,16 @@ const { el: heroTitleEl } = useWordReveal({
 </script>
 
 <style scoped>
-.project-layout {
-  display: grid;
-  grid-template-columns: 1.6fr 0.9fr;
-  gap: 16px;
-  align-items: start;
-}
-.project-copy {
-  color: rgba(255, 255, 255, 0.86);
-  line-height: 1.8;
-}
-.project-facts {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
-  padding: 14px;
-}
-.facts-list {
-  list-style: none;
-  padding: 10px 0 0;
-  margin: 0;
-  display: grid;
-  gap: 8px;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 13px;
-}
-@media (max-width: 920px) {
-  .project-layout {
-    grid-template-columns: 1fr;
-  }
-}
-/* PROJECT PAGE: flat/square banner (no V shape) + smaller height */
 :deep(.stage--top--flat) {
-  /* smaller hero */
   min-height: clamp(320px, 46vh, 520px);
-
-  /* remove the “V space” padding at the bottom */
   padding-top: calc(var(--header-h) + 54px);
-  padding-bottom: 54px; /* was calc(64px + var(--v-h)) on homepage */
+  padding-bottom: 54px;
 }
 
-/* remove the V shape entirely */
 :deep(.stage--top--flat::after) {
-  content: none !important; /* easiest way to kill the pseudo element */
+  content: none !important;
 }
 
-/* the homepage uses negative margin to tuck content into the V;
-   on a flat banner it usually looks wrong, so reset it */
 :deep(.project-page .hero-offset) {
   margin-top: 0;
 }
