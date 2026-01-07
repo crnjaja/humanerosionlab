@@ -224,8 +224,8 @@ function setActive(key) {
  * ✅ Tile images (replace with CLI-M-CO2 assets)
  */
 const tileImages = {
-  description: '/images/tiles/ClimDescription.jpg',
-  team: '/images/tiles/team.jpg',
+  description: '/images/tiles/ClimDescription.png',
+  team: '/images/tiles/ClimTeam.png',
   publications: '/images/tiles/ClimPublications.png',
   events: '/images/tiles/ClimEvents.png',
   academic: '/images/tiles/ClimAcademic.png',
