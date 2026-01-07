@@ -234,11 +234,11 @@ function setActive(key) {
  * ✅ Tile images (replace with GEM-specific assets whenever you want)
  */
 const tileImages = {
-  description: '/images/tiles/xx.jpg',
+  description: '/images/tiles/GemDescription.png',
   glance: '/images/tiles/xx.jpg',
   team: '/images/tiles/team.jpg',
   publications: '/images/tiles/xx.jpg',
-  events: '/images/tiles/xx.png',
+  events: '/images/tiles/GemEvents.jpg',
   map: '/images/tiles/map.jpg',
   infographics: '/images/tiles/infographics.jpg',
   website: '/images/tiles/xx.jpg',
