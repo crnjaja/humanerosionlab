@@ -224,14 +224,14 @@ function setActive(key) {
  * ✅ Tile images (replace with CLI-M-CO2 assets)
  */
 const tileImages = {
-  description: '/images/tiles/xx.jpg',
+  description: '/images/tiles/ClimDescription.jpg',
   team: '/images/tiles/team.jpg',
-  publications: '/images/tiles/xx.jpg',
-  events: '/images/tiles/xx.png',
-  academic: '/images/tiles/xx.jpg',
+  publications: '/images/tiles/ClimPublications.png',
+  events: '/images/tiles/ClimEvents.png',
+  academic: '/images/tiles/ClimAcademic.png',
 
   // optional external link tile
-  website: '/images/tiles/xx.jpg',
+  website: '/images/tiles/ClimWebsite.png',
 }
 
 const launchTiles = computed(() => {

@@ -78,7 +78,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn--primary" href="#news">About Us</a>
+            <RouterLink class="btn btn--primary" to="projects/hel">About Us</RouterLink>
             <RouterLink class="btn btn--ghost" to="/contact">Contact</RouterLink>
           </div>
         </div>
