@@ -100,7 +100,11 @@
                 <article class="feature-row" aria-label="Last News">
                   <div class="media-frame">
                     <figure class="feature-media">
-                      <img src="/images/background4.jpg" alt="News cover" loading="lazy" />
+                      <img
+                        src="/images/backgrounds/background4.jpg"
+                        alt="News cover"
+                        loading="lazy"
+                      />
                     </figure>
                     <div class="feature-card">
                       <div>
@@ -125,7 +129,11 @@
                 <article class="feature-row" aria-label="Last Publication">
                   <div class="media-frame">
                     <figure class="feature-media">
-                      <img src="/images/rose.png" alt="Publications cover" loading="lazy" />
+                      <img
+                        src="/images/backgrounds/rose.png"
+                        alt="Publications cover"
+                        loading="lazy"
+                      />
                     </figure>
                     <div class="feature-card">
                       <div>
@@ -225,7 +233,7 @@
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
-                    <img src="/images/background4.jpg" alt="HEL cover" loading="lazy" />
+                    <img src="/images/backgrounds/background4.jpg" alt="HEL cover" loading="lazy" />
                   </figure>
                   <div class="project-card">
                     <div>
@@ -250,7 +258,7 @@
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
-                    <img src="/images/bordeaux.png" alt="HRJUST cover" loading="lazy" />
+                    <img src="/images/backgrounds/bordeaux.png" alt="HRJUST cover" loading="lazy" />
                   </figure>
                   <div class="project-card">
                     <div>
@@ -275,7 +283,7 @@
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
-                    <img src="/images/rose.png" alt="GEM cover" loading="lazy" />
+                    <img src="/images/backgrounds/rose.png" alt="GEM cover" loading="lazy" />
                   </figure>
                   <div class="project-card">
                     <div>
@@ -300,7 +308,7 @@
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
-                    <img src="/images/vert.png" alt="CLIMCO2 cover" loading="lazy" />
+                    <img src="/images/backgrounds/vert.png" alt="CLIMCO2 cover" loading="lazy" />
                   </figure>
                   <div class="project-card">
                     <div>
