@@ -325,8 +325,8 @@ const coreTeam = [
   },
   {
     key: 'riccarda-heepen',
-    name: 'Research Assistant',
-    role: 'Job Title',
+    name: 'Riccarda Heepen',
+    role: 'Research Assistant',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'riccard.heepen@unibe.ch',
     linkedin: '#',
