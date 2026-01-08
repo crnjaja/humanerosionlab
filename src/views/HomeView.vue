@@ -393,7 +393,7 @@
               rel="noopener"
               aria-label="World Trade Institute"
             >
-              <img src="/images/logos/placeholder.png" alt="World Trade Institute logo" />
+              <img src="/images/logos/SNF.png" alt="World Trade Institute logo" />
             </a>
           </div>
         </div>

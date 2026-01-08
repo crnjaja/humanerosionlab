@@ -207,7 +207,7 @@
             aria-labelledby="visiting-former-title"
             aria-describedby="visiting-former-desc"
           >
-            <h2 class="section-heading">Alumni</h2>
+            <h2 class="section-heading">Advisory Board</h2>
 
             <ul class="team-grid" aria-label="Former visiting fellows">
               <li v-for="member in visitingAlumni" :key="member.key" class="member-card">
@@ -316,7 +316,7 @@ const coreTeam = [
   {
     key: 'elisa-fornale',
     name: 'Elisa Fornalé',
-    role: 'Senior Researcher',
+    role: 'Professor',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'elisa.fornale@unibe.ch',
     linkedin: 'https://ch.linkedin.com/in/elisa-fornal%C3%A9-622596283',
@@ -325,7 +325,7 @@ const coreTeam = [
   },
   {
     key: 'riccarda-heepen',
-    name: 'Riccarda Heepen',
+    name: 'Research Assistant',
     role: 'Job Title',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'riccard.heepen@unibe.ch',
@@ -336,7 +336,7 @@ const coreTeam = [
   {
     key: 'martina-sardo',
     name: 'Martina Sardo',
-    role: 'Job Title',
+    role: 'Postdoctoral Researcher',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'martina.sardo@unibe.ch',
     linkedin: '#',
@@ -344,11 +344,11 @@ const coreTeam = [
     photo: '',
   },
   {
-    key: 'parinaz-tofighi',
-    name: 'Parinaz Tofighi',
-    role: 'Job Title',
+    key: 'simone-ferrari',
+    name: 'Simone Ferrari',
+    role: 'Senior Postdoctoral Researcher',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'parinaz.tofighi@unibe.ch',
+    email: 'simone.ferrari.fs@gmail.com',
     linkedin: '#',
     location: 'Bern, Switzerland',
     photo: '',

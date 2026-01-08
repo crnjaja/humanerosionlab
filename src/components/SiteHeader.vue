@@ -66,6 +66,9 @@
           </div>
         </div>
 
+                <RouterLink class="top-nav-link" to="/publications">Publications</RouterLink>
+        <RouterLink class="top-nav-link" to="/events">Events</RouterLink>
+
         <!-- PROJECTS DROPDOWN -->
         <div
           ref="projectsEl"
@@ -86,7 +89,7 @@
             @keydown.escape.prevent="closeProjects"
             @keydown.down.prevent="focusFirstItem('projects')"
           >
-            Projects
+            Archived Projects
             <span class="dropdown-icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" />
@@ -130,8 +133,7 @@
           </div>
         </div>
 
-        <RouterLink class="top-nav-link" to="/publications">Publications</RouterLink>
-        <RouterLink class="top-nav-link" to="/events">Events</RouterLink>
+
         <RouterLink class="top-nav-link" to="/contact">Contact</RouterLink>
       </nav>
     </div>
