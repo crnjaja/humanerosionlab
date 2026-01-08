@@ -63,6 +63,17 @@
               The Team
               <span class="nav-dropdown-hint">Human Erosion Lab Team</span>
             </RouterLink>
+
+                        <RouterLink
+              class="nav-dropdown-item"
+              to="/projects/network"
+              role="menuitem"
+              tabindex="-1"
+              @click="closeAbout"
+            >
+              Our Network
+              <span class="nav-dropdown-hint">Lab Partners</span>
+            </RouterLink>
           </div>
         </div>
 
