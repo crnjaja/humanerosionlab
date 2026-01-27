@@ -42,7 +42,7 @@
 
 <script setup>
 import { useWordReveal } from '@/composables/useWordReveal'
-import HrJustPanel from './components/hrjust/HrJustPanel.vue'
+import HrJustPanel from './subprojects/hrjust/HrJustPanel.vue'
 
 /* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({

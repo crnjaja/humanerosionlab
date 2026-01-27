@@ -42,7 +42,7 @@
 
 <script setup>
 import { useWordReveal } from '@/composables/useWordReveal'
-import ClimCo2Panel from './components/clim/ClimCo2Panel.vue'
+import ClimCo2Panel from './subprojects/clim/ClimCo2Panel.vue'
 
 /* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({

@@ -42,7 +42,7 @@
 
 <script setup>
 import { useWordReveal } from '@/composables/useWordReveal'
-import GemPanel from './components/gem/GemPanel.vue'
+import GemPanel from './subprojects/gem/GemPanel.vue'
 
 /* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
