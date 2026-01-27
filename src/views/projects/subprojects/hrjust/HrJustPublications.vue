@@ -65,15 +65,7 @@
 </template>
 
 <script setup>
-/**
- * Publications – presentational component
- * - Reuses HRJUST card language (square, top gradient strap, soft shadow)
- * - Title is in the card header strap (with year)
- * - Body text spans the full width of the card
- * - No filter logic, all publications are shown
- */
 
-// Data model for publications – content taken from your Joomla page
 const publications = [
   {
     id: 'pennino-2025-evolution',
@@ -81,7 +73,7 @@ const publications = [
     title: 'The Evolution of Civil Society Engagement to face Global Challenges',
     subtitle: 'WTI Working Paper Series',
     author: 'Martina Pennino',
-    linkLabel: 'direct PDF Link',
+    linkLabel: 'open PDF',
     linkUrl: 'https://www.hrjust-climate-claims.eu/documents/PenninoMartina.pdf',
     body: [
       'The research question this paper addresses is the identification of the subjects that can be embraced under the term “civil society” and the attempt to clarify who is encompassed by this category and who is excluded. Firstly, this paper aims to define the concept of civil society and examine the definition of civil society provided at the international level. Secondly, it focuses on the active role played by civil society actors in claiming for the protection of human rights. Thirdly, it aims at analyzing the requirements it must meet in order to participate in legal proceedings before international and regional courts.',
@@ -126,7 +118,7 @@ const publications = [
     subtitle:
       'BioLaw Journal – Rivista di BioDiritto, n. 1/2025, pp. 475–505',
     author: 'Nicolò Paolo Alessi',
-    linkLabel: 'direct PDF Link',
+    linkLabel: 'open PDF',
     linkUrl: 'https://teseo.unitn.it/biolaw/article/view/3503/3846',
     body: [
       'The present paper deals with the concept of intersectionality and its applications in the legal realm, with special regard to human rights law. Intersectional legal approaches have traditionally been linked to non-discrimination law, while the application in human rights law is still inconsistent, but with significant potential.',
@@ -141,7 +133,7 @@ const publications = [
     subtitle:
       'Freedom, Security & Justice: European Legal Studies 1, pp. 210–236',
     author: 'Nicolò Paolo Alessi',
-    linkLabel: 'direct PDF Link',
+    linkLabel: 'open PDF',
     linkUrl: 'https://www.hrjust-climate-claims.eu/documents/FSJ.pdf',
     body: [
       'The recent decision of the European Court of Human Rights (ECtHR) on the case Verein KlimaSeniorinnen remarkably innovated its jurisprudence on environmental cases. It underlined the connection between states’ inaction, climate change and violations of human rights protected by the European Convention on Human Rights (ECHR).',
@@ -157,7 +149,7 @@ const publications = [
     subtitle:
       'European Papers, Vol. 9, No 2, pp. 479–512',
     author: 'Chiara Tea Antoniazzi',
-    linkLabel: 'direct PDF Link',
+    linkLabel: 'open PDF',
     linkUrl:
       'https://www.hrjust-climate-claims.eu/documents/EP_eJ_2024_2_Chiara_Tea_Antoniazzi_00768.pdf',
     body: [
@@ -199,7 +191,7 @@ const publications = [
 </script>
 
 <style scoped>
-/* Local theme tokens for this block (aligns with your team + WWWH cards) */
+
 .hrjust-publications {
   --accent: var(--hrjust-accent-3, #002d47);
   --accent-top-a: rgba(0, 45, 71, 0.16);
@@ -215,7 +207,6 @@ const publications = [
   gap: 18px;
 }
 
-/* Header */
 .hrjust-pubHeader {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -262,13 +253,11 @@ const publications = [
   text-align: justify;
 }
 
-/* List layout */
 .hrjust-pubList {
   display: grid;
   gap: 14px;
 }
 
-/* Card */
 .hrjust-pubCard {
   position: relative;
   background: var(--card);
@@ -280,7 +269,6 @@ const publications = [
     border-color 180ms ease;
 }
 
-/* Top gradient strap with title + year */
 .hrjust-pubCard__top {
   background: linear-gradient(90deg, var(--accent-top-a), var(--accent-top-b));
   border-bottom: 1px solid var(--border-soft);
@@ -320,7 +308,6 @@ const publications = [
   box-shadow: var(--shadow-hover);
 }
 
-/* Body */
 .hrjust-pubBody {
   display: grid;
   gap: 10px;
@@ -354,7 +341,6 @@ const publications = [
   margin-bottom: 0;
 }
 
-/* Meta footer */
 .hrjust-pubMeta {
   margin-top: 8px;
   padding-top: 8px;
@@ -390,8 +376,6 @@ const publications = [
   color: #8a0a2c;
 }
 
-
-/* Responsive tweaks */
 @media (max-width: 768px) {
   .hrjust-pubHeader {
     grid-template-columns: minmax(0, 1fr);
