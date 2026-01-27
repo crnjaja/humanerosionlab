@@ -261,6 +261,7 @@ import HrJustToolDatabase from './HrJustToolDatabase.vue'
 import HrJustToolMap from './HrJustToolMap.vue'
 import HrJustToolInfographics from './HrJustToolInfographics.vue'
 import HrJustPublications from './HrJustPublications.vue'
+import HrJustEvents from './HrJustEvents.vue'
 
 /**
  * Active tab key (controls right content + left nav highlight)
@@ -276,6 +277,7 @@ const componentMap = {
   map: HrJustToolMap,
   info: HrJustToolInfographics,
   publications: HrJustPublications,
+  events: HrJustEvents,
 }
 
 /**
