@@ -1,6 +1,5 @@
 <template>
   <div id="publications" class="hrjust-content hrjust-publications">
-
     <!-- List -->
     <section class="hrjust-pubList" aria-label="List of publications">
       <article
@@ -9,6 +8,11 @@
         class="hrjust-pubCard"
         :data-year="pub.year"
       >
+        <!-- NEW: block icon à cheval -->
+        <div class="hrjust-pubCard__icon" aria-hidden="true">
+          <i class="fas fa-file-alt"></i>
+        </div>
+
         <!-- Card header with title + year -->
         <div class="hrjust-pubCard__top">
           <div class="hrjust-pubCard__topInner">
@@ -47,14 +51,15 @@
               <div class="hrjust-pubMeta__availability">
                 <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                 <span>Available on:</span>
-                <a
-                  :href="pub.linkUrl"
-                  target="_blank"
-                  rel="noopener"
-                  class="hrjust-pubMeta__link"
-                >
-                  {{ pub.linkLabel }}
-                </a>
+<a
+  :href="pub.file ? `/files/publications/${pub.file}` : pub.linkUrl"
+  target="_blank"
+  rel="noopener"
+  class="hrjust-pubMeta__link"
+>
+  {{ pub.linkLabel }}
+</a>
+
               </div>
             </footer>
           </div>
@@ -65,7 +70,6 @@
 </template>
 
 <script setup>
-
 const publications = [
   {
     id: 'pennino-2025-evolution',
@@ -74,7 +78,7 @@ const publications = [
     subtitle: 'WTI Working Paper Series',
     author: 'Martina Pennino',
     linkLabel: 'open PDF',
-    linkUrl: 'https://www.hrjust-climate-claims.eu/documents/PenninoMartina.pdf',
+    link: 'PenninoMartina.pdf',
     body: [
       'The research question this paper addresses is the identification of the subjects that can be embraced under the term “civil society” and the attempt to clarify who is encompassed by this category and who is excluded. Firstly, this paper aims to define the concept of civil society and examine the definition of civil society provided at the international level. Secondly, it focuses on the active role played by civil society actors in claiming for the protection of human rights. Thirdly, it aims at analyzing the requirements it must meet in order to participate in legal proceedings before international and regional courts.',
       'In lack of a universal definition, each court or tribunal sets its own standards for their recognition and admission. Finally, the paper focuses on the specific and growing role of civil society in climate litigation, where third-party interventions have become a strategic means of influencing legal reasoning.',
@@ -119,7 +123,7 @@ const publications = [
       'BioLaw Journal – Rivista di BioDiritto, n. 1/2025, pp. 475–505',
     author: 'Nicolò Paolo Alessi',
     linkLabel: 'open PDF',
-    linkUrl: 'https://teseo.unitn.it/biolaw/article/view/3503/3846',
+    link: 'ALESSI.pdf',
     body: [
       'The present paper deals with the concept of intersectionality and its applications in the legal realm, with special regard to human rights law. Intersectional legal approaches have traditionally been linked to non-discrimination law, while the application in human rights law is still inconsistent, but with significant potential.',
       'The article thus focuses on the theoretical and practical developments concerning these less trodden aspects of intersectionality, to unveil in which sense it can bring innovations to legal theory and practice beyond the connection to non-discrimination. To do so, it firstly deals with the origins of the concept and subsequently focuses on its legal applications. The second part of the paper focuses on the developments of the concept of intersectionality in human rights law in general and in some specific areas thereof, i.e. climate change law, migration law, emergency law, and democratic innovations.',
@@ -134,7 +138,7 @@ const publications = [
       'Freedom, Security & Justice: European Legal Studies 1, pp. 210–236',
     author: 'Nicolò Paolo Alessi',
     linkLabel: 'open PDF',
-    linkUrl: 'https://www.hrjust-climate-claims.eu/documents/FSJ.pdf',
+    link: 'FSJ.pdf',
     body: [
       'The recent decision of the European Court of Human Rights (ECtHR) on the case Verein KlimaSeniorinnen remarkably innovated its jurisprudence on environmental cases. It underlined the connection between states’ inaction, climate change and violations of human rights protected by the European Convention on Human Rights (ECHR).',
       'In addition, the ruling has brought to the forefront the particular relationship between domestic and international norms in the Swiss context, all the more peculiar when popular votes have been involved. Notably, the decision sparked prompt negative reactions by political actors and institutions and oppositions to its implementation, with implications that are still to be assessed.',
@@ -150,8 +154,8 @@ const publications = [
       'European Papers, Vol. 9, No 2, pp. 479–512',
     author: 'Chiara Tea Antoniazzi',
     linkLabel: 'open PDF',
-    linkUrl:
-      'https://www.hrjust-climate-claims.eu/documents/EP_eJ_2024_2_Chiara_Tea_Antoniazzi_00768.pdf',
+    link:
+      'EP_eJ_2024_2_Chiara_Tea_Antoniazzi_00768.pdf',
     body: [
       'While it is by now recognised that climate change is having and will increasingly have a devastating impact on human rights and that ill-conceived climate action can also have adverse repercussions, the legal implications of these dynamics are still debated. This is particularly the case for the apparent incompatibility between the global nature of climate change and the primarily territorial nature of States’ human rights obligations.',
       'In this context, the potential human rights obligations of the European Union (EU) towards persons living in third countries when it acts – or refrains from acting – to counter climate change have been particularly neglected, notwithstanding the major role played by the EU in both contributing to and mitigating climate change.',
@@ -191,7 +195,6 @@ const publications = [
 </script>
 
 <style scoped>
-
 .hrjust-publications {
   --accent: var(--hrjust-accent-3, #002d47);
   --accent-top-a: rgba(0, 45, 71, 0.16);
@@ -269,6 +272,25 @@ const publications = [
     border-color 180ms ease;
 }
 
+/* NEW: block icon à cheval header / contenu */
+.hrjust-pubCard__icon {
+  position: absolute;
+  left: 16px;
+  top: 12px; /* ajuste au besoin pour matcher EXACTEMENT tes autres cartes */
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  z-index: 2;
+}
+
+.hrjust-pubCard__icon i {
+  font-size: 18px;
+  color: #002d47; /* ou var(--accent) si tu veux coller au panel global */
+}
+
 .hrjust-pubCard__top {
   background: linear-gradient(90deg, var(--accent-top-a), var(--accent-top-b));
   border-bottom: 1px solid var(--border-soft);
@@ -279,7 +301,8 @@ const publications = [
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 10px 14px;
+  /* on réserve la place de l'icône */
+  padding: 10px 14px 10px 70px;
 }
 
 .hrjust-pubCard__title {
@@ -388,6 +411,7 @@ const publications = [
   .hrjust-pubCard__topInner {
     flex-direction: column;
     align-items: flex-start;
+    padding-left: 62px; /* un peu moins large sur mobile mais toujours l'espace pour l'icône */
   }
 }
 </style>
