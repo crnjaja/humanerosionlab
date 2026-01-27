@@ -90,6 +90,44 @@
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
+
+                        <li>
+              <button
+                type="button"
+                class="hrjust-nav-tile"
+                :class="{ 'is-active': active === 'events' }"
+                @click="setActive('events')"
+              >
+                <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+                <span class="hrjust-nav-tile__text">
+                  <span class="hrjust-nav-tile__label">
+                    <strong v-if="active === 'events'">Events</strong>
+                    <span v-else>Events</span>
+                  </span>
+                  <span class="hrjust-nav-tile__desc">Organized, active participation</span>
+                </span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
+              </button>
+            </li>
+
+                        <li>
+              <button
+                type="button"
+                class="hrjust-nav-tile"
+                :class="{ 'is-active': active === 'publications' }"
+                @click="setActive('publications')"
+              >
+                <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+                <span class="hrjust-nav-tile__text">
+                  <span class="hrjust-nav-tile__label">
+                    <strong v-if="active === 'publications'">Publications</strong>
+                    <span v-else>Publications</span>
+                  </span>
+                  <span class="hrjust-nav-tile__desc">Add subtitle</span>
+                </span>
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
+              </button>
+            </li>
           </ul>
         </section>
 
@@ -222,6 +260,7 @@ import HrJustTeam from './HrJustTeam.vue'
 import HrJustToolDatabase from './HrJustToolDatabase.vue'
 import HrJustToolMap from './HrJustToolMap.vue'
 import HrJustToolInfographics from './HrJustToolInfographics.vue'
+import HrJustPublications from './HrJustPublications.vue'
 
 /**
  * Active tab key (controls right content + left nav highlight)
@@ -236,6 +275,7 @@ const componentMap = {
   db: HrJustToolDatabase,
   map: HrJustToolMap,
   info: HrJustToolInfographics,
+  publications: HrJustPublications,
 }
 
 /**
