@@ -77,7 +77,7 @@
           </div>
         </div>
 
-                <RouterLink class="top-nav-link" to="/publications">Publications</RouterLink>
+        <RouterLink class="top-nav-link" to="/publications">Publications</RouterLink>
         <RouterLink class="top-nav-link" to="/events">Events</RouterLink>
 
         <!-- PROJECTS DROPDOWN -->

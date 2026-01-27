@@ -4,6 +4,7 @@ import ContactView from '../views/ContactView.vue'
 import PublicationsView from '../views/PublicationsView.vue'
 import EventsView from '../views/EventsView.vue'
 import TeamView from '../views/about/TeamView.vue'
+import BaserowTable from '../views/BaserowTable.vue'
 
 // Projects (lazy-loaded)
 const HelView = () => import('../views/projects/HelView.vue')
@@ -25,6 +26,8 @@ const router = createRouter({
     { path: '/projects/hrjust', name: 'project-hrjust', component: HrjustView },
     { path: '/projects/gem', name: 'project-gem', component: GemView },
     { path: '/projects/cli-m-co2', name: 'project-cli-m-co2', component: CliMCo2View },
+
+    { path: '/projects/network', name: 'project-network', component: BaserowTable },
   ],
   scrollBehavior() {
     return { top: 0 }
