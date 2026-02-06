@@ -429,24 +429,24 @@ import { computed, onMounted, reactive, ref, watch } from 'vue'
    Constants copied from your Joomla logic
    ========================= */
 const HUMAN_RIGHTS_KEYWORDS = {
-  'Right to life': ['right to life'],
-  'Right to a healthy environment': ['healthy environment'],
-  'Right to health': ['right to health'],
+  'Right to Life': ['right to life'],
+  'Right to a Healthy Environment': ['healthy environment'],
+  'Right to Health': ['right to health'],
   'Rights of Indigenous Peoples': ['indigenous'],
-  "Children's rights": ['children'],
+  "Children's Rights": ['children'],
   'Rights of Future Generations': ['future generations'],
-  'Right to participation': ['participation'],
-  'Right to access to information': ['access to information'],
-  'Right to private and family life': ['private and family life'],
-  'Right to property': ['property'],
-  'Right to equality': ['equality', 'non-discrimination', 'non discrimination'],
-  'Right to development': ['right to development'],
-  'Freedom of expression': ['freedom of expression'],
-  'Right to remedy': ['remedy', 'access to justice'],
-  'Right to water': ['right to water'],
-  'Right to food': ['right to food', 'food sovereignty'],
-  'Human dignity': ['human dignity'],
-  'Right to housing': ['right to housing', 'adequate shelter'],
+  'Right to Participation': ['participation'],
+  'Right to access to Information': ['access to information'],
+  'Right to Private and Family Life': ['private and family life'],
+  'Right to Property': ['property'],
+  'Right to Equality': ['equality', 'non-discrimination', 'non discrimination'],
+  'Right to Development': ['right to development'],
+  'Freedom of Expression': ['freedom of expression'],
+  'Right to Remedy': ['remedy', 'access to justice'],
+  'Right to Water': ['right to water'],
+  'Right to Food': ['right to food', 'food sovereignty'],
+  'Human Dignity': ['human dignity'],
+  'Right to Housing': ['right to housing', 'adequate shelter'],
 }
 
 const CIVIL_SOCIETY_OPTIONS = [
@@ -1258,4 +1258,25 @@ onMounted(async () => {
   padding-top: 10px;
   border-top: 1px solid var(--ig-border-soft);
 }
+
+/* Darker tone for the “text blocks” that have the left vertical line */
+:deep(.hrjust-case__highlight),
+:deep(.hrjust-case__party) {
+  /* was: rgba(10, 34, 59, 0.03) */
+  background: rgba(10, 34, 59, 0.07);
+}
+
+/* Optional: if you want the Summary bar and chips containers to match the darker tone */
+.hrjust-db__summaryText,
+.hrjust-db__chips {
+  /* was: rgba(10, 34, 59, 0.03) / 0.02 */
+  background: rgba(10, 34, 59, 0.06);
+}
+
+/* Optional: if you also want a bit more contrast on the code pill background */
+:deep(.hrjust-case__code) {
+  /* was: rgba(0, 0, 0, 0.06) */
+  background: rgba(0, 0, 0, 0.10);
+}
+
 </style>

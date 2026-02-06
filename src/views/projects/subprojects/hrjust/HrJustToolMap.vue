@@ -760,4 +760,24 @@ onBeforeUnmount(() => {
     grid-template-columns: 1fr;
   }
 }
+
+/* Darker tone for text blocks that have the left vertical line */
+:deep(.hrjust-case__highlight),
+:deep(.hrjust-case__party) {
+  /* was: rgba(10, 34, 59, 0.03) */
+  background: rgba(10, 34, 59, 0.07);
+}
+
+/* Optional: make popup chips slightly darker too */
+.hrjust-map__chip {
+  /* was: rgba(10, 34, 59, 0.03) */
+  background: rgba(10, 34, 59, 0.06);
+}
+
+/* Optional: code pill a bit darker for contrast */
+:deep(.hrjust-case__code) {
+  /* was: rgba(0, 0, 0, 0.06) */
+  background: rgba(0, 0, 0, 0.10);
+}
+
 </style>
