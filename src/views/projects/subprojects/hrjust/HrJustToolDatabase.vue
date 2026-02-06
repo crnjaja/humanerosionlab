@@ -379,22 +379,37 @@
             </div>
           </div>
 
-          <template v-if="c.external_case_link || c.literature_reference">
-            <div class="hrjust-case__divider"></div>
-            <div class="hrjust-case__section">
-              <div class="hrjust-case__sectionTitle">References</div>
+<template v-if="c.external_case_link || c.literature_reference">
+  <div class="hrjust-case__divider"></div>
+  <div class="hrjust-case__section">
+    <div class="hrjust-case__sectionTitle">References</div>
 
-              <div v-if="c.external_case_link" class="hrjust-case__highlight">
-                <strong>External Case Link:</strong>
-                <code class="hrjust-case__code">{{ String(c.external_case_link).trim() }}</code>
-              </div>
+    <div v-if="c.external_case_link" class="hrjust-case__highlight">
+      <strong>External Case Link:</strong>
+      <a
+        class="hrjust-case__link"
+        :href="String(c.external_case_link).trim()"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        open
+      </a>
+    </div>
 
-              <div v-if="c.literature_reference" class="hrjust-case__highlight">
-                <strong>Literature Reference:</strong>
-                <code class="hrjust-case__code">{{ String(c.literature_reference).trim() }}</code>
-              </div>
-            </div>
-          </template>
+    <div v-if="c.literature_reference" class="hrjust-case__highlight">
+      <strong>Literature Reference:</strong>
+      <a
+        class="hrjust-case__link"
+        :href="String(c.literature_reference).trim()"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        open
+      </a>
+    </div>
+  </div>
+</template>
+
         </div>
       </div>
       <!-- Bottom summary + pagination -->
@@ -1278,5 +1293,24 @@ onMounted(async () => {
   /* was: rgba(0, 0, 0, 0.06) */
   background: rgba(0, 0, 0, 0.10);
 }
+
+:deep(.hrjust-case__link) {
+  margin-left: 10px;
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--ig-border-soft);
+  background: rgba(10, 34, 59, 0.06);
+  color: var(--ig-accent);
+  text-decoration: none;
+  border-radius: 0;
+  font-size: 12.5px;
+  font-weight: 900;
+}
+
+:deep(.hrjust-case__link:hover) {
+  background: rgba(10, 34, 59, 0.10);
+  text-decoration: underline;
+}
+
 
 </style>

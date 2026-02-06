@@ -184,23 +184,30 @@ function showCase(caseName) {
       `<div class="hrjust-case__highlight"><strong>Proceedings Status:</strong> ${htmlEscape(d.status)}</div>`,
     )
 
-  const refs = []
-  if (d.externalLink) {
-    refs.push(`
-      <div class="hrjust-case__highlight">
-        <strong>External Case Link:</strong>
-        <code class="hrjust-case__code">${htmlEscape(String(d.externalLink).trim())}</code>
-      </div>
-    `)
-  }
-  if (d.literatureReference) {
-    refs.push(`
-      <div class="hrjust-case__highlight">
-        <strong>Literature Reference:</strong>
-        <code class="hrjust-case__code">${htmlEscape(String(d.literatureReference).trim())}</code>
-      </div>
-    `)
-  }
+const refs = []
+if (d.externalLink) {
+  const url = String(d.externalLink).trim()
+  refs.push(`
+    <div class="hrjust-case__highlight">
+      <strong>External Case Link:</strong>
+      <a class="hrjust-case__link" href="${htmlEscape(url)}" target="_blank" rel="noopener noreferrer">
+        link
+      </a>
+    </div>
+  `)
+}
+if (d.literatureReference) {
+  const url = String(d.literatureReference).trim()
+  refs.push(`
+    <div class="hrjust-case__highlight">
+      <strong>Literature Reference:</strong>
+      <a class="hrjust-case__link" href="${htmlEscape(url)}" target="_blank" rel="noopener noreferrer">
+        link
+      </a>
+    </div>
+  `)
+}
+
 
   caseEl.value.innerHTML = `
     <div class="hrjust-case">
@@ -779,5 +786,24 @@ onBeforeUnmount(() => {
   /* was: rgba(0, 0, 0, 0.06) */
   background: rgba(0, 0, 0, 0.10);
 }
+
+:deep(.hrjust-case__link) {
+  margin-left: 10px;
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--ig-border-soft);
+  background: rgba(10, 34, 59, 0.06);
+  color: var(--ig-accent);
+  text-decoration: none;
+  border-radius: 0;
+  font-size: 12.5px;
+  font-weight: 900;
+}
+
+:deep(.hrjust-case__link:hover) {
+  background: rgba(10, 34, 59, 0.10);
+  text-decoration: underline;
+}
+
 
 </style>
