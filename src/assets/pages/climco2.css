@@ -1,6 +1,6 @@
 /* =========================
    CLI-M-CO2 PAGE – Minimal modern panel
-   (clone of GEM / HRJust)
+   (clone of GEM / HRJust) + Collapsible icon rail
    ========================= */
 
 .climco2-page {
@@ -8,6 +8,7 @@
   --hrjust-panel-top: calc(var(--header-h, 72px) + 12px);
   --hrjust-panel-h: calc(100vh - var(--hrjust-panel-top) - 12px);
 
+  /* Tokens (same as HRJust/GEM) */
   --hrjust-surface: #ffffff;
   --hrjust-border: rgba(10, 34, 59, 0.12);
   --hrjust-border-soft: rgba(10, 34, 59, 0.08);
@@ -18,7 +19,10 @@
   --hrjust-active: rgba(174, 12, 54, 0.08);
 }
 
-/* Panel frame */
+/* =========================
+   PANEL FRAME
+   ========================= */
+
 .climco2-page .hrjust-panel {
   display: grid;
   grid-template-columns: var(--hrjust-nav-w) minmax(0, 1fr);
@@ -33,7 +37,15 @@
   overflow: visible;
 }
 
-/* LEFT MENU */
+/* Collapsed width (icon rail) */
+.climco2-page .hrjust-panel.is-collapsed {
+  grid-template-columns: 86px minmax(0, 1fr);
+}
+
+/* =========================
+   LEFT MENU
+   ========================= */
+
 .climco2-page .hrjust-panel__menu {
   position: relative;
   height: 100%;
@@ -46,7 +58,10 @@
   overscroll-behavior: contain;
 }
 
-/* RIGHT CONTENT */
+/* =========================
+   RIGHT CONTENT
+   ========================= */
+
 .climco2-page .hrjust-panel__content {
   height: auto;
   overflow: visible;
@@ -56,7 +71,10 @@
   background: #ffffff;
 }
 
-/* NAV HEADER */
+/* =========================
+   NAV HEADER
+   ========================= */
+
 .climco2-page .hrjust-navhead {
   display: grid;
   gap: 6px;
@@ -65,6 +83,21 @@
   margin-bottom: 14px;
 
   border-bottom: 1px solid var(--hrjust-border-soft);
+}
+
+/* Header top row (meta + toggle) */
+.climco2-page .hrjust-navhead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Meta wrapper (Project + title) */
+.climco2-page .hrjust-navhead__meta {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
 }
 
 .climco2-page .hrjust-navhead__kicker {
@@ -83,6 +116,7 @@
   line-height: 1.1;
 }
 
+/* Accent rule */
 .climco2-page .hrjust-navhead__rule {
   height: 2px;
   width: 42px;
@@ -91,7 +125,10 @@
   margin-top: 4px;
 }
 
-/* NAV STRUCTURE */
+/* =========================
+   NAV STRUCTURE
+   ========================= */
+
 .climco2-page .hrjust-nav {
   display: grid;
   gap: 18px;
@@ -119,7 +156,10 @@
   gap: 6px;
 }
 
-/* NAV TILE */
+/* =========================
+   NAV TILE (with icon column)
+   ========================= */
+
 .climco2-page .hrjust-nav-tile {
   width: 100%;
   appearance: none;
@@ -134,7 +174,7 @@
   padding: 10px 10px;
 
   display: grid;
-  grid-template-columns: 6px minmax(0, 1fr) auto;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
 
@@ -144,12 +184,30 @@
     transform 140ms ease;
 }
 
+/* IMPORTANT: remove the vertical marker line always */
 .climco2-page .hrjust-nav-tile__mark {
-  width: 4px;
-  height: 34px;
-  background: rgba(10, 34, 59, 0.08);
+  display: none !important;
 }
 
+/* Icon box */
+.climco2-page .hrjust-nav-tile__icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(10, 34, 59, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.climco2-page .hrjust-nav-tile__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: rgba(11, 31, 51, 0.72);
+}
+
+/* Text block */
 .climco2-page .hrjust-nav-tile__text {
   display: grid;
   gap: 2px;
@@ -181,6 +239,7 @@
   text-overflow: ellipsis;
 }
 
+/* Right “inversed L” corner icon */
 .climco2-page .hrjust-nav-tile__chev {
   width: 14px;
   height: 14px;
@@ -192,6 +251,7 @@
   opacity: 0.9;
 }
 
+/* draw the corner */
 .climco2-page .hrjust-nav-tile__chev::before {
   content: '';
   position: absolute;
@@ -200,25 +260,25 @@
   border-top: 2px solid currentColor;
 }
 
+/* hover motion */
 .climco2-page .hrjust-nav-tile:hover .hrjust-nav-tile__chev {
   transform: translateX(2px);
   opacity: 1;
 }
 
-.climco2-page .hrjust-nav-tile.is-active .hrjust-nav-tile__chev {
-  color: rgba(174, 12, 54, 0.55);
-}
-
+/* Hover */
 .climco2-page .hrjust-nav-tile:hover {
   background: var(--hrjust-hover);
   border-color: var(--hrjust-border-soft);
 }
 
+/* Focus */
 .climco2-page .hrjust-nav-tile:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
+/* Active (expanded): keep your theme active background */
 .climco2-page .hrjust-nav-tile.is-active {
   background: var(--hrjust-active);
   border-color: rgba(174, 12, 54, 0.28);
@@ -228,11 +288,60 @@
   font-weight: 950;
 }
 
-.climco2-page .hrjust-nav-tile.is-active .hrjust-nav-tile__mark {
-  background: linear-gradient(180deg, var(--hrjust-accent), var(--hrjust-accent-2));
+.climco2-page .hrjust-nav-tile.is-active .hrjust-nav-tile__chev {
+  color: rgba(174, 12, 54, 0.55);
 }
 
-/* EMPTY STATE */
+/* Sub-items (if used later) */
+.climco2-page .hrjust-nav-tile--sub {
+  padding-left: 14px;
+}
+
+/* =========================
+   COLLAPSED MODE
+   - hide titles + text + chev
+   - icon centered
+   - ONLY icon is colored for active
+   ========================= */
+
+.climco2-page .hrjust-panel.is-collapsed .hrjust-navhead__meta,
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav__title,
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav-tile__text,
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav-tile__chev {
+  display: none;
+}
+
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav-tile {
+  gap: 0;
+  height: 56px;
+  padding: 0;
+  grid-template-columns: 1fr;
+}
+
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav-tile__icon {
+  justify-self: center;
+  align-self: center;
+}
+
+/* collapsed: remove tile active background, only color icon */
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav-tile.is-active {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav-tile.is-active .hrjust-nav-tile__icon {
+  border-color: rgba(174, 12, 54, 0.28);
+  background: var(--hrjust-active, rgba(174, 12, 54, 0.08));
+}
+
+.climco2-page .hrjust-panel.is-collapsed .hrjust-nav-tile.is-active .hrjust-nav-tile__icon svg {
+  fill: rgba(174, 12, 54, 0.85);
+}
+
+/* =========================
+   EMPTY STATE (optional)
+   ========================= */
+
 .climco2-page .hrjust-empty {
   border: 1px dashed var(--hrjust-border);
   background: rgba(10, 34, 59, 0.02);
@@ -250,12 +359,19 @@
   line-height: 1.6;
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+   ========================= */
+
 @media (max-width: 980px) {
   .climco2-page .hrjust-panel {
     grid-template-columns: 1fr;
     height: auto;
     overflow: visible;
+  }
+
+  .climco2-page .hrjust-panel.is-collapsed {
+    grid-template-columns: 1fr;
   }
 
   .climco2-page .hrjust-panel__menu {
@@ -271,7 +387,10 @@
   }
 }
 
-/* Keep spacing helpers (same behavior as GEM) */
+/* =========================
+   SPACING HELPERS (same behavior)
+   ========================= */
+
 .climco2-page .content-block {
   padding-top: 32px;
   padding-bottom: 110px;

@@ -1,10 +1,27 @@
 <template>
-  <div class="hrjust-panel">
-    <!-- LEFT NAV (pinned inside the panel) -->
+  <div class="hrjust-panel" :class="{ 'is-collapsed': isMenuCollapsed }">
+    <!-- LEFT NAV -->
     <aside class="hrjust-panel__menu" aria-label="Project navigation">
       <div class="hrjust-navhead">
-        <div class="hrjust-navhead__kicker">Project</div>
-        <div class="hrjust-navhead__title">GEM</div>
+        <div class="hrjust-navhead__top">
+          <div class="hrjust-navhead__meta">
+            <div class="hrjust-navhead__kicker">Project</div>
+            <div class="hrjust-navhead__title">GEM</div>
+          </div>
+
+          <!-- Toggle -->
+          <button
+            type="button"
+            class="hrjust-menu-toggle"
+            :aria-expanded="String(!isMenuCollapsed)"
+            :aria-label="isMenuCollapsed ? 'Expand navigation' : 'Collapse navigation'"
+            title="Toggle menu"
+            @click="toggleMenu"
+          >
+            <span class="hrjust-menu-toggle__icon" aria-hidden="true"></span>
+          </button>
+        </div>
+
         <div class="hrjust-navhead__rule" aria-hidden="true"></div>
       </div>
 
@@ -13,15 +30,23 @@
           <div class="hrjust-nav__title">Details</div>
 
           <ul class="hrjust-nav__list">
-            <!-- Overview (Tile launcher) -->
+            <!-- Overview -->
             <li>
               <button
                 type="button"
                 class="hrjust-nav-tile"
                 :class="{ 'is-active': active === 'overview' }"
+                :title="isMenuCollapsed ? 'Overview' : null"
                 @click="setActive('overview')"
               >
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 3l9 8h-3v10h-5v-6H11v6H6V11H3l9-8z" />
+                  </svg>
+                </span>
+
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
                     <strong v-if="active === 'overview'">Overview</strong>
@@ -29,18 +54,31 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Quick access to key sections</span>
                 </span>
+
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
+            <!-- Description -->
             <li>
               <button
                 type="button"
                 class="hrjust-nav-tile"
                 :class="{ 'is-active': active === 'description' }"
+                :title="isMenuCollapsed ? 'Description' : null"
                 @click="setActive('description')"
               >
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1v5h5"
+                    />
+                    <path d="M7 13h10M7 17h10M7 9h6" />
+                  </svg>
+                </span>
+
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
                     <strong v-if="active === 'description'">Description</strong>
@@ -48,18 +86,28 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Scope, method, outputs</span>
                 </span>
+
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
+            <!-- At a Glance -->
             <li>
               <button
                 type="button"
                 class="hrjust-nav-tile"
                 :class="{ 'is-active': active === 'glance' }"
+                :title="isMenuCollapsed ? 'At a Glance' : null"
                 @click="setActive('glance')"
               >
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z" />
+                  </svg>
+                </span>
+
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
                     <strong v-if="active === 'glance'">At a Glance</strong>
@@ -67,18 +115,28 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Quick snapshot + key facts</span>
                 </span>
+
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
+            <!-- Team -->
             <li>
               <button
                 type="button"
                 class="hrjust-nav-tile"
                 :class="{ 'is-active': active === 'team' }"
+                :title="isMenuCollapsed ? 'Team' : null"
                 @click="setActive('team')"
               >
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zm-14 11a7 7 0 0 1 20 0H2z" />
+                  </svg>
+                </span>
+
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
                     <strong v-if="active === 'team'">Team</strong>
@@ -86,6 +144,68 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">People, roles, partners</span>
                 </span>
+
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
+              </button>
+            </li>
+
+            <!-- Publications -->
+            <li>
+              <button
+                type="button"
+                class="hrjust-nav-tile"
+                :class="{ 'is-active': active === 'publications' }"
+                :title="isMenuCollapsed ? 'Publications' : null"
+                @click="setActive('publications')"
+              >
+                <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 3h12a3 3 0 0 1 3 3v15a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2V3z" />
+                    <path d="M6 5h10M6 8h10M6 11h10" />
+                  </svg>
+                </span>
+
+                <span class="hrjust-nav-tile__text">
+                  <span class="hrjust-nav-tile__label">
+                    <strong v-if="active === 'publications'">Publications</strong>
+                    <span v-else>Publications</span>
+                  </span>
+                  <span class="hrjust-nav-tile__desc">Reports, outputs, articles</span>
+                </span>
+
+                <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
+              </button>
+            </li>
+
+            <!-- Events -->
+            <li>
+              <button
+                type="button"
+                class="hrjust-nav-tile"
+                :class="{ 'is-active': active === 'events' }"
+                :title="isMenuCollapsed ? 'Events' : null"
+                @click="setActive('events')"
+              >
+                <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm14 8H3V8h18v2z"
+                    />
+                  </svg>
+                </span>
+
+                <span class="hrjust-nav-tile__text">
+                  <span class="hrjust-nav-tile__label">
+                    <strong v-if="active === 'events'">Events</strong>
+                    <span v-else>Events</span>
+                  </span>
+                  <span class="hrjust-nav-tile__desc">Activities and participation</span>
+                </span>
+
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
@@ -96,14 +216,24 @@
           <div class="hrjust-nav__title">Tools</div>
 
           <ul class="hrjust-nav__list">
+            <!-- Map -->
             <li>
               <button
                 type="button"
                 class="hrjust-nav-tile hrjust-nav-tile--sub"
                 :class="{ 'is-active': active === 'map' }"
+                :title="isMenuCollapsed ? 'Interactive Map' : null"
                 @click="setActive('map')"
               >
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z" />
+                    <path d="M9 3v15M15 6v15" />
+                  </svg>
+                </span>
+
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
                     <strong v-if="active === 'map'">Interactive Map</strong>
@@ -111,18 +241,28 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Indicators and metrics</span>
                 </span>
+
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
 
+            <!-- Infographics -->
             <li>
               <button
                 type="button"
                 class="hrjust-nav-tile hrjust-nav-tile--sub"
                 :class="{ 'is-active': active === 'info' }"
+                :title="isMenuCollapsed ? 'Infographics' : null"
                 @click="setActive('info')"
               >
                 <span class="hrjust-nav-tile__mark" aria-hidden="true"></span>
+
+                <span class="hrjust-nav-tile__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 19V5h2v14H4zm7 0V9h2v10h-2zm7 0V3h2v16h-2z" />
+                  </svg>
+                </span>
+
                 <span class="hrjust-nav-tile__text">
                   <span class="hrjust-nav-tile__label">
                     <strong v-if="active === 'info'">Infographics</strong>
@@ -130,6 +270,7 @@
                   </span>
                   <span class="hrjust-nav-tile__desc">Charts and key insights</span>
                 </span>
+
                 <span class="hrjust-nav-tile__chev" aria-hidden="true"></span>
               </button>
             </li>
@@ -138,12 +279,10 @@
       </nav>
     </aside>
 
-    <!-- RIGHT CONTENT (scrolls inside the panel only) -->
+    <!-- RIGHT CONTENT -->
     <section class="hrjust-panel__content" aria-live="polite">
-      <!-- Overview tile launcher -->
       <div v-if="active === 'overview'" class="hrjust-launch" aria-label="Quick access tiles">
         <template v-for="tile in launchTiles" :key="tile.id">
-          <!-- External link tile -->
           <a
             v-if="tile.isExternal"
             class="hrjust-launch-tile"
@@ -168,7 +307,6 @@
             </span>
           </a>
 
-          <!-- Internal tile -->
           <button
             v-else
             type="button"
@@ -203,10 +341,12 @@ import GemEvents from './GemEvents.vue'
 import GemToolMap from './GemToolMap.vue'
 import GemToolInfographics from './GemToolInfographics.vue'
 
-/**
- * ✅ Default is "overview" so the tile launcher is shown on page load
- */
 const active = ref('overview')
+const isMenuCollapsed = ref(false)
+
+function toggleMenu() {
+  isMenuCollapsed.value = !isMenuCollapsed.value
+}
 
 const componentMap = {
   glance: GemAtGlance,
@@ -218,9 +358,6 @@ const componentMap = {
   info: GemToolInfographics,
 }
 
-/**
- * ✅ Overview is not a component; it renders the tile launcher.
- */
 const activeComponent = computed(() => {
   if (!active.value || active.value === 'overview') return null
   return componentMap[active.value] ?? null
@@ -230,9 +367,6 @@ function setActive(key) {
   active.value = key
 }
 
-/**
- * ✅ Tile images (replace with GEM-specific assets whenever you want)
- */
 const tileImages = {
   description: '/images/tiles/GemDescription.png',
   glance: '/images/tiles/xx.jpg',
@@ -248,8 +382,6 @@ const launchTiles = computed(() => {
   const tiles = [
     { id: 'g1', title: 'Description', target: 'description', img: tileImages.description },
     { id: 'g2', title: 'At a Glance', target: 'glance', img: tileImages.glance },
-
-    // Optional external link
     {
       id: 'g3',
       title: 'Project Website',
@@ -257,7 +389,6 @@ const launchTiles = computed(() => {
       href: '#',
       img: tileImages.website,
     },
-
     { id: 'g4', title: 'Team', target: 'team', img: tileImages.team },
     { id: 'g5', title: 'Publications', target: 'publications', img: tileImages.publications },
     { id: 'g6', title: 'Events', target: 'events', img: tileImages.events },
@@ -275,7 +406,134 @@ const launchTiles = computed(() => {
 </script>
 
 <style scoped>
-/* ✅ Keep EXACT same launcher styling as HRJust */
+/* =========================================================
+   COLLAPSIBLE LAYOUT + ICON RAIL (same as HRJust)
+   ========================================================= */
+
+.hrjust-panel {
+  display: grid;
+  grid-template-columns: var(--hrjust-nav-w, 300px) minmax(0, 1fr);
+  gap: 0;
+}
+.hrjust-panel.is-collapsed {
+  grid-template-columns: 86px minmax(0, 1fr);
+}
+
+.hrjust-navhead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hrjust-menu-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  border: 1px solid var(--hrjust-border, rgba(10, 34, 59, 0.12));
+  background: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.hrjust-menu-toggle__icon {
+  width: 18px;
+  height: 12px;
+  position: relative;
+  display: inline-block;
+}
+.hrjust-menu-toggle__icon::before,
+.hrjust-menu-toggle__icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.72);
+}
+.hrjust-menu-toggle__icon::before {
+  top: 0;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.72);
+}
+.hrjust-menu-toggle__icon::after {
+  bottom: 0;
+}
+
+.hrjust-nav-tile__icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(10, 34, 59, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ✅ OUTLINE ICON SYSTEM (no fill, stroke only) */
+.hrjust-nav-tile__icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+
+  fill: none !important;
+  stroke: rgba(11, 31, 51, 0.72);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ✅ active state (expanded + collapsed): change stroke, not fill */
+:deep(.hrjust-nav-tile.is-active) .hrjust-nav-tile__icon svg {
+  fill: none !important;
+  stroke: rgba(174, 12, 54, 0.85);
+}
+
+/* ✅ collapsed: keep your icon background highlight */
+.hrjust-panel.is-collapsed :deep(.hrjust-nav-tile.is-active) .hrjust-nav-tile__icon svg {
+  fill: none !important;
+  stroke: rgba(174, 12, 54, 0.85);
+}
+
+/* collapsed mode hides text + section titles + chevron */
+.hrjust-panel.is-collapsed :deep(.hrjust-navhead__meta),
+.hrjust-panel.is-collapsed :deep(.hrjust-nav__title),
+.hrjust-panel.is-collapsed :deep(.hrjust-nav-tile__text),
+.hrjust-panel.is-collapsed :deep(.hrjust-nav-tile__chev) {
+  display: none;
+}
+
+.hrjust-panel.is-collapsed :deep(.hrjust-nav-tile) {
+  grid-template-columns: 1fr;
+  gap: 0;
+  height: 56px;
+  padding: 0;
+}
+
+/* remove vertical mark everywhere */
+:deep(.hrjust-nav-tile__mark) {
+  display: none;
+}
+
+.hrjust-panel.is-collapsed .hrjust-nav-tile__icon {
+  justify-self: center;
+  align-self: center;
+}
+
+/* collapsed: only icon gets active color */
+.hrjust-panel.is-collapsed :deep(.hrjust-nav-tile.is-active) {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+.hrjust-panel.is-collapsed :deep(.hrjust-nav-tile.is-active) .hrjust-nav-tile__icon {
+  border-color: rgba(174, 12, 54, 0.28);
+  background: var(--hrjust-active, rgba(174, 12, 54, 0.08));
+}
+
+/* =========================================================
+   OVERVIEW CARDS + SVG size hard-fix (same as HRJust)
+   ========================================================= */
+
 .hrjust-launch {
   padding: 18px;
   display: grid;
@@ -321,7 +579,6 @@ const launchTiles = computed(() => {
   border-color: rgba(0, 0, 0, 0.16);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
-
 .hrjust-launch-tile:active {
   transform: translateY(0);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
@@ -354,6 +611,26 @@ const launchTiles = computed(() => {
   letter-spacing: 0.2px;
   font-size: 16px;
   line-height: 1.15;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ✅ prevent "giant svg" bug */
+.hrjust-launch-tile__ext {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(1px);
+  opacity: 0.95;
+}
+.hrjust-launch-tile__ext svg {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  display: block !important;
+  fill: currentColor !important;
 }
 
 .hrjust-launch-tile:focus-visible {
@@ -361,27 +638,8 @@ const launchTiles = computed(() => {
   outline-offset: 2px;
 }
 
-.hrjust-panel__content {
-  overflow: auto;
-}
-
 a.hrjust-launch-tile {
   text-decoration: none;
   color: inherit;
-}
-
-.hrjust-launch-tile__ext {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 8px;
-  transform: translateY(1px);
-  opacity: 0.95;
-}
-
-.hrjust-launch-tile__ext svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
 }
 </style>

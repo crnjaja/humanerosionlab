@@ -153,7 +153,7 @@
   padding: 10px 10px;
 
   display: grid;
-  grid-template-columns: 6px minmax(0, 1fr) auto;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
 
@@ -165,9 +165,7 @@
 
 /* slim marker, not “big pill” */
 .hrjust-page .hrjust-nav-tile__mark {
-  width: 4px;
-  height: 34px;
-  background: rgba(10, 34, 59, 0.08);
+  display: none;
 }
 
 /* text block */
@@ -225,11 +223,6 @@
 .hrjust-page .hrjust-nav-tile:hover .hrjust-nav-tile__chev {
   transform: translateX(2px);
   opacity: 1;
-}
-
-/* active state slightly stronger */
-.hrjust-page .hrjust-nav-tile.is-active .hrjust-nav-tile__chev {
-  color: rgba(174, 12, 54, 0.55);
 }
 
 /* Hover: calm, no “card lift” */
