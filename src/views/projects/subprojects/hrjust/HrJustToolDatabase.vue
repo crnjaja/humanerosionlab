@@ -13,426 +13,705 @@
         </p>
       </div>
 
-      <!-- Filters toolbar (horizontal) -->
-      <div class="hrjust-db__filters" role="region" aria-label="Database filters">
-        <div class="hrjust-db__filtersRow">
-          <div class="hrjust-db__field">
-            <label class="hrjust-db__label" for="f-country">Country</label>
-            <select id="f-country" v-model="filters.country" class="hrjust-db__select">
-              <option value="">All</option>
-              <option v-for="c in options.countries" :key="c" :value="c">{{ c }}</option>
-            </select>
-          </div>
-
-          <div class="hrjust-db__field">
-            <label class="hrjust-db__label" for="f-scope">Scope</label>
-            <select id="f-scope" v-model="filters.nature" class="hrjust-db__select">
-              <option value="">All</option>
-              <option v-for="n in options.natures" :key="n" :value="n">{{ n }}</option>
-            </select>
-          </div>
-
-          <div class="hrjust-db__field">
-            <label class="hrjust-db__label" for="f-claimant">Claimant type</label>
-            <select id="f-claimant" v-model="filters.claimantType" class="hrjust-db__select">
-              <option value="">All</option>
-              <option v-for="v in options.claimantTypes" :key="v" :value="v">{{ v }}</option>
-            </select>
-          </div>
-
-          <div class="hrjust-db__field">
-            <label class="hrjust-db__label" for="f-respondent">Respondent type</label>
-            <select id="f-respondent" v-model="filters.respondentType" class="hrjust-db__select">
-              <option value="">All</option>
-              <option v-for="v in options.respondentTypes" :key="v" :value="v">{{ v }}</option>
-            </select>
-          </div>
-
-          <div class="hrjust-db__field hrjust-db__field--search">
-            <label class="hrjust-db__label" for="f-search">Search</label>
-            <div class="hrjust-db__searchWrap">
-              <input
-                id="f-search"
-                v-model.trim="filters.search"
-                class="hrjust-db__input"
-                type="text"
-                placeholder="Search by key words..."
-              />
-              <span class="hrjust-db__searchIcon" aria-hidden="true">⌕</span>
-            </div>
-          </div>
-
-          <label class="hrjust-db__toggle">
-            <input type="checkbox" v-model="filters.decisionOnly" />
-            <span>Only cases with a <strong>Decision</strong></span>
-          </label>
-
-          <button type="button" class="hrjust-db__btn" @click="toggleAdvanced">
-            {{ showAdvanced ? 'Hide' : 'Show' }} advanced
+      <!-- =========================
+           DETAIL VIEW — clean, linear, column-based like screenshot
+           ========================= -->
+      <div v-if="selectedCase" class="hrjust-detail">
+        <div class="hrjust-detail__topbar">
+          <button type="button" class="hrjust-detail__back" @click="closeCase()">
+            ← Back to results
           </button>
 
-          <button type="button" class="hrjust-db__btn hrjust-db__btn--ghost" @click="resetAll">
-            Reset
-          </button>
+          <div class="hrjust-detail__rightActions">
+            <a
+              v-if="safeUrl(selectedCase.external_case_link)"
+              class="hrjust-detail__linkStrong"
+              :href="safeUrl(selectedCase.external_case_link)"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link to the full text of the decision ↗
+            </a>
+            <span v-else class="hrjust-detail__linkStrong hrjust-detail__linkStrong--empty">
+              Link to the full text of the decision: Not provided
+            </span>
+          </div>
         </div>
 
-        <!-- Advanced (chips + clickable options, no search) -->
-        <div v-show="showAdvanced" class="hrjust-db__advanced">
-          <div class="hrjust-db__advancedGrid">
-            <!-- Civil Society -->
-            <div class="hrjust-db__advCard">
-              <div class="hrjust-db__advHead">
-                <div class="hrjust-db__advTitle">Civil society engagement</div>
-                <button
-                  type="button"
-                  class="hrjust-db__advClear"
-                  @click="filters.civilSociety = []"
-                >
-                  Clear
-                </button>
-              </div>
+        <!-- Title area (no box) -->
+        <div class="hrjust-detail__heading">
+          <h2 class="hrjust-detail__title">
+            {{ selectedCase.case_name || 'Untitled case' }}
+          </h2>
 
-              <div class="hrjust-db__chips">
-                <button
-                  v-for="chip in filters.civilSociety"
-                  :key="chip"
-                  type="button"
-                  class="hrjust-db__chip"
-                  @click="removeChip('civilSociety', chip)"
-                  :title="`Remove ${chip}`"
-                >
-                  {{ chip }} <span aria-hidden="true">×</span>
-                </button>
-                <span v-if="!filters.civilSociety.length" class="hrjust-db__chipsEmpty"
-                  >No selection</span
-                >
-              </div>
+          <!-- Original title: show only when provided -->
+          <div v-if="hasOriginalTitle(selectedCase)" class="hrjust-detail__subtitle">
+            <span class="hrjust-detail__subtitleLabel">Original title</span>
+            <span class="hrjust-detail__subtitleValue">
+              {{ String(selectedCase.case_name_original).trim() }}
+            </span>
+          </div>
 
-              <div class="hrjust-db__options">
-                <button
-                  v-for="o in remainingOptions('civilSociety')"
-                  :key="o"
-                  type="button"
-                  class="hrjust-db__opt"
-                  @click="addChip('civilSociety', o)"
-                  :title="`Add ${o}`"
-                >
-                  + {{ o }}
-                </button>
-                <div v-if="!remainingOptions('civilSociety').length" class="hrjust-db__pickerEmpty">
-                  All selected.
-                </div>
-              </div>
-            </div>
+          <!-- light meta line -->
+          <div class="hrjust-detail__metaLine">
+            <span class="hrjust-detail__metaItem">
+              <strong>Country:</strong>
+              <span :class="{ 'is-empty': isEmptyLike(selectedCase.respondent_country) }">
+                {{ displayValue(selectedCase.respondent_country, 'Unknown') }}
+              </span>
+            </span>
 
-            <!-- Human Rights -->
-            <div class="hrjust-db__advCard">
-              <div class="hrjust-db__advHead">
-                <div class="hrjust-db__advTitle">Human rights</div>
-                <button type="button" class="hrjust-db__advClear" @click="filters.humanRights = []">
-                  Clear
-                </button>
-              </div>
+            <span class="hrjust-detail__metaDot">•</span>
 
-              <div class="hrjust-db__chips">
-                <button
-                  v-for="chip in filters.humanRights"
-                  :key="chip"
-                  type="button"
-                  class="hrjust-db__chip"
-                  @click="removeChip('humanRights', chip)"
-                  :title="`Remove ${chip}`"
-                >
-                  {{ chip }} <span aria-hidden="true">×</span>
-                </button>
-                <span v-if="!filters.humanRights.length" class="hrjust-db__chipsEmpty"
-                  >No selection</span
-                >
-              </div>
+            <span class="hrjust-detail__metaItem">
+              <strong>Scope:</strong>
+              <span :class="{ 'is-empty': isEmptyLike(selectedCase.nature_of_case) }">
+                {{ displayValue(selectedCase.nature_of_case) }}
+              </span>
+            </span>
 
-              <div class="hrjust-db__options">
-                <button
-                  v-for="o in remainingOptions('humanRights')"
-                  :key="o"
-                  type="button"
-                  class="hrjust-db__opt"
-                  @click="addChip('humanRights', o)"
-                  :title="`Add ${o}`"
-                >
-                  + {{ o }}
-                </button>
-                <div v-if="!remainingOptions('humanRights').length" class="hrjust-db__pickerEmpty">
-                  All selected.
-                </div>
-              </div>
-            </div>
+            <span class="hrjust-detail__metaDot">•</span>
 
-            <!-- Justification Typology -->
-            <div class="hrjust-db__advCard">
-              <div class="hrjust-db__advHead">
-                <div class="hrjust-db__advTitle">Justification typology</div>
-                <button
-                  type="button"
-                  class="hrjust-db__advClear"
-                  @click="filters.justifications = []"
-                >
-                  Clear
-                </button>
-              </div>
+            <span class="hrjust-detail__metaItem">
+              <strong>Decision date:</strong>
+              <span :class="{ 'is-empty': isEmptyLike(selectedCase.decision_date) }">
+                {{ displayValue(selectedCase.decision_date) }}
+              </span>
+            </span>
+          </div>
+        </div>
 
-              <div class="hrjust-db__chips">
-                <button
-                  v-for="chip in filters.justifications"
-                  :key="chip"
-                  type="button"
-                  class="hrjust-db__chip"
-                  @click="removeChip('justifications', chip)"
-                  :title="`Remove ${chip}`"
-                >
-                  {{ chip }} <span aria-hidden="true">×</span>
-                </button>
-                <span v-if="!filters.justifications.length" class="hrjust-db__chipsEmpty"
-                  >No selection</span
-                >
-              </div>
+        <!-- =========================
+             CASE OVERVIEW
+             ========================= -->
+        <section class="hrjust-section">
+          <div class="hrjust-section__bar">
+            <h3 class="hrjust-section__title">Case overview</h3>
+          </div>
 
-              <div class="hrjust-db__options">
-                <button
-                  v-for="o in remainingOptions('justifications')"
-                  :key="o"
-                  type="button"
-                  class="hrjust-db__opt"
-                  @click="addChip('justifications', o)"
-                  :title="`Add ${o}`"
-                >
-                  + {{ o }}
-                </button>
+          <div class="hrjust-dlGrid">
+            <!-- Column 1 -->
+            <div class="hrjust-dlCol">
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Country</div>
                 <div
-                  v-if="!remainingOptions('justifications').length"
-                  class="hrjust-db__pickerEmpty"
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.respondent_country) }"
                 >
-                  All selected.
+                  {{ displayValue(selectedCase.respondent_country, 'Unknown') }}
+                </div>
+              </div>
+
+              <!-- Case ID intentionally removed -->
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Proceeding #</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.proceeding_number) }"
+                >
+                  {{ displayValue(selectedCase.proceeding_number) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Decision date</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.decision_date) }"
+                >
+                  {{ displayValue(selectedCase.decision_date) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Submission year</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.submission_year) }"
+                >
+                  {{ displayValue(selectedCase.submission_year) }}
                 </div>
               </div>
             </div>
 
-            <!-- Subtopics -->
-            <div class="hrjust-db__advCard">
-              <div class="hrjust-db__advHead">
-                <div class="hrjust-db__advTitle">Subtopics</div>
-                <button type="button" class="hrjust-db__advClear" @click="filters.subtopics = []">
-                  Clear
-                </button>
-              </div>
-
-              <div class="hrjust-db__chips">
-                <button
-                  v-for="chip in filters.subtopics"
-                  :key="chip"
-                  type="button"
-                  class="hrjust-db__chip"
-                  @click="removeChip('subtopics', chip)"
-                  :title="`Remove ${chip}`"
+            <!-- Column 2 -->
+            <div class="hrjust-dlCol">
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Type of body</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.court_type) }"
                 >
-                  {{ chip }} <span aria-hidden="true">×</span>
-                </button>
-                <span v-if="!filters.subtopics.length" class="hrjust-db__chipsEmpty"
-                  >No selection</span
-                >
-              </div>
-
-              <div class="hrjust-db__options">
-                <button
-                  v-for="o in remainingOptions('subtopics')"
-                  :key="o"
-                  type="button"
-                  class="hrjust-db__opt"
-                  @click="addChip('subtopics', o)"
-                  :title="`Add ${o}`"
-                >
-                  + {{ o }}
-                </button>
-                <div v-if="!remainingOptions('subtopics').length" class="hrjust-db__pickerEmpty">
-                  All selected.
+                  {{ displayValue(selectedCase.court_type) }}
                 </div>
               </div>
 
-              <div class="hrjust-db__advFoot">
-                <span class="hrjust-db__hint">
-                  The advanced filters allow you to select multiple options. Click on a selected
-                  option to remove it.
-                </span>
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Proceedings status</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.proceedings_status) }"
+                >
+                  {{ displayValue(selectedCase.proceedings_status) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Human rights involvement</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.humanrights_involvment) }"
+                >
+                  {{ displayValue(selectedCase.humanrights_involvment) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Court type</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.court_type) }"
+                >
+                  {{ displayValue(selectedCase.court_type) }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3 — Parties (single coherent style) -->
+            <div class="hrjust-dlCol">
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Claimant type</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.claimant_type) }"
+                >
+                  {{ displayValue(selectedCase.claimant_type) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Claimant</div>
+                <div class="hrjust-dd" :class="{ 'is-empty': isEmptyLike(selectedCase.claimant) }">
+                  {{ displayValue(selectedCase.claimant) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Respondent type</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.respondent_type) }"
+                >
+                  {{ displayValue(selectedCase.respondent_type) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Respondent</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.respondent) }"
+                >
+                  {{ displayValue(selectedCase.respondent) }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 4 -->
+            <div class="hrjust-dlCol">
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Civil society engagement</div>
+                <div class="hrjust-dd" :class="{ 'is-empty': !civilSocietyList.length }">
+                  <template v-if="civilSocietyList.length">
+                    <ul class="hrjust-inlineList">
+                      <li v-for="(t, i) in civilSocietyList" :key="`cs-${i}`">{{ t }}</li>
+                    </ul>
+                  </template>
+                  <template v-else>Not provided</template>
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Human rights catalogue</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': !asList(selectedCase.rights_catalogue).length }"
+                >
+                  <template v-if="asList(selectedCase.rights_catalogue).length">
+                    <ul class="hrjust-inlineList">
+                      <li v-for="(t, i) in asList(selectedCase.rights_catalogue)" :key="`rc-${i}`">
+                        {{ t }}
+                      </li>
+                    </ul>
+                  </template>
+                  <template v-else>Not provided</template>
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Justification typology</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.justification_typology) }"
+                >
+                  {{ displayValue(selectedCase.justification_typology) }}
+                </div>
+              </div>
+
+              <div class="hrjust-dl">
+                <div class="hrjust-dt">Justification subtypology</div>
+                <div
+                  class="hrjust-dd"
+                  :class="{ 'is-empty': isEmptyLike(selectedCase.justification_subtypology) }"
+                >
+                  {{ displayValue(selectedCase.justification_subtypology) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =========================
+             CASE ANALYSIS
+             ========================= -->
+        <section class="hrjust-section">
+          <div class="hrjust-section__bar">
+            <h3 class="hrjust-section__title">Case analysis</h3>
+          </div>
+
+          <div class="hrjust-linear">
+            <div class="hrjust-linearRow">
+              <div class="hrjust-linearK">General summary</div>
+              <div
+                class="hrjust-linearV"
+                :class="{ 'is-empty': isEmptyLike(selectedCase.summary) }"
+              >
+                {{ displayValue(selectedCase.summary, 'No summary provided.') }}
+              </div>
+            </div>
+
+            <div class="hrjust-linearRow">
+              <div class="hrjust-linearK">Violated rights</div>
+              <div
+                class="hrjust-linearV"
+                :class="{ 'is-empty': isEmptyLike(selectedCase.humanrights_violated) }"
+              >
+                {{ displayValue(selectedCase.humanrights_violated) }}
+              </div>
+            </div>
+
+            <div class="hrjust-linearRow">
+              <div class="hrjust-linearK">Notes</div>
+              <div class="hrjust-linearV" :class="{ 'is-empty': isEmptyLike(selectedCase.notes) }">
+                {{ displayValue(selectedCase.notes) }}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =========================
+             REFERENCES
+             ========================= -->
+        <section class="hrjust-section">
+          <div class="hrjust-section__bar">
+            <h3 class="hrjust-section__title">References</h3>
+          </div>
+
+          <div class="hrjust-linear">
+            <div class="hrjust-linearRow">
+              <div class="hrjust-linearK">External case link</div>
+              <div
+                class="hrjust-linearV"
+                :class="{ 'is-empty': !safeUrl(selectedCase.external_case_link) }"
+              >
+                <a
+                  v-if="safeUrl(selectedCase.external_case_link)"
+                  class="hrjust-link"
+                  :href="safeUrl(selectedCase.external_case_link)"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ safeUrl(selectedCase.external_case_link) }}
+                </a>
+                <span v-else>Not provided</span>
+              </div>
+            </div>
+
+            <div class="hrjust-linearRow">
+              <div class="hrjust-linearK">Literature reference</div>
+              <div
+                class="hrjust-linearV"
+                :class="{ 'is-empty': !asLinks(selectedCase.literature_reference).length }"
+              >
+                <template v-if="asLinks(selectedCase.literature_reference).length">
+                  <a
+                    v-for="(u, i) in asLinks(selectedCase.literature_reference)"
+                    :key="`lr-${i}`"
+                    class="hrjust-link"
+                    :href="u"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open source {{ i + 1 }}
+                  </a>
+                </template>
+                <span v-else>Not provided</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <details class="hrjust-raw">
+          <summary class="hrjust-raw__sum">Show raw record</summary>
+          <pre class="hrjust-raw__pre">{{ selectedCase }}</pre>
+        </details>
+      </div>
+
+      <!-- =========================
+           LIST VIEW (filters + results)
+           ========================= -->
+      <template v-else>
+        <!-- Filters toolbar (horizontal) -->
+        <div class="hrjust-db__filters" role="region" aria-label="Database filters">
+          <div class="hrjust-db__filtersRow">
+            <div class="hrjust-db__field">
+              <label class="hrjust-db__label" for="f-country">Country</label>
+              <select id="f-country" v-model="filters.country" class="hrjust-db__select">
+                <option value="">All</option>
+                <option v-for="c in options.countries" :key="c" :value="c">{{ c }}</option>
+              </select>
+            </div>
+
+            <div class="hrjust-db__field">
+              <label class="hrjust-db__label" for="f-scope">Scope</label>
+              <select id="f-scope" v-model="filters.nature" class="hrjust-db__select">
+                <option value="">All</option>
+                <option v-for="n in options.natures" :key="n" :value="n">{{ n }}</option>
+              </select>
+            </div>
+
+            <div class="hrjust-db__field">
+              <label class="hrjust-db__label" for="f-claimant">Claimant type</label>
+              <select id="f-claimant" v-model="filters.claimantType" class="hrjust-db__select">
+                <option value="">All</option>
+                <option v-for="v in options.claimantTypes" :key="v" :value="v">{{ v }}</option>
+              </select>
+            </div>
+
+            <div class="hrjust-db__field">
+              <label class="hrjust-db__label" for="f-respondent">Respondent type</label>
+              <select id="f-respondent" v-model="filters.respondentType" class="hrjust-db__select">
+                <option value="">All</option>
+                <option v-for="v in options.respondentTypes" :key="v" :value="v">{{ v }}</option>
+              </select>
+            </div>
+
+            <div class="hrjust-db__field hrjust-db__field--search">
+              <label class="hrjust-db__label" for="f-search">Search</label>
+              <div class="hrjust-db__searchWrap">
+                <input
+                  id="f-search"
+                  v-model.trim="filters.search"
+                  class="hrjust-db__input"
+                  type="text"
+                  placeholder="Search by key words..."
+                />
+                <span class="hrjust-db__searchIcon" aria-hidden="true">⌕</span>
+              </div>
+            </div>
+
+            <label class="hrjust-db__toggle">
+              <input type="checkbox" v-model="filters.decisionOnly" />
+              <span>Only cases with a <strong>Decision</strong></span>
+            </label>
+
+            <button type="button" class="hrjust-db__btn" @click="toggleAdvanced">
+              {{ showAdvanced ? 'Hide' : 'Show' }} advanced
+            </button>
+
+            <button type="button" class="hrjust-db__btn hrjust-db__btn--ghost" @click="resetAll">
+              Reset
+            </button>
+          </div>
+
+          <!-- Advanced (chips + clickable options, no search) -->
+          <div v-show="showAdvanced" class="hrjust-db__advanced">
+            <div class="hrjust-db__advancedGrid">
+              <!-- Civil Society -->
+              <div class="hrjust-db__advCard">
+                <div class="hrjust-db__advHead">
+                  <div class="hrjust-db__advTitle">Civil society engagement</div>
+                  <button
+                    type="button"
+                    class="hrjust-db__advClear"
+                    @click="filters.civilSociety = []"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <div class="hrjust-db__chips">
+                  <button
+                    v-for="chip in filters.civilSociety"
+                    :key="chip"
+                    type="button"
+                    class="hrjust-db__chip"
+                    @click="removeChip('civilSociety', chip)"
+                    :title="`Remove ${chip}`"
+                  >
+                    {{ chip }} <span aria-hidden="true">×</span>
+                  </button>
+                  <span v-if="!filters.civilSociety.length" class="hrjust-db__chipsEmpty"
+                    >No selection</span
+                  >
+                </div>
+
+                <div class="hrjust-db__options">
+                  <button
+                    v-for="o in remainingOptions('civilSociety')"
+                    :key="o"
+                    type="button"
+                    class="hrjust-db__opt"
+                    @click="addChip('civilSociety', o)"
+                    :title="`Add ${o}`"
+                  >
+                    + {{ o }}
+                  </button>
+                  <div
+                    v-if="!remainingOptions('civilSociety').length"
+                    class="hrjust-db__pickerEmpty"
+                  >
+                    All selected.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Human Rights -->
+              <div class="hrjust-db__advCard">
+                <div class="hrjust-db__advHead">
+                  <div class="hrjust-db__advTitle">Human rights</div>
+                  <button
+                    type="button"
+                    class="hrjust-db__advClear"
+                    @click="filters.humanRights = []"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <div class="hrjust-db__chips">
+                  <button
+                    v-for="chip in filters.humanRights"
+                    :key="chip"
+                    type="button"
+                    class="hrjust-db__chip"
+                    @click="removeChip('humanRights', chip)"
+                    :title="`Remove ${chip}`"
+                  >
+                    {{ chip }} <span aria-hidden="true">×</span>
+                  </button>
+                  <span v-if="!filters.humanRights.length" class="hrjust-db__chipsEmpty"
+                    >No selection</span
+                  >
+                </div>
+
+                <div class="hrjust-db__options">
+                  <button
+                    v-for="o in remainingOptions('humanRights')"
+                    :key="o"
+                    type="button"
+                    class="hrjust-db__opt"
+                    @click="addChip('humanRights', o)"
+                    :title="`Add ${o}`"
+                  >
+                    + {{ o }}
+                  </button>
+                  <div
+                    v-if="!remainingOptions('humanRights').length"
+                    class="hrjust-db__pickerEmpty"
+                  >
+                    All selected.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Justification Typology -->
+              <div class="hrjust-db__advCard">
+                <div class="hrjust-db__advHead">
+                  <div class="hrjust-db__advTitle">Justification typology</div>
+                  <button
+                    type="button"
+                    class="hrjust-db__advClear"
+                    @click="filters.justifications = []"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <div class="hrjust-db__chips">
+                  <button
+                    v-for="chip in filters.justifications"
+                    :key="chip"
+                    type="button"
+                    class="hrjust-db__chip"
+                    @click="removeChip('justifications', chip)"
+                    :title="`Remove ${chip}`"
+                  >
+                    {{ chip }} <span aria-hidden="true">×</span>
+                  </button>
+                  <span v-if="!filters.justifications.length" class="hrjust-db__chipsEmpty"
+                    >No selection</span
+                  >
+                </div>
+
+                <div class="hrjust-db__options">
+                  <button
+                    v-for="o in remainingOptions('justifications')"
+                    :key="o"
+                    type="button"
+                    class="hrjust-db__opt"
+                    @click="addChip('justifications', o)"
+                    :title="`Add ${o}`"
+                  >
+                    + {{ o }}
+                  </button>
+                  <div
+                    v-if="!remainingOptions('justifications').length"
+                    class="hrjust-db__pickerEmpty"
+                  >
+                    All selected.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subtopics -->
+              <div class="hrjust-db__advCard">
+                <div class="hrjust-db__advHead">
+                  <div class="hrjust-db__advTitle">Subtopics</div>
+                  <button type="button" class="hrjust-db__advClear" @click="filters.subtopics = []">
+                    Clear
+                  </button>
+                </div>
+
+                <div class="hrjust-db__chips">
+                  <button
+                    v-for="chip in filters.subtopics"
+                    :key="chip"
+                    type="button"
+                    class="hrjust-db__chip"
+                    @click="removeChip('subtopics', chip)"
+                    :title="`Remove ${chip}`"
+                  >
+                    {{ chip }} <span aria-hidden="true">×</span>
+                  </button>
+                  <span v-if="!filters.subtopics.length" class="hrjust-db__chipsEmpty"
+                    >No selection</span
+                  >
+                </div>
+
+                <div class="hrjust-db__options">
+                  <button
+                    v-for="o in remainingOptions('subtopics')"
+                    :key="o"
+                    type="button"
+                    class="hrjust-db__opt"
+                    @click="addChip('subtopics', o)"
+                    :title="`Add ${o}`"
+                  >
+                    + {{ o }}
+                  </button>
+                  <div v-if="!remainingOptions('subtopics').length" class="hrjust-db__pickerEmpty">
+                    All selected.
+                  </div>
+                </div>
+
+                <div class="hrjust-db__advFoot">
+                  <span class="hrjust-db__hint">
+                    The advanced filters allow you to select multiple options. Click on a selected
+                    option to remove it.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Summary + pagination -->
-      <div class="hrjust-db__summaryBar" aria-live="polite">
-        <div class="hrjust-db__summaryText">
-          Displaying {{ pageCountShown }} case notes of {{ filteredCases.length }} (Page
-          {{ currentPage }} of {{ totalPages }})
-        </div>
+        <!-- Summary + pagination -->
+        <div class="hrjust-db__summaryBar" aria-live="polite">
+          <div class="hrjust-db__summaryText">
+            Displaying {{ pageCountShown }} case notes of {{ filteredCases.length }} (Page
+            {{ currentPage }} of {{ totalPages }})
+          </div>
 
-        <div class="hrjust-db__pager" v-if="totalPages > 1">
-          <button class="hrjust-db__pagerBtn" :disabled="currentPage === 1" @click="currentPage--">
-            Previous
-          </button>
-          <div class="hrjust-db__pagerMid">Page {{ currentPage }} / {{ totalPages }}</div>
-          <button
-            class="hrjust-db__pagerBtn"
-            :disabled="currentPage === totalPages"
-            @click="currentPage++"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-
-      <!-- Results -->
-      <div v-if="!paginatedCases.length" class="hrjust-db__empty">No cases found.</div>
-
-      <div v-for="c in paginatedCases" :key="c.__key" class="hrjust-case">
-        <div class="hrjust-case__title">
-          {{ c.case_name || 'Untitled' }},
-          <span class="hrjust-case__country">{{ c.respondent_country || 'Unknown' }}</span>
-        </div>
-
-        <div class="hrjust-case__section">
-          <div class="hrjust-case__sectionTitle">Summary</div>
-          <div class="hrjust-case__highlight">
-            {{ c.summary || 'No summary provided.' }}
+          <div class="hrjust-db__pager" v-if="totalPages > 1">
+            <button
+              class="hrjust-db__pagerBtn"
+              :disabled="currentPage === 1"
+              @click="currentPage--"
+            >
+              Previous
+            </button>
+            <div class="hrjust-db__pagerMid">Page {{ currentPage }} / {{ totalPages }}</div>
+            <button
+              class="hrjust-db__pagerBtn"
+              :disabled="currentPage === totalPages"
+              @click="currentPage++"
+            >
+              Next
+            </button>
           </div>
         </div>
 
-        <div class="hrjust-case__divider"></div>
+        <!-- Results -->
+        <div v-if="!paginatedCases.length" class="hrjust-db__empty">No cases found.</div>
 
-        <button class="hrjust-db__toggleBtn" type="button" @click="toggleOpen(c.__key)">
-          {{ openMap[c.__key] ? 'Show less' : 'Show more' }}
-        </button>
+        <div v-for="c in paginatedCases" :key="c.__key" class="hrjust-case">
+          <div class="hrjust-case__title">
+            {{ c.case_name || 'Untitled' }},
+            <span class="hrjust-case__country">{{ c.respondent_country || 'Unknown' }}</span>
+          </div>
 
-        <div v-show="openMap[c.__key]" class="hrjust-db__details">
           <div class="hrjust-case__section">
-            <div class="hrjust-case__sectionTitle">Parties involved</div>
-            <div class="hrjust-case__grid">
-              <div class="hrjust-case__party">
-                <div class="hrjust-case__partyRole">Claimant</div>
-                <div class="hrjust-case__partyType">{{ c.claimant_type || 'N/A' }}</div>
-                <div class="hrjust-case__partyName">{{ c.claimant || 'N/A' }}</div>
-              </div>
-              <div class="hrjust-case__party">
-                <div class="hrjust-case__partyRole">Respondent</div>
-                <div class="hrjust-case__partyType">{{ c.respondent_type || 'N/A' }}</div>
-                <div class="hrjust-case__partyName">{{ c.respondent || 'N/A' }}</div>
-              </div>
+            <div class="hrjust-case__sectionTitle">Summary</div>
+            <div class="hrjust-case__highlight">
+              {{ c.summary || 'No summary provided.' }}
             </div>
           </div>
-
-          <template v-if="hasProceedings(c)">
-            <div class="hrjust-case__divider"></div>
-            <div class="hrjust-case__section">
-              <div class="hrjust-case__sectionTitle">Proceedings details</div>
-              <div class="hrjust-case__grid">
-                <div v-if="c.submission_year" class="hrjust-case__highlight">
-                  <strong>Submission Year:</strong> {{ c.submission_year }}
-                </div>
-                <div v-if="c.decision_date" class="hrjust-case__highlight">
-                  <strong>Decision Date:</strong> {{ c.decision_date }}
-                </div>
-                <div v-if="c.court_type" class="hrjust-case__highlight">
-                  <strong>Court Type:</strong> {{ c.court_type }}
-                </div>
-                <div v-if="c.proceedings_status" class="hrjust-case__highlight">
-                  <strong>Proceedings Status:</strong> {{ c.proceedings_status }}
-                </div>
-              </div>
-            </div>
-          </template>
 
           <div class="hrjust-case__divider"></div>
-          <div class="hrjust-case__section">
-            <div class="hrjust-case__sectionTitle">Civil society engagement</div>
-            <div class="hrjust-case__highlight">{{ c.civil_society_engagement || 'N/A' }}</div>
-          </div>
 
-          <div class="hrjust-case__divider"></div>
-          <div class="hrjust-case__section">
-            <div class="hrjust-case__sectionTitle">Human rights</div>
-            <div class="hrjust-case__highlight">
-              <strong>Catalogue:</strong> {{ c.rights_catalogue || 'N/A' }}
-            </div>
-            <div class="hrjust-case__highlight">
-              <strong>Violated Rights:</strong> {{ c.humanrights_violated || 'N/A' }}
-            </div>
-          </div>
-
-          <div class="hrjust-case__divider"></div>
-          <div class="hrjust-case__section">
-            <div class="hrjust-case__sectionTitle">Typology</div>
-            <div class="hrjust-case__highlight">
-              <strong>Justification Typology:</strong>
-              {{ formatJustifications(c.justification_typology) }}
-            </div>
-            <div v-if="c.justification_subtypology" class="hrjust-case__highlight">
-              <strong>Subtypology:</strong> {{ c.justification_subtypology }}
-            </div>
-          </div>
-
-<template v-if="c.external_case_link || c.literature_reference">
-  <div class="hrjust-case__divider"></div>
-  <div class="hrjust-case__section">
-    <div class="hrjust-case__sectionTitle">References</div>
-
-    <div v-if="c.external_case_link" class="hrjust-case__highlight">
-      <strong>External Case Link:</strong>
-      <a
-        class="hrjust-case__link"
-        :href="String(c.external_case_link).trim()"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        open
-      </a>
-    </div>
-
-    <div v-if="c.literature_reference" class="hrjust-case__highlight">
-      <strong>Literature Reference:</strong>
-      <a
-        class="hrjust-case__link"
-        :href="String(c.literature_reference).trim()"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        open
-      </a>
-    </div>
-  </div>
-</template>
-
-        </div>
-      </div>
-      <!-- Bottom summary + pagination -->
-      <div class="hrjust-db__summaryBar hrjust-db__summaryBar--bottom" aria-live="polite">
-        <div class="hrjust-db__summaryText">
-          Displaying {{ pageCountShown }} case notes of {{ filteredCases.length }} (Page
-          {{ currentPage }} of {{ totalPages }})
-        </div>
-
-        <div class="hrjust-db__pager" v-if="totalPages > 1">
-          <button class="hrjust-db__pagerBtn" :disabled="currentPage === 1" @click="currentPage--">
-            Previous
-          </button>
-          <div class="hrjust-db__pagerMid">Page {{ currentPage }} / {{ totalPages }}</div>
-          <button
-            class="hrjust-db__pagerBtn"
-            :disabled="currentPage === totalPages"
-            @click="currentPage++"
-          >
-            Next
+          <button class="hrjust-db__openBtn" type="button" @click="openCase(c)">
+            Open full case →
           </button>
         </div>
-      </div>
+
+        <!-- Bottom summary + pagination -->
+        <div class="hrjust-db__summaryBar hrjust-db__summaryBar--bottom" aria-live="polite">
+          <div class="hrjust-db__summaryText">
+            Displaying {{ pageCountShown }} case notes of {{ filteredCases.length }} (Page
+            {{ currentPage }} of {{ totalPages }})
+          </div>
+
+          <div class="hrjust-db__pager" v-if="totalPages > 1">
+            <button
+              class="hrjust-db__pagerBtn"
+              :disabled="currentPage === 1"
+              @click="currentPage--"
+            >
+              Previous
+            </button>
+            <div class="hrjust-db__pagerMid">Page {{ currentPage }} / {{ totalPages }}</div>
+            <button
+              class="hrjust-db__pagerBtn"
+              :disabled="currentPage === totalPages"
+              @click="currentPage++"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -479,6 +758,16 @@ const SUBTOPICS = ['Trade & HR', 'Climate Change & HR']
    State
    ========================= */
 const allCases = ref([])
+const selectedCase = ref(null)
+
+function openCase(c) {
+  selectedCase.value = c
+  window?.scrollTo?.({ top: 0, behavior: 'smooth' })
+}
+function closeCase() {
+  selectedCase.value = null
+  window?.scrollTo?.({ top: 0, behavior: 'smooth' })
+}
 
 const showAdvanced = ref(false)
 function toggleAdvanced() {
@@ -515,28 +804,16 @@ function removeChip(field, value) {
 
 function remainingOptions(field) {
   const selected = new Set((filters[field] || []).map(String))
-
   let source
-  if (field === 'civilSociety') {
-    source = options.value.civilSociety
-  } else if (field === 'humanRights') {
-    source = options.value.humanRights
-  } else if (field === 'justifications') {
-    source = options.value.justifications
-  } else {
-    source = options.value.subtopics
-  }
-
+  if (field === 'civilSociety') source = options.value.civilSociety
+  else if (field === 'humanRights') source = options.value.humanRights
+  else if (field === 'justifications') source = options.value.justifications
+  else source = options.value.subtopics
   return source.filter((x) => !selected.has(x))
 }
 
 const casesPerPage = ref(10)
 const currentPage = ref(1)
-
-const openMap = reactive({}) // key -> boolean
-function toggleOpen(key) {
-  openMap[key] = !openMap[key]
-}
 
 function resetAll() {
   filters.country = ''
@@ -560,27 +837,84 @@ function normalizeClaimantType(val = '') {
   return v.replace('individuals', 'individual')
 }
 
-function formatJustifications(input) {
-  if (!input)
-    return 'This case lacks guiding document or explicit argument from the state concerning the allegations made.'
-  return String(input)
-    .split(',')
-    .map((j) => j.trim().toLowerCase())
-    .filter(Boolean)
-    .map((j) => j.charAt(0).toUpperCase() + j.slice(1))
-    .join(', ')
-}
-
-function hasProceedings(c) {
-  return !!(c.submission_year || c.decision_date || c.court_type || c.proceedings_status)
-}
-
 function decisionIsValid(val) {
   const v = String(val || '')
     .toLowerCase()
     .trim()
   return v && v !== 'n/a' && v !== 'null' && v !== 'pending'
 }
+
+function alphaSort(a, b) {
+  return String(a).localeCompare(String(b))
+}
+function capitalize(s = '') {
+  const str = String(s)
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : ''
+}
+
+function isEmptyLike(value) {
+  const s = String(value ?? '').trim()
+  if (!s) return true
+  const v = s.toLowerCase()
+  return v === 'n/a' || v === 'na' || v === 'null' || v === 'not provided' || v === 'pending'
+}
+
+function displayValue(value, emptyLabel = 'Not provided') {
+  return isEmptyLike(value) ? emptyLabel : String(value)
+}
+
+function asList(value) {
+  const v = String(value || '').trim()
+  if (!v) return []
+  const parts = v
+    .split(/[,;\n]+/g)
+    .map((x) => x.trim())
+    .filter(Boolean)
+
+  const seen = new Set()
+  const out = []
+  for (const p of parts) {
+    const key = p.toLowerCase()
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push(p)
+  }
+  return out
+}
+
+function asLinks(value) {
+  const v = String(value || '').trim()
+  if (!v) return []
+  const urls = v.match(/https?:\/\/[^\s)]+/g) || []
+  return urls.map((u) => u.replace(/[),.;]+$/g, '').trim()).filter((u) => /^https?:\/\//i.test(u))
+}
+
+function safeUrl(value) {
+  const links = asLinks(value)
+  return links[0] || ''
+}
+
+function hasOriginalTitle(c) {
+  return !isEmptyLike(c?.case_name_original)
+}
+
+/* =========================
+   Civil society: add amici # next to "Amicus Curiae"
+   ========================= */
+const civilSocietyList = computed(() => {
+  const base = asList(selectedCase.value?.civil_society_engagement)
+  if (!base.length) return []
+
+  const nRaw = selectedCase.value?.amiciicuriae_number
+  const n = isEmptyLike(nRaw) ? '' : String(nRaw).trim()
+
+  const idx = base.findIndex((x) => x.toLowerCase().includes('amicus curiae'))
+  if (idx === -1 || !n) return base
+
+  const out = [...base]
+  out[idx] = `${out[idx]} (${n})`
+  return out
+})
 
 /* =========================
    Options computed from dataset
@@ -592,14 +926,12 @@ const options = computed(() => {
   const justifications = new Set()
 
   for (const c of allCases.value) {
-    // Countries: respondent_country can be comma-separated
     String(c.respondent_country || '')
       .split(',')
       .map((x) => x.trim())
       .filter(Boolean)
       .forEach((x) => countries.add(x))
 
-    // claimant_type / respondent_type can be comma-separated in your data
     String(c.claimant_type || '')
       .split(',')
       .map((x) => x.trim())
@@ -631,15 +963,6 @@ const options = computed(() => {
   }
 })
 
-function alphaSort(a, b) {
-  return String(a).localeCompare(String(b))
-}
-
-function capitalize(s = '') {
-  const str = String(s)
-  return str ? str.charAt(0).toUpperCase() + str.slice(1) : ''
-}
-
 /* =========================
    Filtering (keeps your Joomla logic)
    ========================= */
@@ -656,7 +979,6 @@ const filteredCases = computed(() => {
   const decisionOnly = filters.decisionOnly
 
   return allCases.value.filter((c) => {
-    // Quick search (same as Joomla: name or summary)
     if (search) {
       const name = String(c.case_name || '').toLowerCase()
       const sum = String(c.summary || '').toLowerCase()
@@ -692,7 +1014,6 @@ const filteredCases = computed(() => {
         .includes(needle),
     )
 
-    // Human rights keyword catalogue match (same logic)
     const rightsCatalogue = String(c.rights_catalogue || '').toLowerCase()
     const matchRights = rights.every((label) => {
       const keywords = HUMAN_RIGHTS_KEYWORDS[label] || []
@@ -702,7 +1023,6 @@ const filteredCases = computed(() => {
     const justificationField = String(c.justification_typology || '').toLowerCase()
     const matchJustification = justs.every((j) => justificationField.includes(j))
 
-    // Subtopics logic (same as your Joomla code)
     const isInternational = String(c.nature_of_case || '')
       .toLowerCase()
       .includes('international')
@@ -710,8 +1030,6 @@ const filteredCases = computed(() => {
     if (subtopics.length === 1) {
       if (subtopics.includes('trade & hr')) matchSubtopics = isInternational
       else if (subtopics.includes('climate change & hr')) matchSubtopics = !isInternational
-    } else if (subtopics.length === 2) {
-      // matchSubtopics is already true by default, no assignment needed
     }
 
     return (
@@ -773,13 +1091,11 @@ async function fetchCases() {
   const res = await fetch(url)
   const db = await res.json()
 
-  // same pattern as your map page
   const table = Array.isArray(db)
     ? db.find((d) => d.type === 'table' && d.name === 'climate_cases2')
     : null
   const rows = table?.data ?? []
 
-  // filter out header row-style artifacts
   allCases.value = rows.filter((c) => c?.case_name && c.case_name !== 'case_name')
 }
 
@@ -790,7 +1106,8 @@ onMounted(async () => {
 
 <style scoped>
 /* =========================
-   Match your hrjust look (square corners)
+   MATCH your HRJUST look (square corners)
+   Includes LIST VIEW + DETAIL VIEW (complete)
    ========================= */
 .hrjust-db {
   --accent: var(--hrjust-accent-3, #d84b8b);
@@ -800,6 +1117,7 @@ onMounted(async () => {
   --ig-accent-2: var(--hrjust-accent-2, #002d47);
 }
 
+/* Tool frame */
 .hrjust-tool--db {
   border: none;
   background: transparent;
@@ -823,18 +1141,6 @@ onMounted(async () => {
   margin: 0;
 }
 
-.hrjust-tool__icon {
-  width: 22px;
-  height: 22px;
-  display: grid;
-  place-items: center;
-  background: var(--ig-accent);
-  color: #fff;
-  font-weight: 900;
-  font-size: 13px;
-  border-radius: 50%;
-}
-
 .hrjust-tool__note {
   margin: 0;
   font-size: 13px;
@@ -842,7 +1148,7 @@ onMounted(async () => {
 }
 
 /* =========================
-   Horizontal filters toolbar
+   LIST VIEW — Filters toolbar
    ========================= */
 .hrjust-db__filters {
   border: 1px solid var(--ig-border-soft);
@@ -867,7 +1173,7 @@ onMounted(async () => {
 }
 
 .hrjust-db__field--search {
-  flex: 999 1 320px; /* grow a lot, still wrap on small screens */
+  flex: 999 1 320px;
   min-width: 260px;
 }
 
@@ -903,7 +1209,7 @@ onMounted(async () => {
 
 .hrjust-db__field--search .hrjust-db__input {
   width: 100%;
-  padding-right: 44px; /* was 34px */
+  padding-right: 44px;
 }
 
 .hrjust-db__searchIcon {
@@ -911,7 +1217,7 @@ onMounted(async () => {
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 18px; /* bigger */
+  font-size: 18px;
   line-height: 1;
   color: rgba(11, 31, 51, 0.45);
   pointer-events: none;
@@ -928,13 +1234,14 @@ onMounted(async () => {
   border: 1px solid var(--ig-border-soft);
   background: rgba(10, 34, 59, 0.02);
 }
+
 .hrjust-db__toggle input {
   accent-color: var(--ig-accent);
   width: 16px;
   height: 16px;
 }
 
-/* Make buttons less flashy by default */
+/* Buttons */
 .hrjust-db__btn {
   border: 1px solid color-mix(in srgb, var(--ig-accent-2) 35%, transparent);
   background: color-mix(in srgb, var(--ig-accent-2) 6%, transparent);
@@ -945,17 +1252,14 @@ onMounted(async () => {
   cursor: pointer;
   height: 36px;
 }
-
 .hrjust-db__btn:hover {
   background: color-mix(in srgb, var(--ig-accent-2) 10%, transparent);
 }
-
 .hrjust-db__btn:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ig-accent) 18%, transparent);
 }
 
-/* Keep Reset as a "ghost" but consistent */
 .hrjust-db__btn--ghost {
   border: 1px solid var(--ig-border-soft);
   background: transparent;
@@ -965,187 +1269,13 @@ onMounted(async () => {
   background: rgba(10, 34, 59, 0.03);
 }
 
+/* Advanced */
 .hrjust-db__advanced {
   margin-top: 10px;
   border-top: 1px solid var(--ig-border-soft);
   padding-top: 10px;
 }
 
-.hrjust-db__hint {
-  font-size: 12px;
-  color: rgba(11, 31, 51, 0.6);
-}
-
-/* =========================
-   Summary + pager
-   ========================= */
-.hrjust-db__summaryBar {
-  margin-top: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 12px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.hrjust-db__summaryText {
-  font-size: 13px;
-  color: rgba(11, 31, 51, 0.78);
-  border-left: 4px solid var(--ig-accent);
-  padding: 8px 10px;
-  background: rgba(10, 34, 59, 0.03);
-}
-
-.hrjust-db__pager {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.hrjust-db__pagerBtn {
-  border: 1px solid var(--ig-border-soft);
-  background: #fff;
-  border-radius: 0;
-  padding: 8px 10px;
-  cursor: pointer;
-}
-.hrjust-db__pagerBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.hrjust-db__pagerMid {
-  font-size: 12.5px;
-  color: rgba(11, 31, 51, 0.65);
-}
-
-/* =========================
-   Cases (reuse your map style)
-   ========================= */
-.hrjust-db__empty {
-  margin-top: 12px;
-  font-size: 13px;
-  color: rgba(11, 31, 51, 0.65);
-}
-
-:deep(.hrjust-case) {
-  margin-top: 12px;
-  border: 1px solid var(--ig-border);
-  background: #fff;
-  border-radius: 0;
-  padding: 14px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-}
-
-:deep(.hrjust-case__title) {
-  font-size: 18px;
-  font-weight: 950;
-  color: var(--ig-accent);
-  text-align: center;
-  margin-bottom: 14px;
-}
-
-:deep(.hrjust-case__country) {
-  color: var(--ig-accent-2);
-}
-
-:deep(.hrjust-case__sectionTitle) {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 950;
-  color: var(--ig-accent);
-  margin-bottom: 10px;
-}
-
-:deep(.hrjust-case__grid) {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 14px;
-}
-
-:deep(.hrjust-case__party) {
-  background: rgba(10, 34, 59, 0.03);
-  border-left: 1px solid var(--ig-accent);
-  padding: 12px;
-}
-
-:deep(.hrjust-case__partyRole) {
-  font-weight: 950;
-  color: var(--ig-accent);
-}
-
-:deep(.hrjust-case__partyType) {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.65);
-  font-style: italic;
-}
-
-:deep(.hrjust-case__partyName) {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.78);
-}
-
-:deep(.hrjust-case__highlight) {
-  background: rgba(10, 34, 59, 0.03);
-  border-left: 1px solid var(--ig-accent);
-  padding: 10px 12px;
-  color: rgba(0, 0, 0, 0.78);
-  font-size: 13.5px;
-  line-height: 1.55;
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
-}
-
-:deep(.hrjust-case__divider) {
-  border-bottom: 1px solid color-mix(in srgb, var(--ig-accent) 35%, transparent);
-  margin: 14px 0;
-}
-
-:deep(.hrjust-case__code) {
-  margin-left: 10px;
-  word-break: break-all;
-  font-size: 12.5px;
-  background: rgba(0, 0, 0, 0.06);
-  padding: 2px 6px;
-  border-radius: 0;
-  color: var(--ig-accent);
-}
-
-/* Show more button */
-.hrjust-db__toggleBtn {
-  border: 1px solid var(--ig-border-soft);
-  background: #fff;
-  border-radius: 0;
-  padding: 8px 10px;
-  cursor: pointer;
-  font-size: 13px;
-}
-.hrjust-db__toggleBtn:hover {
-  background: rgba(10, 34, 59, 0.03);
-}
-
-.hrjust-db__details {
-  margin-top: 12px;
-}
-
-@media (max-width: 980px) {
-  :deep(.hrjust-case__grid) {
-    grid-template-columns: 1fr;
-  }
-
-  .hrjust-db__field {
-    min-width: 140px;
-  }
-
-  .hrjust-db__field--search {
-    min-width: 200px;
-  }
-}
-
-/* =========================
-   Advanced filters (chips + search) — better UX
-   ========================= */
 .hrjust-db__advancedGrid {
   margin-top: 10px;
   display: grid;
@@ -1218,7 +1348,6 @@ onMounted(async () => {
   max-width: 100%;
   text-align: left;
 }
-
 .hrjust-db__chip span {
   opacity: 0.75;
   font-weight: 900;
@@ -1227,17 +1356,6 @@ onMounted(async () => {
   background: rgba(10, 34, 59, 0.03);
 }
 
-.hrjust-db__advFoot {
-  margin-top: -2px;
-}
-
-@media (max-width: 980px) {
-  .hrjust-db__advancedGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Options list (click to add) */
 .hrjust-db__options {
   border: 1px solid var(--ig-border-soft);
   background: #fff;
@@ -1257,7 +1375,6 @@ onMounted(async () => {
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   color: rgba(11, 31, 51, 0.86);
 }
-
 .hrjust-db__opt:hover {
   background: rgba(10, 34, 59, 0.03);
 }
@@ -1268,49 +1385,370 @@ onMounted(async () => {
   color: rgba(11, 31, 51, 0.6);
 }
 
+.hrjust-db__hint {
+  font-size: 12px;
+  color: rgba(11, 31, 51, 0.6);
+}
+
+/* Summary + pager */
+.hrjust-db__summaryBar {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hrjust-db__summaryText {
+  font-size: 13px;
+  color: rgba(11, 31, 51, 0.78);
+  border-left: 4px solid var(--ig-accent);
+  padding: 8px 10px;
+  background: rgba(10, 34, 59, 0.03);
+}
+
+.hrjust-db__pager {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hrjust-db__pagerBtn {
+  border: 1px solid var(--ig-border-soft);
+  background: #fff;
+  border-radius: 0;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.hrjust-db__pagerBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.hrjust-db__pagerMid {
+  font-size: 12.5px;
+  color: rgba(11, 31, 51, 0.65);
+}
+
 .hrjust-db__summaryBar--bottom {
   margin-top: 16px;
   padding-top: 10px;
   border-top: 1px solid var(--ig-border-soft);
 }
 
-/* Darker tone for the “text blocks” that have the left vertical line */
-:deep(.hrjust-case__highlight),
-:deep(.hrjust-case__party) {
-  /* was: rgba(10, 34, 59, 0.03) */
-  background: rgba(10, 34, 59, 0.07);
+/* Cases list cards (LIST VIEW only) */
+.hrjust-db__empty {
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(11, 31, 51, 0.65);
 }
 
-/* Optional: if you want the Summary bar and chips containers to match the darker tone */
-.hrjust-db__summaryText,
-.hrjust-db__chips {
-  /* was: rgba(10, 34, 59, 0.03) / 0.02 */
-  background: rgba(10, 34, 59, 0.06);
-}
-
-/* Optional: if you also want a bit more contrast on the code pill background */
-:deep(.hrjust-case__code) {
-  /* was: rgba(0, 0, 0, 0.06) */
-  background: rgba(0, 0, 0, 0.10);
-}
-
-:deep(.hrjust-case__link) {
-  margin-left: 10px;
-  display: inline-block;
-  padding: 2px 8px;
-  border: 1px solid var(--ig-border-soft);
-  background: rgba(10, 34, 59, 0.06);
-  color: var(--ig-accent);
-  text-decoration: none;
+:deep(.hrjust-case) {
+  margin-top: 12px;
+  border: 1px solid var(--ig-border);
+  background: #fff;
   border-radius: 0;
-  font-size: 12.5px;
+  padding: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+:deep(.hrjust-case__title) {
+  font-size: 18px;
+  font-weight: 950;
+  color: var(--ig-accent);
+  text-align: center;
+  margin-bottom: 14px;
+}
+:deep(.hrjust-case__country) {
+  color: var(--ig-accent-2);
+}
+
+:deep(.hrjust-case__sectionTitle) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 950;
+  color: var(--ig-accent);
+  margin-bottom: 10px;
+}
+
+/* Summary block in list (keep your nice style here) */
+:deep(.hrjust-case__highlight) {
+  background: rgba(10, 34, 59, 0.06);
+  padding: 10px 12px;
+  color: rgba(0, 0, 0, 0.78);
+  font-size: 13.5px;
+  line-height: 1.55;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+:deep(.hrjust-case__divider) {
+  border-bottom: 1px solid color-mix(in srgb, var(--ig-accent) 35%, transparent);
+  margin: 14px 0;
+}
+
+.hrjust-db__openBtn {
+  border: 1px solid var(--ig-border-soft);
+  background: #fff;
+  border-radius: 0;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.hrjust-db__openBtn:hover {
+  background: rgba(10, 34, 59, 0.03);
+}
+
+/* =========================
+   DETAIL VIEW styles (flat like screenshot)
+   ========================= */
+.hrjust-detail {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hrjust-detail__topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 14px;
+  border-bottom: 1px solid var(--ig-border-soft);
+  margin-bottom: 14px;
+}
+
+.hrjust-detail__back {
+  border: 1px solid var(--ig-border-soft);
+  background: #fff;
+  border-radius: 0;
+  padding: 9px 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.hrjust-detail__back:hover {
+  background: rgba(10, 34, 59, 0.03);
+}
+
+.hrjust-detail__rightActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.hrjust-detail__linkStrong {
+  color: rgba(11, 31, 51, 0.92);
+  font-weight: 900;
+  font-size: 13px;
+  text-decoration: none;
+}
+.hrjust-detail__linkStrong:hover {
+  text-decoration: underline;
+  color: var(--ig-accent);
+}
+.hrjust-detail__linkStrong--empty {
+  color: rgba(11, 31, 51, 0.45);
+  font-weight: 800;
+}
+
+.hrjust-detail__heading {
+  margin-bottom: 10px;
+}
+
+.hrjust-detail__title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 950;
+  color: rgba(11, 31, 51, 0.92);
+}
+
+.hrjust-detail__subtitle {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.hrjust-detail__subtitleLabel {
+  font-size: 12px;
+  font-weight: 850;
+  color: rgba(11, 31, 51, 0.62);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.hrjust-detail__subtitleValue {
+  font-size: 13.5px;
+  color: rgba(11, 31, 51, 0.82);
+  font-style: italic;
+}
+
+.hrjust-detail__metaLine {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  color: rgba(11, 31, 51, 0.7);
+  font-size: 13px;
+}
+.hrjust-detail__metaItem strong {
+  color: rgba(11, 31, 51, 0.86);
   font-weight: 900;
 }
+.hrjust-detail__metaDot {
+  opacity: 0.5;
+}
 
-:deep(.hrjust-case__link:hover) {
-  background: rgba(10, 34, 59, 0.10);
+.is-empty {
+  color: rgba(11, 31, 51, 0.45);
+}
+
+/* Section bar */
+.hrjust-section {
+  margin-top: 18px;
+}
+.hrjust-section__bar {
+  padding: 14px 0;
+  border-top: 1px solid var(--ig-border-soft);
+  border-bottom: 1px solid var(--ig-border-soft);
+  margin-bottom: 14px;
+}
+.hrjust-section__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  color: rgba(11, 31, 51, 0.92);
+}
+
+/* Flat columns list */
+.hrjust-dlGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px;
+}
+.hrjust-dlCol {
+  display: grid;
+  gap: 16px;
+}
+.hrjust-dl {
+  display: grid;
+  gap: 5px;
+}
+.hrjust-dt {
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(11, 31, 51, 0.86);
+}
+.hrjust-dd {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(11, 31, 51, 0.8);
+  word-break: break-word;
+}
+.hrjust-dd.is-empty {
+  color: rgba(11, 31, 51, 0.45);
+}
+
+/* inline list */
+.hrjust-inlineList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+}
+
+/* analysis (linear) */
+.hrjust-linear {
+  display: grid;
+  gap: 16px;
+}
+.hrjust-linearRow {
+  display: grid;
+  gap: 6px;
+}
+.hrjust-linearK {
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(11, 31, 51, 0.86);
+}
+.hrjust-linearV {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgba(11, 31, 51, 0.8);
+  text-align: justify;
+  hyphens: auto;
+}
+.hrjust-linearV.is-empty {
+  color: rgba(11, 31, 51, 0.45);
+  text-align: left;
+  hyphens: none;
+}
+
+/* links inside linear blocks */
+.hrjust-link {
+  color: var(--ig-accent);
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 10px;
+}
+.hrjust-link:hover {
   text-decoration: underline;
 }
 
+/* raw */
+.hrjust-raw {
+  margin-top: 18px;
+  border-top: 1px solid var(--ig-border-soft);
+  padding-top: 12px;
+}
+.hrjust-raw__sum {
+  cursor: pointer;
+  font-weight: 900;
+  color: rgba(11, 31, 51, 0.86);
+}
+.hrjust-raw__pre {
+  margin: 10px 0 0;
+  padding: 12px;
+  border: 1px solid var(--ig-border-soft);
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 0;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.5;
+}
 
+/* Responsive */
+@media (max-width: 980px) {
+  .hrjust-db__advancedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hrjust-db__field {
+    min-width: 140px;
+  }
+
+  .hrjust-db__field--search {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .hrjust-dlGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .hrjust-dlGrid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
