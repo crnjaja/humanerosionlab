@@ -331,7 +331,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 
 import GemAtGlance from './GemAtGlance.vue'
 import GemDescription from './GemDescription.vue'
@@ -342,11 +342,27 @@ import GemToolMap from './GemToolMap.vue'
 import GemToolInfographics from './GemToolInfographics.vue'
 
 const active = ref('overview')
-const isMenuCollapsed = ref(false)
+
+// ✅ default: landing on overview => collapsed
+const isMenuCollapsed = ref(true)
 
 function toggleMenu() {
   isMenuCollapsed.value = !isMenuCollapsed.value
 }
+
+// ✅ central rule: overview => collapsed, anything else => expanded
+function syncMenuWithActiveTab() {
+  isMenuCollapsed.value = active.value === 'overview'
+}
+
+onMounted(() => {
+  syncMenuWithActiveTab()
+})
+
+// ✅ whenever tab changes, enforce the rule
+watch(active, () => {
+  syncMenuWithActiveTab()
+})
 
 const componentMap = {
   glance: GemAtGlance,
@@ -365,6 +381,7 @@ const activeComponent = computed(() => {
 
 function setActive(key) {
   active.value = key
+  // (watch will handle collapsing/expanding)
 }
 
 const tileImages = {
@@ -382,13 +399,7 @@ const launchTiles = computed(() => {
   const tiles = [
     { id: 'g1', title: 'Description', target: 'description', img: tileImages.description },
     { id: 'g2', title: 'At a Glance', target: 'glance', img: tileImages.glance },
-    {
-      id: 'g3',
-      title: 'Project Website',
-      isExternal: true,
-      href: '#',
-      img: tileImages.website,
-    },
+    { id: 'g3', title: 'Project Website', isExternal: true, href: '#', img: tileImages.website },
     { id: 'g4', title: 'Team', target: 'team', img: tileImages.team },
     { id: 'g5', title: 'Publications', target: 'publications', img: tileImages.publications },
     { id: 'g6', title: 'Events', target: 'events', img: tileImages.events },

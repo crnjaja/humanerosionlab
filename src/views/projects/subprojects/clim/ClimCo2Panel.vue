@@ -269,7 +269,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 
 import ClimCo2Description from './ClimCo2Description.vue'
 import ClimCo2Team from './ClimCo2Team.vue'
@@ -283,14 +283,31 @@ import ClimCo2AcademicParticipation from './ClimCo2AcademicParticipation.vue'
 const active = ref('overview')
 
 /**
- * Collapsible menu state
- * (same as your working GEM version: starts expanded)
+ * ✅ default: landing on overview => collapsed
  */
-const isMenuCollapsed = ref(false)
+const isMenuCollapsed = ref(true)
 
 function toggleMenu() {
   isMenuCollapsed.value = !isMenuCollapsed.value
 }
+
+/**
+ * ✅ central rule: overview => collapsed, anything else => expanded
+ */
+function syncMenuWithActiveTab() {
+  isMenuCollapsed.value = active.value === 'overview'
+}
+
+onMounted(() => {
+  syncMenuWithActiveTab()
+})
+
+/**
+ * ✅ whenever tab changes, enforce the rule
+ */
+watch(active, () => {
+  syncMenuWithActiveTab()
+})
 
 const componentMap = {
   description: ClimCo2Description,
@@ -307,6 +324,7 @@ const activeComponent = computed(() => {
 
 function setActive(key) {
   active.value = key
+  // watcher handles collapse/expand
 }
 
 const tileImages = {

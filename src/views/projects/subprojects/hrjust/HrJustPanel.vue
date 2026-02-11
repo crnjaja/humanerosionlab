@@ -362,7 +362,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 
 import HrJustAtGlance from './HrJustAtGlance.vue'
 import HrJustDescription from './HrJustDescription.vue'
@@ -373,11 +373,27 @@ import HrJustToolInfographics from './HrJustToolInfographics.vue'
 import HrJustPublications from './HrJustPublications.vue'
 
 const active = ref('overview')
-const isMenuCollapsed = ref(false)
+
+// ✅ default: landing on overview => collapsed
+const isMenuCollapsed = ref(true)
 
 function toggleMenu() {
   isMenuCollapsed.value = !isMenuCollapsed.value
 }
+
+// ✅ central rule: overview => collapsed, anything else => expanded
+function syncMenuWithActiveTab() {
+  isMenuCollapsed.value = active.value === 'overview'
+}
+
+onMounted(() => {
+  syncMenuWithActiveTab()
+})
+
+// ✅ whenever tab changes, enforce the rule
+watch(active, () => {
+  syncMenuWithActiveTab()
+})
 
 const componentMap = {
   glance: HrJustAtGlance,
@@ -396,6 +412,7 @@ const activeComponent = computed(() => {
 
 function setActive(key) {
   active.value = key
+  // watcher handles collapse/expand
 }
 
 const tileImages = {
