@@ -277,23 +277,14 @@ import ClimCo2Publications from './ClimCo2Publications.vue'
 import ClimCo2Events from './ClimCo2Events.vue'
 import ClimCo2AcademicParticipation from './ClimCo2AcademicParticipation.vue'
 
-/**
- * Default tab
- */
 const active = ref('overview')
 
-/**
- * ✅ default: landing on overview => collapsed
- */
 const isMenuCollapsed = ref(true)
 
 function toggleMenu() {
   isMenuCollapsed.value = !isMenuCollapsed.value
 }
 
-/**
- * ✅ central rule: overview => collapsed, anything else => expanded
- */
 function syncMenuWithActiveTab() {
   isMenuCollapsed.value = active.value === 'overview'
 }
@@ -302,9 +293,6 @@ onMounted(() => {
   syncMenuWithActiveTab()
 })
 
-/**
- * ✅ whenever tab changes, enforce the rule
- */
 watch(active, () => {
   syncMenuWithActiveTab()
 })
@@ -324,7 +312,6 @@ const activeComponent = computed(() => {
 
 function setActive(key) {
   active.value = key
-  // watcher handles collapse/expand
 }
 
 const tileImages = {
@@ -362,11 +349,6 @@ const launchTiles = computed(() => {
 </script>
 
 <style scoped>
-/* =========================================================
-   COLLAPSIBLE LAYOUT + ICON RAIL
-   (same behavior as your working GEM/HRJust version)
-   ========================================================= */
-
 .hrjust-panel {
   display: grid;
   grid-template-columns: var(--hrjust-nav-w, 300px) minmax(0, 1fr);
@@ -376,7 +358,6 @@ const launchTiles = computed(() => {
   grid-template-columns: 86px minmax(0, 1fr);
 }
 
-/* header row */
 .hrjust-navhead__top {
   display: flex;
   align-items: center;
@@ -384,7 +365,6 @@ const launchTiles = computed(() => {
   gap: 10px;
 }
 
-/* toggle button */
 .hrjust-menu-toggle {
   width: 40px;
   height: 40px;
@@ -419,12 +399,10 @@ const launchTiles = computed(() => {
   bottom: 0;
 }
 
-/* add icon column */
 :deep(.hrjust-nav-tile) {
   grid-template-columns: 44px minmax(0, 1fr) auto;
 }
 
-/* IMPORTANT: kill the vertical marker line (expanded + collapsed) */
 :deep(.hrjust-nav-tile__mark) {
   display: none !important;
 }
@@ -439,7 +417,7 @@ const launchTiles = computed(() => {
   align-items: center;
   justify-content: center;
 }
-/* ✅ OUTLINE ICON SYSTEM (no fill, stroke only) */
+
 .hrjust-nav-tile__icon svg {
   width: 18px;
   height: 18px;
@@ -452,19 +430,16 @@ const launchTiles = computed(() => {
   stroke-linejoin: round;
 }
 
-/* ✅ active state (expanded + collapsed): change stroke, not fill */
 :deep(.hrjust-nav-tile.is-active) .hrjust-nav-tile__icon svg {
   fill: none !important;
   stroke: rgba(174, 12, 54, 0.85);
 }
 
-/* ✅ collapsed: keep your icon background highlight */
 .hrjust-panel.is-collapsed :deep(.hrjust-nav-tile.is-active) .hrjust-nav-tile__icon svg {
   fill: none !important;
   stroke: rgba(174, 12, 54, 0.85);
 }
 
-/* collapsed mode hides text + chevron, centers icon perfectly */
 .hrjust-panel.is-collapsed :deep(.hrjust-navhead__meta),
 .hrjust-panel.is-collapsed :deep(.hrjust-nav__title),
 .hrjust-panel.is-collapsed :deep(.hrjust-nav-tile__text),
@@ -483,7 +458,6 @@ const launchTiles = computed(() => {
   align-self: center;
 }
 
-/* collapsed: ONLY icon gets active color */
 .hrjust-panel.is-collapsed :deep(.hrjust-nav-tile.is-active) {
   background: transparent !important;
   border-color: transparent !important;
@@ -492,10 +466,6 @@ const launchTiles = computed(() => {
   border-color: rgba(174, 12, 54, 0.28);
   background: var(--hrjust-active, rgba(174, 12, 54, 0.08));
 }
-
-/* =========================================================
-   OVERVIEW CARDS — SAME AS BEFORE + svg size safety
-   ========================================================= */
 
 .hrjust-launch {
   padding: 18px;
@@ -579,7 +549,6 @@ const launchTiles = computed(() => {
   gap: 8px;
 }
 
-/* prevent global svg rules from blowing this up */
 .hrjust-launch-tile__ext svg {
   width: 16px !important;
   height: 16px !important;
@@ -597,5 +566,9 @@ const launchTiles = computed(() => {
 a.hrjust-launch-tile {
   text-decoration: none;
   color: inherit;
+}
+
+.hrjust-panel.is-collapsed .hrjust-launch {
+  gap: 30px;
 }
 </style>

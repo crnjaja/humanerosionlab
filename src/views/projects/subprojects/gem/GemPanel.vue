@@ -343,14 +343,12 @@ import GemToolInfographics from './GemToolInfographics.vue'
 
 const active = ref('overview')
 
-// ✅ default: landing on overview => collapsed
 const isMenuCollapsed = ref(true)
 
 function toggleMenu() {
   isMenuCollapsed.value = !isMenuCollapsed.value
 }
 
-// ✅ central rule: overview => collapsed, anything else => expanded
 function syncMenuWithActiveTab() {
   isMenuCollapsed.value = active.value === 'overview'
 }
@@ -359,7 +357,6 @@ onMounted(() => {
   syncMenuWithActiveTab()
 })
 
-// ✅ whenever tab changes, enforce the rule
 watch(active, () => {
   syncMenuWithActiveTab()
 })
@@ -381,7 +378,6 @@ const activeComponent = computed(() => {
 
 function setActive(key) {
   active.value = key
-  // (watch will handle collapsing/expanding)
 }
 
 const tileImages = {
@@ -417,10 +413,6 @@ const launchTiles = computed(() => {
 </script>
 
 <style scoped>
-/* =========================================================
-   COLLAPSIBLE LAYOUT + ICON RAIL (same as HRJust)
-   ========================================================= */
-
 .hrjust-panel {
   display: grid;
   grid-template-columns: var(--hrjust-nav-w, 300px) minmax(0, 1fr);
@@ -481,7 +473,7 @@ const launchTiles = computed(() => {
   align-items: center;
   justify-content: center;
 }
-/* ✅ OUTLINE ICON SYSTEM (no fill, stroke only) */
+
 .hrjust-nav-tile__icon svg {
   width: 18px;
   height: 18px;
@@ -494,19 +486,16 @@ const launchTiles = computed(() => {
   stroke-linejoin: round;
 }
 
-/* ✅ active state (expanded + collapsed): change stroke, not fill */
 :deep(.hrjust-nav-tile.is-active) .hrjust-nav-tile__icon svg {
   fill: none !important;
   stroke: rgba(174, 12, 54, 0.85);
 }
 
-/* ✅ collapsed: keep your icon background highlight */
 .hrjust-panel.is-collapsed :deep(.hrjust-nav-tile.is-active) .hrjust-nav-tile__icon svg {
   fill: none !important;
   stroke: rgba(174, 12, 54, 0.85);
 }
 
-/* collapsed mode hides text + section titles + chevron */
 .hrjust-panel.is-collapsed :deep(.hrjust-navhead__meta),
 .hrjust-panel.is-collapsed :deep(.hrjust-nav__title),
 .hrjust-panel.is-collapsed :deep(.hrjust-nav-tile__text),
@@ -521,7 +510,6 @@ const launchTiles = computed(() => {
   padding: 0;
 }
 
-/* remove vertical mark everywhere */
 :deep(.hrjust-nav-tile__mark) {
   display: none;
 }
@@ -531,7 +519,6 @@ const launchTiles = computed(() => {
   align-self: center;
 }
 
-/* collapsed: only icon gets active color */
 .hrjust-panel.is-collapsed :deep(.hrjust-nav-tile.is-active) {
   background: transparent !important;
   border-color: transparent !important;
@@ -540,10 +527,6 @@ const launchTiles = computed(() => {
   border-color: rgba(174, 12, 54, 0.28);
   background: var(--hrjust-active, rgba(174, 12, 54, 0.08));
 }
-
-/* =========================================================
-   OVERVIEW CARDS + SVG size hard-fix (same as HRJust)
-   ========================================================= */
 
 .hrjust-launch {
   padding: 18px;
@@ -627,7 +610,6 @@ const launchTiles = computed(() => {
   gap: 8px;
 }
 
-/* ✅ prevent "giant svg" bug */
 .hrjust-launch-tile__ext {
   display: inline-flex;
   align-items: center;
@@ -652,5 +634,9 @@ const launchTiles = computed(() => {
 a.hrjust-launch-tile {
   text-decoration: none;
   color: inherit;
+}
+
+.hrjust-panel.is-collapsed .hrjust-launch {
+  gap: 30px;
 }
 </style>
