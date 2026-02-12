@@ -72,34 +72,6 @@
 <script setup>
 const publications = [
   {
-    id: 'pennino-2025-evolution',
-    year: '2025',
-    title: 'The Evolution of Civil Society Engagement to face Global Challenges',
-    subtitle: 'WTI Working Paper Series',
-    author: 'Martina Pennino',
-    linkLabel: 'open PDF',
-    link: 'PenninoMartina.pdf',
-    body: [
-      'The research question this paper addresses is the identification of the subjects that can be embraced under the term “civil society” and the attempt to clarify who is encompassed by this category and who is excluded. Firstly, this paper aims to define the concept of civil society and examine the definition of civil society provided at the international level. Secondly, it focuses on the active role played by civil society actors in claiming for the protection of human rights. Thirdly, it aims at analyzing the requirements it must meet in order to participate in legal proceedings before international and regional courts.',
-      'In lack of a universal definition, each court or tribunal sets its own standards for their recognition and admission. Finally, the paper focuses on the specific and growing role of civil society in climate litigation, where third-party interventions have become a strategic means of influencing legal reasoning.',
-    ],
-  },
-  {
-    id: 'heepen-2025-amicus',
-    year: '2025',
-    title:
-      'The Role of the Amicus Curiae before the Inter-American Court of Human Rights: How Growing Civil Society Participation in the Form of a Third Intervenor Has the Potential to Shape Human Rights-Based Climate Litigation',
-    subtitle: 'WTI Working Paper Series',
-    author: 'Riccarda Heepen',
-    linkLabel: 'BORIS Portal',
-    linkUrl:
-      'https://boris-portal.unibe.ch/entities/publication/0f2214a7-54db-4678-aba7-a39ba4d94332',
-    body: [
-      'This paper examines the evolving role of the amicus curiae before the Inter-American Court of Human Rights (IACtHR), focusing on its significance in the landmark Advisory Opinion OC-32/25 on Climate Emergency and Human Rights. With a record 263 briefs submitted, the advisory opinion illustrates the exponential rise in civil society participation in human rights-based climate litigation.',
-      'Further, the working paper analyzes how civil society organizations (CSOs) have used the amicus curiae instrument in order to influence jurisprudence and expand human rights norms, such as the emerging right to a healthy climate. Amicus curiae involvement has the transformative potential to advance strategic climate litigation and strengthen the nexus between human rights and environmental protection in the Inter-American system.',
-    ],
-  },
-  {
     id: 'milo-2025-environmental-hrj',
     year: '2025',
     title:
@@ -191,6 +163,38 @@ const publications = [
       'Naz Nemec, E. examines the principle of non-regression in climate litigation, focusing on the case of Lake Marmara in Turkey, and highlighting its relevance for legal arguments in environmental law.',
     ],
   },
+]
+
+const backedPublications = [
+  {
+    id: 'pennino-2025-evolution',
+    year: '2025',
+    title: 'The Evolution of Civil Society Engagement to face Global Challenges',
+    subtitle: 'WTI Working Paper Series',
+    author: 'Martina Pennino',
+    linkLabel: 'open PDF',
+    link: 'PenninoMartina.pdf',
+    body: [
+      'The research question this paper addresses is the identification of the subjects that can be embraced under the term “civil society” and the attempt to clarify who is encompassed by this category and who is excluded. Firstly, this paper aims to define the concept of civil society and examine the definition of civil society provided at the international level. Secondly, it focuses on the active role played by civil society actors in claiming for the protection of human rights. Thirdly, it aims at analyzing the requirements it must meet in order to participate in legal proceedings before international and regional courts.',
+      'In lack of a universal definition, each court or tribunal sets its own standards for their recognition and admission. Finally, the paper focuses on the specific and growing role of civil society in climate litigation, where third-party interventions have become a strategic means of influencing legal reasoning.',
+    ],
+  },
+  {
+    id: 'heepen-2025-amicus',
+    year: '2025',
+    title:
+      'The Role of the Amicus Curiae before the Inter-American Court of Human Rights: How Growing Civil Society Participation in the Form of a Third Intervenor Has the Potential to Shape Human Rights-Based Climate Litigation',
+    subtitle: 'WTI Working Paper Series',
+    author: 'Riccarda Heepen',
+    linkLabel: 'BORIS Portal',
+    linkUrl:
+      'https://boris-portal.unibe.ch/entities/publication/0f2214a7-54db-4678-aba7-a39ba4d94332',
+    body: [
+      'This paper examines the evolving role of the amicus curiae before the Inter-American Court of Human Rights (IACtHR), focusing on its significance in the landmark Advisory Opinion OC-32/25 on Climate Emergency and Human Rights. With a record 263 briefs submitted, the advisory opinion illustrates the exponential rise in civil society participation in human rights-based climate litigation.',
+      'Further, the working paper analyzes how civil society organizations (CSOs) have used the amicus curiae instrument in order to influence jurisprudence and expand human rights norms, such as the emerging right to a healthy climate. Amicus curiae involvement has the transformative potential to advance strategic climate litigation and strengthen the nexus between human rights and environmental protection in the Inter-American system.',
+    ],
+  },
+
 ]
 </script>
 
