@@ -64,7 +64,7 @@
               <span class="nav-dropdown-hint">Human Erosion Lab Team</span>
             </RouterLink>
 
-                        <RouterLink
+            <RouterLink
               class="nav-dropdown-item"
               to="/projects/network"
               role="menuitem"
@@ -74,6 +74,77 @@
               Our Network
               <span class="nav-dropdown-hint">Lab Partners</span>
             </RouterLink>
+
+            <!-- TOOLS SUB-SUBMENU (inside About) -->
+            <div
+              ref="toolsSubEl"
+              class="nav-subdropdown"
+              :class="{ 'nav-subdropdown--open': toolsSubOpen }"
+              @mouseenter="onToolsSubEnter"
+              @mouseleave="onToolsSubLeave"
+            >
+<button
+  type="button"
+  class="nav-dropdown-item nav-dropdown-item--submenu"
+  role="menuitem"
+  tabindex="-1"
+  aria-haspopup="menu"
+  :aria-expanded="toolsSubOpen ? 'true' : 'false'"
+  @click.stop="toggleToolsSub"
+  @keydown.enter.prevent="toggleToolsSub"
+  @keydown.space.prevent="toggleToolsSub"
+  @keydown.escape.prevent="closeToolsSub"
+  @keydown.right.prevent="openToolsSubAndFocusFirst()"
+  @keydown.left.prevent="closeToolsSub"
+  @keydown.down.prevent="focusFirstItem('toolsSub')"
+>
+  Tools
+  <span class="nav-dropdown-hint">Infographics, database & map</span>
+
+  <span class="dropdown-icon dropdown-icon--right" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M10 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" />
+    </svg>
+  </span>
+</button>
+
+
+              <div class="nav-subdropdown-panel" role="menu" aria-label="Tools submenu" @click.stop>
+                <RouterLink
+                  class="nav-dropdown-item"
+                  to="/tools/infographics"
+                  role="menuitem"
+                  tabindex="-1"
+                  @click="closeAll"
+                >
+                  Infographics
+                  <span class="nav-dropdown-hint">Visual summaries</span>
+                </RouterLink>
+
+                <RouterLink
+                  class="nav-dropdown-item"
+                  to="/tools/database"
+                  role="menuitem"
+                  tabindex="-1"
+                  @click="closeAll"
+                >
+                  Database
+                  <span class="nav-dropdown-hint">Browse & search data</span>
+                </RouterLink>
+
+                <RouterLink
+                  class="nav-dropdown-item"
+                  to="/tools/interactive-map"
+                  role="menuitem"
+                  tabindex="-1"
+                  @click="closeAll"
+                >
+                  Interactive Map
+                  <span class="nav-dropdown-hint">Explore cases geographically</span>
+                </RouterLink>
+              </div>
+            </div>
+            <!-- END TOOLS SUB-SUBMENU -->
           </div>
         </div>
 
@@ -144,12 +215,12 @@
           </div>
         </div>
 
-
         <RouterLink class="top-nav-link" to="/contact">Contact</RouterLink>
       </nav>
     </div>
   </header>
 </template>
+
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -162,14 +233,21 @@ const onScroll = () => {
 }
 
 const aboutEl = ref<HTMLElement | null>(null)
+const toolsSubEl = ref<HTMLElement | null>(null)
 const projectsEl = ref<HTMLElement | null>(null)
 
 const aboutOpen = ref(false)
+const toolsSubOpen = ref(false)
 const projectsOpen = ref(false)
 
 const ABOUT_ALIASES = new Set(['/le-bon', '/projects/hel', '/projects/team'])
+const TOOLS_ALIASES = new Set([
+  '/tools/infographics',
+  '/tools/database',
+  '/tools/interactive-map',
+])
 
-const isAboutActive = computed(() => ABOUT_ALIASES.has(route.path))
+const isAboutActive = computed(() => ABOUT_ALIASES.has(route.path) || TOOLS_ALIASES.has(route.path))
 const isProjectsActive = computed(
   () => route.path.startsWith('/projects/') && !ABOUT_ALIASES.has(route.path),
 )
@@ -178,6 +256,7 @@ const canHover = () => globalThis.matchMedia?.('(hover: hover) and (pointer: fin
 
 function closeAll() {
   aboutOpen.value = false
+  toolsSubOpen.value = false
   projectsOpen.value = false
 }
 
@@ -187,22 +266,34 @@ function openAbout() {
 }
 function closeAbout() {
   aboutOpen.value = false
+  toolsSubOpen.value = false
 }
 function toggleAbout() {
   projectsOpen.value = false
   aboutOpen.value = !aboutOpen.value
+  if (!aboutOpen.value) toolsSubOpen.value = false
 }
 
 function openProjects() {
-  aboutOpen.value = false
+  closeAbout()
   projectsOpen.value = true
 }
 function closeProjects() {
   projectsOpen.value = false
 }
 function toggleProjects() {
-  aboutOpen.value = false
+  closeAbout()
   projectsOpen.value = !projectsOpen.value
+}
+
+function openToolsSub() {
+  toolsSubOpen.value = true
+}
+function closeToolsSub() {
+  toolsSubOpen.value = false
+}
+function toggleToolsSub() {
+  toolsSubOpen.value = !toolsSubOpen.value
 }
 
 function onAboutEnter() {
@@ -218,12 +309,25 @@ function onProjectsLeave() {
   if (canHover()) closeProjects()
 }
 
-function focusFirstItem(which: 'about' | 'projects') {
+function onToolsSubEnter() {
+  if (canHover()) openToolsSub()
+}
+function onToolsSubLeave() {
+  if (canHover()) closeToolsSub()
+}
+
+function focusFirstItem(which: 'about' | 'toolsSub' | 'projects') {
   requestAnimationFrame(() => {
-    const root = which === 'about' ? aboutEl.value : projectsEl.value
-    const first = root?.querySelector(
-      '.nav-dropdown-panel .nav-dropdown-item',
-    ) as HTMLElement | null
+    const root = which === 'about' ? aboutEl.value : which === 'toolsSub' ? toolsSubEl.value : projectsEl.value
+    const first = root?.querySelector('.nav-dropdown-panel .nav-dropdown-item, .nav-subdropdown-panel .nav-dropdown-item') as HTMLElement | null
+    first?.focus()
+  })
+}
+
+function openToolsSubAndFocusFirst() {
+  openToolsSub()
+  requestAnimationFrame(() => {
+    const first = toolsSubEl.value?.querySelector('.nav-subdropdown-panel .nav-dropdown-item') as HTMLElement | null
     first?.focus()
   })
 }
@@ -231,6 +335,7 @@ function focusFirstItem(which: 'about' | 'projects') {
 function onDocClick(e: MouseEvent) {
   const t = e.target as Node
   if (aboutOpen.value && aboutEl.value && !aboutEl.value.contains(t)) closeAbout()
+  if (toolsSubOpen.value && toolsSubEl.value && !toolsSubEl.value.contains(t)) closeToolsSub()
   if (projectsOpen.value && projectsEl.value && !projectsEl.value.contains(t)) closeProjects()
 }
 

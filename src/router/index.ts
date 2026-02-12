@@ -4,13 +4,15 @@ import ContactView from '../views/ContactView.vue'
 import PublicationsView from '../views/PublicationsView.vue'
 import EventsView from '../views/EventsView.vue'
 import TeamView from '../views/about/TeamView.vue'
-import BaserowTable from '../views/BaserowTable.vue'
 
 // Projects (lazy-loaded)
-const HelView = () => import('../views/projects/HelView.vue')
 const HrjustView = () => import('../views/projects/HrjustView.vue')
 const GemView = () => import('../views/projects/GemView.vue')
 const CliMCo2View = () => import('../views/projects/CliMCo2View.vue')
+
+// Tools (lazy-loaded)
+const InfographicsView = () => import('../views/tools/InfographicsView.vue')
+const HelView = () => import('../views/projects/HelView.vue')
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,6 +22,7 @@ const router = createRouter({
     { path: '/publications', name: 'publications', component: PublicationsView },
     { path: '/events', name: 'events', component: EventsView },
 
+    // About / Projects
     { path: '/projects/hel', name: 'project-hel', component: HelView },
     { path: '/projects/team', name: 'project-team', component: TeamView },
 
@@ -27,7 +30,12 @@ const router = createRouter({
     { path: '/projects/gem', name: 'project-gem', component: GemView },
     { path: '/projects/cli-m-co2', name: 'project-cli-m-co2', component: CliMCo2View },
 
-    { path: '/projects/network', name: 'project-network', component: BaserowTable },
+    // Tools
+    {
+      path: '/tools/infographics',
+      name: 'tools-infographics',
+      component: InfographicsView,
+    },
   ],
   scrollBehavior() {
     return { top: 0 }
