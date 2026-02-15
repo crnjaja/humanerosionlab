@@ -653,6 +653,15 @@ function geomToPath(geometry, w, h) {
   return ''
 }
 
+function circlePath(cx, cy, r) {
+  // Cercle en SVG path (compatible avec ton v-for <path>)
+  return [
+    `M ${cx - r} ${cy}`,
+    `a ${r} ${r} 0 1 0 ${r * 2} 0`,
+    `a ${r} ${r} 0 1 0 ${-r * 2} 0`,
+  ].join(' ')
+}
+
 /* =========================
    Data loading
    ========================= */
@@ -721,6 +730,24 @@ async function buildMap() {
       count,
       d,
       fill: colorForCount(count, maxCount.value),
+    })
+  }
+
+  // ✅ Add Hong Kong as a highlighted "island/region" marker (GeoJSON doesn't include it as a feature)
+  const hkKey = norm('Hong Kong, China')
+  const hkCount = byMemberNorm.get(hkKey) || 0
+
+  if (hkCount > 0) {
+    // Approx. center of Hong Kong (lon/lat)
+    const [hkX, hkY] = projectLonLat(114.1095, 22.3964, viewBox.w, viewBox.h)
+
+    out.push({
+      key: `HongKong-marker-${hkCount}`,
+      name: 'Hong Kong, China', // IMPORTANT: must match your notifications member key
+      count: hkCount,
+      d: circlePath(hkX, hkY, 6.5), // radius in SVG units (tweak 5.5–8)
+      fill: colorForCount(hkCount, maxCount.value),
+      isMarker: true,
     })
   }
 
