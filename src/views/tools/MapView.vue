@@ -210,16 +210,6 @@
                     <button
                       class="hrjust-pillBtn"
                       type="button"
-                      @click="scrollToTopOfPanel"
-                      aria-label="Scroll to top of notifications panel"
-                      title="Scroll to top"
-                    >
-                      ↑ Top
-                    </button>
-
-                    <button
-                      class="hrjust-pillBtn"
-                      type="button"
                       @click="resetFilters"
                       aria-label="Reset filters"
                       title="Reset filters"
@@ -380,6 +370,19 @@
                     </article>
                   </div>
                 </div>
+
+                <!-- Sticky bottom actions inside details panel -->
+                <div class="hrjust-detailsBottom" aria-label="Details actions">
+                  <button
+                    class="hrjust-pillBtn hrjust-pillBtn--top"
+                    type="button"
+                    @click="scrollToTopOfPanel"
+                    aria-label="Scroll to top of notifications panel"
+                    title="Scroll to top"
+                  >
+                    ↑ Top
+                  </button>
+                </div>
               </div>
 
               <div class="hrjust-mapNote" role="note">
@@ -511,6 +514,7 @@ function displayMember(row) {
   return raw ? toGeoName(raw) : ''
 }
 
+/** Display "Country • SYMBOL" */
 function formatSymbolWithCountry(row) {
   const country = displayMember(row)
   const symbol = String(row?.notification_symbol ?? '').trim() || '—'
@@ -779,7 +783,7 @@ const allRows = computed(() => {
   for (const [, arr] of rowsByMember.value.entries()) {
     if (Array.isArray(arr) && arr.length) out.push(...arr)
   }
-  // Keep a consistent baseline sort: date desc
+  // Baseline sort: date desc
   out.sort((a, b) => {
     const da = safeStr(b?.communication_date_iso || b?.communication_date)
     const db = safeStr(a?.communication_date_iso || a?.communication_date)
@@ -802,10 +806,7 @@ const selectedRows = computed(() => {
   return []
 })
 
-const baseRows = computed(() => {
-  return selectedCountryName.value ? selectedRows.value : allRows.value
-})
-
+const baseRows = computed(() => (selectedCountryName.value ? selectedRows.value : allRows.value))
 const baseTotal = computed(() => baseRows.value.length)
 
 function uniqSorted(list, { numeric = false, desc = false } = {}) {
@@ -937,8 +938,8 @@ function countryHasData(name) {
 }
 
 /* =========================
-   Wheel zoom + Pointer pan (touch-friendly)
-   + Click selection that works (tap vs drag threshold)
+   Wheel zoom + Pointer pan
+   + Click selection (tap vs drag threshold)
    ========================= */
 function onWheel(e) {
   e.preventDefault()
@@ -1513,6 +1514,26 @@ onBeforeUnmount(() => {
 
 .hrjust-resultsWrap {
   margin-top: 14px;
+}
+
+/* Sticky bottom action bar inside details panel */
+.hrjust-detailsBottom {
+  position: sticky;
+  bottom: 0;
+  margin-top: 12px;
+
+  padding-top: 12px;
+  padding-bottom: 2px;
+
+  display: flex;
+  justify-content: flex-end;
+
+  background: #fff;
+  border-top: 1px solid var(--hrjust-border-soft);
+}
+
+.hrjust-pillBtn--top {
+  font-weight: 950;
 }
 
 /* Empty states */
