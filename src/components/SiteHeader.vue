@@ -83,31 +83,30 @@
               @mouseenter="onToolsSubEnter"
               @mouseleave="onToolsSubLeave"
             >
-<button
-  type="button"
-  class="nav-dropdown-item nav-dropdown-item--submenu"
-  role="menuitem"
-  tabindex="-1"
-  aria-haspopup="menu"
-  :aria-expanded="toolsSubOpen ? 'true' : 'false'"
-  @click.stop="toggleToolsSub"
-  @keydown.enter.prevent="toggleToolsSub"
-  @keydown.space.prevent="toggleToolsSub"
-  @keydown.escape.prevent="closeToolsSub"
-  @keydown.right.prevent="openToolsSubAndFocusFirst()"
-  @keydown.left.prevent="closeToolsSub"
-  @keydown.down.prevent="focusFirstItem('toolsSub')"
->
-  Tools
-  <span class="nav-dropdown-hint">Infographics, database & map</span>
+              <button
+                type="button"
+                class="nav-dropdown-item nav-dropdown-item--submenu"
+                role="menuitem"
+                tabindex="-1"
+                aria-haspopup="menu"
+                :aria-expanded="toolsSubOpen ? 'true' : 'false'"
+                @click.stop="toggleToolsSub"
+                @keydown.enter.prevent="toggleToolsSub"
+                @keydown.space.prevent="toggleToolsSub"
+                @keydown.escape.prevent="closeToolsSub"
+                @keydown.right.prevent="openToolsSubAndFocusFirst()"
+                @keydown.left.prevent="closeToolsSub"
+                @keydown.down.prevent="focusFirstItem('toolsSub')"
+              >
+                Tools
+                <span class="nav-dropdown-hint">Infographics, database & map</span>
 
-  <span class="dropdown-icon dropdown-icon--right" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M10 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" />
-    </svg>
-  </span>
-</button>
-
+                <span class="dropdown-icon dropdown-icon--right" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M10 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                </span>
+              </button>
 
               <div class="nav-subdropdown-panel" role="menu" aria-label="Tools submenu" @click.stop>
                 <RouterLink
@@ -134,7 +133,7 @@
 
                 <RouterLink
                   class="nav-dropdown-item"
-                  to="/tools/interactive-map"
+                  to="/tools/map"
                   role="menuitem"
                   tabindex="-1"
                   @click="closeAll"
@@ -241,11 +240,7 @@ const toolsSubOpen = ref(false)
 const projectsOpen = ref(false)
 
 const ABOUT_ALIASES = new Set(['/le-bon', '/projects/hel', '/projects/team'])
-const TOOLS_ALIASES = new Set([
-  '/tools/infographics',
-  '/tools/database',
-  '/tools/interactive-map',
-])
+const TOOLS_ALIASES = new Set(['/tools/infographics', '/tools/database', '/tools/interactive-map'])
 
 const isAboutActive = computed(() => ABOUT_ALIASES.has(route.path) || TOOLS_ALIASES.has(route.path))
 const isProjectsActive = computed(
@@ -318,8 +313,11 @@ function onToolsSubLeave() {
 
 function focusFirstItem(which: 'about' | 'toolsSub' | 'projects') {
   requestAnimationFrame(() => {
-    const root = which === 'about' ? aboutEl.value : which === 'toolsSub' ? toolsSubEl.value : projectsEl.value
-    const first = root?.querySelector('.nav-dropdown-panel .nav-dropdown-item, .nav-subdropdown-panel .nav-dropdown-item') as HTMLElement | null
+    const root =
+      which === 'about' ? aboutEl.value : which === 'toolsSub' ? toolsSubEl.value : projectsEl.value
+    const first = root?.querySelector(
+      '.nav-dropdown-panel .nav-dropdown-item, .nav-subdropdown-panel .nav-dropdown-item',
+    ) as HTMLElement | null
     first?.focus()
   })
 }
@@ -327,7 +325,9 @@ function focusFirstItem(which: 'about' | 'toolsSub' | 'projects') {
 function openToolsSubAndFocusFirst() {
   openToolsSub()
   requestAnimationFrame(() => {
-    const first = toolsSubEl.value?.querySelector('.nav-subdropdown-panel .nav-dropdown-item') as HTMLElement | null
+    const first = toolsSubEl.value?.querySelector(
+      '.nav-subdropdown-panel .nav-dropdown-item',
+    ) as HTMLElement | null
     first?.focus()
   })
 }
