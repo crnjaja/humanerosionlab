@@ -13,6 +13,7 @@ const CliMCo2View = () => import('../views/projects/CliMCo2View.vue')
 // Tools (lazy-loaded)
 const InfographicsView = () => import('../views/tools/InfographicsView.vue')
 const MapView = () => import('../views/tools/MapView.vue')
+const DatabaseView = () => import('../views/tools/DatabaseView.vue')
 const HelView = () => import('../views/projects/HelView.vue')
 
 const router = createRouter({
@@ -41,6 +42,11 @@ const router = createRouter({
       path: '/tools/map',
       name: 'tools-map',
       component: MapView,
+    },
+    {
+      path: '/tools/database',
+      name: 'tools-database',
+      component: DatabaseView,
     },
   ],
   scrollBehavior() {
