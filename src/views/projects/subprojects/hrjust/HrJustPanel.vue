@@ -128,9 +128,8 @@
 
                 <span class="hrjust-nav-tile__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24">
-                    <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0z" />
-                    <path d="M4 20a6 6 0 0 1 16 0" />
-                    <path d="M17 14a3 3 0 0 1 3 3" />
+                    <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" />
+                    <path d="M4 21a8 8 0 0 1 16 0" />
                   </svg>
                 </span>
 

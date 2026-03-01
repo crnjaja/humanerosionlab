@@ -1,22 +1,6 @@
 <template>
-  <div class="gem-section">
-    <h3 class="gem-h">Infographics</h3>
-    <p class="gem-p">Embed charts / images / key insights here.</p>
-  </div>
+  <article class="hrjust-empty">
+    <div class="hrjust-empty__title">Infographics</div>
+    <p class="hrjust-empty__text">Embed charts / images / key insights here.</p>
+  </article>
 </template>
-
-<style scoped>
-.gem-section {
-  padding: 18px;
-}
-.gem-h {
-  margin: 0 0 10px;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 18px;
-}
-.gem-p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.8;
-}
-</style>
