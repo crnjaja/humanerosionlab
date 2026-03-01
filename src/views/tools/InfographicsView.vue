@@ -9,7 +9,6 @@
             CURRENT PROJECT
           </div>
 
-          <!-- SAME WORD ANIMATION AS HOMEPAGE -->
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             <span class="accent">Human Erosion</span> Lab
           </h1>
@@ -30,11 +29,85 @@
     <!-- CONTENT -->
     <section class="content-block full-bleed">
       <div class="container">
-        <div class="hero-offset">
-          <section class="feature-section" aria-label="HEL content">
+        <!-- ================== OBJECTIVES ONLY ================== -->
+        <section class="project-section" aria-label="Objectives">
+          <!-- Events / Publications style header -->
+          <div class="section-head">
             <h2 class="section-heading">Overview</h2>
-          </section>
-        </div>
+          </div>
+
+          <div class="objectives-grid">
+            <article class="feature-row revealed" aria-label="Objective 1">
+              <div class="media-frame">
+                <figure class="feature-media">
+                  <img src="/images/backgrounds/rose.png" alt="Objective cover" loading="lazy" />
+                </figure>
+                <div class="feature-card">
+                  <div>
+                    <div class="pill">Objective</div>
+                    <h3 class="feature-title">Evidence</h3>
+                    <p class="feature-text">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua et dolore magna aliqua et dolore
+                      magna aliqua et dolore magna aliqua.
+                    </p>
+                  </div>
+                  <p class="feature-actions actions-right">
+                    <a class="feature-link" href="#">Details →</a>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="feature-row revealed" aria-label="Objective 2">
+              <div class="media-frame">
+                <figure class="feature-media">
+                  <img
+                    src="/images/backgrounds/bordeaux.png"
+                    alt="Objective cover"
+                    loading="lazy"
+                  />
+                </figure>
+                <div class="feature-card">
+                  <div>
+                    <div class="pill">Objective</div>
+                    <h3 class="feature-title">Accountability</h3>
+                    <p class="feature-text">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua et dolore magna aliqua et dolore
+                      magna aliqua et dolore magna aliqua.
+                    </p>
+                  </div>
+                  <p class="feature-actions actions-right">
+                    <a class="feature-link" href="#">Details →</a>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="feature-row revealed" aria-label="Objective 3">
+              <div class="media-frame">
+                <figure class="feature-media">
+                  <img src="/images/backgrounds/vert.png" alt="Objective cover" loading="lazy" />
+                </figure>
+                <div class="feature-card">
+                  <div>
+                    <div class="pill">Objective</div>
+                    <h3 class="feature-title">Tools</h3>
+                    <p class="feature-text">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua et dolore magna aliqua et dolore
+                      magna aliqua et dolore magna aliqua.
+                    </p>
+                  </div>
+                  <p class="feature-actions actions-right">
+                    <a class="feature-link" href="#">Details →</a>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
       </div>
     </section>
   </div>
@@ -43,7 +116,6 @@
 <script setup>
 import { useWordReveal } from '@/composables/useWordReveal'
 
-/* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,
@@ -51,57 +123,32 @@ const { el: heroTitleEl } = useWordReveal({
 </script>
 
 <style scoped>
-.project-layout {
+/* Objectives section wrapper (matches Events / Publications) */
+.project-section {
+  padding: 0;
+}
+
+/* Objectives grid */
+.objectives-grid {
   display: grid;
-  grid-template-columns: 1.6fr 0.9fr;
   gap: 16px;
-  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.project-copy {
-  color: rgba(255, 255, 255, 0.86);
-  line-height: 1.8;
-}
-
-.project-facts {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
-  padding: 14px;
-}
-
-.facts-list {
-  list-style: none;
-  padding: 10px 0 0;
-  margin: 0;
-  display: grid;
-  gap: 8px;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 13px;
-}
-
-@media (max-width: 920px) {
-  .project-layout {
+@media (max-width: 980px) {
+  .objectives-grid {
     grid-template-columns: 1fr;
   }
 }
-/* PROJECT PAGE: flat/square banner (no V shape) + smaller height */
+
+/* Banner tune */
 :deep(.stage--top--flat) {
-  /* smaller hero */
   min-height: clamp(320px, 46vh, 520px);
-
-  /* remove the “V space” padding at the bottom */
   padding-top: calc(var(--header-h) + 54px);
-  padding-bottom: 54px; /* was calc(64px + var(--v-h)) on homepage */
+  padding-bottom: 54px;
 }
 
-/* remove the V shape entirely */
 :deep(.stage--top--flat::after) {
-  content: none !important; /* easiest way to kill the pseudo element */
-}
-
-/* the homepage uses negative margin to tuck content into the V;
-   on a flat banner it usually looks wrong, so reset it */
-:deep(.project-page .hero-offset) {
-  margin-top: 0;
+  content: none !important;
 }
 </style>

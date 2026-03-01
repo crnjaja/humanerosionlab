@@ -239,7 +239,7 @@ const aboutOpen = ref(false)
 const toolsSubOpen = ref(false)
 const projectsOpen = ref(false)
 
-const ABOUT_ALIASES = new Set(['/le-bon', '/projects/hel', '/projects/team'])
+const ABOUT_ALIASES = new Set(['/projects/network', '/projects/hel', '/projects/team'])
 const TOOLS_ALIASES = new Set(['/tools/infographics', '/tools/database', '/tools/interactive-map'])
 
 const isAboutActive = computed(() => ABOUT_ALIASES.has(route.path) || TOOLS_ALIASES.has(route.path))

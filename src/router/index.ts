@@ -4,6 +4,7 @@ import ContactView from '../views/ContactView.vue'
 import PublicationsView from '../views/PublicationsView.vue'
 import EventsView from '../views/EventsView.vue'
 import TeamView from '../views/about/TeamView.vue'
+import NetworkView from '../views/about/NetworkView.vue'
 
 // Projects (lazy-loaded)
 const HrjustView = () => import('../views/projects/HrjustView.vue')
@@ -27,6 +28,7 @@ const router = createRouter({
     // About / Projects
     { path: '/projects/hel', name: 'project-hel', component: HelView },
     { path: '/projects/team', name: 'project-team', component: TeamView },
+    { path: '/projects/network', name: 'project-network', component: NetworkView },
 
     { path: '/projects/hrjust', name: 'project-hrjust', component: HrjustView },
     { path: '/projects/gem', name: 'project-gem', component: GemView },
