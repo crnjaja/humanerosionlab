@@ -209,7 +209,18 @@
               @click="closeProjects"
             >
               CLI-M-CO2
-              <span class="nav-dropdown-hint">Climate… (à préciser)</span>
+              <span class="nav-dropdown-hint">Project description (tba)</span>
+            </RouterLink>
+
+            <RouterLink
+              class="nav-dropdown-item"
+              to="/projects/clisel"
+              role="menuitem"
+              tabindex="-1"
+              @click="closeProjects"
+            >
+              CLISEL
+              <span class="nav-dropdown-hint">Project description (tba)</span>
             </RouterLink>
           </div>
         </div>

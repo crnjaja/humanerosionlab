@@ -10,6 +10,7 @@ import NetworkView from '../views/about/NetworkView.vue'
 const HrjustView = () => import('../views/projects/HrjustView.vue')
 const GemView = () => import('../views/projects/GemView.vue')
 const CliMCo2View = () => import('../views/projects/CliMCo2View.vue')
+const CliselView = () => import('../views/projects/CliselView.vue')
 
 // Tools (lazy-loaded)
 const InfographicsView = () => import('../views/tools/InfographicsView.vue')
@@ -33,6 +34,7 @@ const router = createRouter({
     { path: '/projects/hrjust', name: 'project-hrjust', component: HrjustView },
     { path: '/projects/gem', name: 'project-gem', component: GemView },
     { path: '/projects/cli-m-co2', name: 'project-cli-m-co2', component: CliMCo2View },
+    { path: '/projects/clisel', name: 'project-clisel', component: CliselView },
 
     // Tools
     {
