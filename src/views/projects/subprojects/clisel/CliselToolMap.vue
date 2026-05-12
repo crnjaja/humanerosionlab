@@ -47,14 +47,10 @@
                       <span class="clisel-book__shadow"></span>
                       <span class="clisel-book__topcap"></span>
 
-                      <span class="clisel-book__continent">{{ book.continent }}</span>
-
-                      <span class="clisel-book__body">
-                        <strong class="clisel-book__title">{{ book.title }}</strong>
-                        <span class="clisel-book__subtitle">{{ book.subtitle }}</span>
-                      </span>
-
-                      <span class="clisel-book__index">{{ book.code }}</span>
+<span class="clisel-book__text">
+  <span class="clisel-book__country">{{ book.region || book.continent }}</span>
+  <strong class="clisel-book__title">{{ book.title }}</strong>
+</span>
                     </button>
 
                     <div
@@ -82,14 +78,10 @@
                       <span class="clisel-book__shadow"></span>
                       <span class="clisel-book__topcap"></span>
 
-                      <span class="clisel-book__continent">{{ book.continent }}</span>
-
-                      <span class="clisel-book__body">
-                        <strong class="clisel-book__title">{{ book.title }}</strong>
-                        <span class="clisel-book__subtitle">{{ book.subtitle }}</span>
-                      </span>
-
-                      <span class="clisel-book__index">{{ book.code }}</span>
+<span class="clisel-book__text">
+  <span class="clisel-book__country">{{ book.region || book.continent }}</span>
+  <strong class="clisel-book__title">{{ book.title }}</strong>
+</span>
                     </button>
 
                     <div
