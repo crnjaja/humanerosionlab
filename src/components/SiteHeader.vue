@@ -5,7 +5,7 @@
         <img
           class="brand-logo"
           :class="{ 'brand-logo--top': !isSolid }"
-          src="/files/logo.png"
+          src="/files/HEL.png"
           alt="Logo"
         />
       </RouterLink>
