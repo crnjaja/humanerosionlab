@@ -136,7 +136,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 6px 10px;
-  border: 1px solid rgba(216, 75, 139, 0.55);
+  border: 1px solid var(--accent);
   color: var(--accent);
   background: #fff;
   font-weight: 900;

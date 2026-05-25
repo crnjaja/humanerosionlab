@@ -440,7 +440,7 @@ async function onSubmit() {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 6px 10px;
-  border: 1px solid rgba(216, 75, 139, 0.55);
+  border: 1px solid var(--accent);
   color: var(--accent);
   background: #fff;
   font-weight: 900;
@@ -484,8 +484,8 @@ async function onSubmit() {
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: rgba(216, 75, 139, 0.55);
-  box-shadow: 0 0 0 4px rgba(216, 75, 139, 0.18);
+  border-color: color-mix(in srgb, var(--accentbis-2) 55%, transparent);
+  background: color-mix(in srgb, var(--accentbis) 12%, transparent);
 }
 
 .form-group textarea {

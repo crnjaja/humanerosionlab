@@ -532,7 +532,7 @@ const launchTiles = computed(() => {
   right: 0;
   bottom: 0;
   padding: 14px 14px;
-  background: color-mix(in srgb, var(--accentbis) 78%, transparent);
+  background: color-mix(in srgb, var(--accent) 78%, transparent);
   border-top: 1px solid rgba(255, 255, 255, 0.22);
   display: flex;
   align-items: center;

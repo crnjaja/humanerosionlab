@@ -27,7 +27,7 @@
 .btn--primary:hover {
   filter: saturate(1.06);
   transform: translateY(-1px);
-  background: #d33d83;
+  background: #0b635b;
   text-decoration: none;
 }
 
@@ -37,8 +37,8 @@
   border-color: rgba(255, 255, 255, 0.16);
 }
 .btn--ghost:hover {
-  border-color: rgba(216, 75, 139, 0.6);
-  background: rgba(216, 75, 139, 0.14);
+  border-color: color-mix(in srgb, var(--accentbis-2) 55%, transparent);
+  background: color-mix(in srgb, var(--accentbis) 12%, transparent);
   transform: translateY(-1px);
   text-decoration: none;
 }
