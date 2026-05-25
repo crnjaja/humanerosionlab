@@ -239,10 +239,11 @@
                     <div>
                       <h3 class="project-title">HEL</h3>
                       <p class="project-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        Resisting Human Erosion explores how international law can respond to
+                        climate migration and the protection gaps created by climate change. Through
+                        case studies in South Asia, Latin America, and the Pacific, the project
+                        examines the experiences of climate migrants and develops new legal
+                        approaches to safeguard human dignity in a changing world.
                       </p>
                     </div>
                     <p class="project-actions actions-right">
@@ -264,10 +265,11 @@
                     <div>
                       <h3 class="project-title">HRJUST</h3>
                       <p class="project-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        HRJUST explored gaps in human rights regulations and developed a theory of
+                        Human Rights Justifications (HRJ) through inclusive civil society
+                        engagement. The project also created an open-access climate litigation
+                        database to analyze climate cases, human rights arguments, and state
+                        practices across national and international jurisdictions.
                       </p>
                     </div>
                     <p class="project-actions actions-right">
@@ -289,10 +291,11 @@
                     <div>
                       <h3 class="project-title">GEM</h3>
                       <p class="project-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        GEM explored how women’s participation and gender equality could be
+                        strengthened within law and international institutions. Through legal
+                        analysis and case studies, the project examined participatory rights,
+                        affirmative action measures, and the institutional barriers that continued
+                        to limit equal representation between men and women.
                       </p>
                     </div>
                     <p class="project-actions actions-right">
@@ -314,10 +317,11 @@
                     <div>
                       <h3 class="project-title">CLI-M-CO2</h3>
                       <p class="project-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        The project explored environmental migration governance and examined
+                        climate-related human mobility as a common concern of humankind. Through
+                        legal research and fieldwork in the Pacific region, it analyzed migration
+                        policies, environmental displacement, and international responses to climate
+                        change and human mobility.
                       </p>
                     </div>
                     <p class="project-actions actions-right">
