@@ -38,8 +38,8 @@
   --bg-image: url('/files/home-bg3.webp');
   --bg-overlay: linear-gradient(
     180deg,
-    rgba(6, 16, 28, 0.68) 0%,
-    rgba(6, 16, 28, 0.45) 45%,
-    rgba(6, 16, 28, 0.68) 100%
+    rgba(6, 16, 28, 0.76) 0%,
+    rgba(6, 16, 28, 0.5) 45%,
+    rgba(6, 16, 28, 0.76) 100%
   );
 }

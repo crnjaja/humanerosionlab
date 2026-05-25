@@ -73,8 +73,8 @@
           </h1>
 
           <p class="hero-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.
+            Exploring how climate change, migration, and international law intersect to protect
+            human dignity in an increasingly uninhabitable world.
           </p>
 
           <div class="hero-actions">
