@@ -248,7 +248,7 @@
                     </div>
                     <p class="project-actions actions-right">
                       <RouterLink class="feature-link" to="/projects/hel">
-                        Read the HEL project →
+                        Go to the HEL project →
                       </RouterLink>
                     </p>
                   </div>
@@ -274,7 +274,7 @@
                     </div>
                     <p class="project-actions actions-right">
                       <RouterLink class="feature-link" to="/projects/hrjust">
-                        Read the HRJUST project →
+                        Go to the HRJUST project →
                       </RouterLink>
                     </p>
                   </div>
@@ -300,7 +300,7 @@
                     </div>
                     <p class="project-actions actions-right">
                       <RouterLink class="feature-link" to="/projects/gem">
-                        Read the GEM project →
+                        Go to the GEM project →
                       </RouterLink>
                     </p>
                   </div>
@@ -326,7 +326,7 @@
                     </div>
                     <p class="project-actions actions-right">
                       <RouterLink class="feature-link" to="/projects/cli-m-co2">
-                        Read the CLIMCO2 project →
+                        Go to the CLI-M-CO2 project →
                       </RouterLink>
                     </p>
                   </div>

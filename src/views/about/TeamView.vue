@@ -579,7 +579,7 @@ const visitingAlumni = [
   height: 72px;
   display: grid;
   place-items: center;
-  background: rgba(216, 75, 139, 0.08);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
   border: 1px solid var(--border);
   user-select: none;
   position: relative;
@@ -616,7 +616,7 @@ const visitingAlumni = [
 }
 
 .role {
-  color: rgba(216, 75, 139, 0.92);
+  color: var(--accent);
   font-weight: 900;
   font-size: 12px;
   text-transform: uppercase;
@@ -663,12 +663,12 @@ const visitingAlumni = [
   width: 18px;
   height: 18px;
   display: block;
-  stroke: rgba(216, 75, 139, 0.92);
+  stroke: var(--accent);
 }
 
 .meta svg.fill-primary {
   stroke: none;
-  fill: rgba(216, 75, 139, 0.92);
+  fill: var(--accent);
   width: 14px;
   height: 14px;
   margin-top: 2px;
@@ -682,7 +682,7 @@ const visitingAlumni = [
 .link {
   color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid rgba(216, 75, 139, 0.35);
+  border-bottom: 1px solid var(--accent);
   padding-bottom: 1px;
   width: max-content;
   display: inline-block;
@@ -690,7 +690,7 @@ const visitingAlumni = [
 
 .link:hover,
 .link:focus-visible {
-  border-color: rgba(216, 75, 139, 0.9);
+  border-color: var(--accent);
 }
 
 /* Respect user motion preferences */
