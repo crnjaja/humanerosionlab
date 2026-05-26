@@ -1,7 +1,5 @@
-<!-- src/views/ContactView.vue -->
 <template>
   <div class="contact-page">
-    <!-- TOP HERO (same language as your Project page) -->
     <section class="stage stage--top stage--top--compact stage--top--flat full-bleed">
       <div class="container stage-inner">
         <div class="hero">
@@ -102,7 +100,6 @@
       </div>
     </section>
 
-    <!-- CONTENT -->
     <section class="content-block full-bleed">
       <div class="container">
         <div class="hero-offset">
@@ -110,7 +107,6 @@
             <h2 class="section-heading">Contact</h2>
 
             <div class="contact-grid">
-              <!-- LEFT: FORM -->
               <article class="contact-card" id="contact" aria-label="Contact form">
                 <div class="card-head">
                   <div class="pill">Message</div>
@@ -185,7 +181,6 @@
                 </form>
               </article>
 
-              <!-- RIGHT: LOCATION -->
               <aside class="location-card" id="location" aria-label="Location">
                 <div class="card-head">
                   <div class="pill">Location</div>
@@ -235,7 +230,6 @@ import { onMounted, reactive, ref } from 'vue'
 import emailjs from '@emailjs/browser'
 import { useWordReveal } from '@/composables/useWordReveal'
 
-/** Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,
@@ -357,9 +351,8 @@ async function onSubmit() {
 </script>
 
 <style scoped>
-/* ✅ Align contact content with Events/Publications */
 .hero-offset {
-  margin-top: -35px; /* change this value and it WILL move */
+  margin-top: -35px;
   position: relative;
   z-index: 2;
 }
@@ -369,7 +362,6 @@ async function onSubmit() {
   container-type: inline-size;
 }
 
-/* Heading (match pubs/events) */
 .section-heading {
   position: relative;
   display: inline-block;
@@ -389,7 +381,6 @@ async function onSubmit() {
   margin-top: clamp(6px, 0.9cqw, 10px);
 }
 
-/* Grid */
 .contact-grid {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
@@ -402,7 +393,6 @@ async function onSubmit() {
   }
 }
 
-/* Cards */
 .contact-card,
 .location-card {
   background: var(--white);
@@ -413,13 +403,11 @@ async function onSubmit() {
   position: relative;
 }
 
-/* ✅ Remove top line ONLY on contact form card */
 .contact-card::before {
   content: none !important;
   display: none !important;
 }
 
-/* ✅ Keep top line on location card */
 .location-card::before {
   content: '';
   position: absolute;
@@ -428,12 +416,10 @@ async function onSubmit() {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
 
-/* Head */
 .card-head {
   padding: 18px 18px 0;
 }
 
-/* Pill */
 .pill {
   display: inline-block;
   font-size: 12px;
@@ -447,7 +433,6 @@ async function onSubmit() {
   border-radius: 0;
 }
 
-/* Form */
 .contact-form {
   padding: 18px;
   display: grid;
@@ -551,7 +536,6 @@ async function onSubmit() {
   color: rgba(205, 57, 57, 0.98);
 }
 
-/* Location */
 .location-card {
   padding-bottom: 16px;
 }
@@ -604,7 +588,6 @@ async function onSubmit() {
   padding: 14px 18px 0;
 }
 
-/* Hero tune (same as your inner pages) */
 :deep(.stage--top--flat) {
   min-height: clamp(320px, 46vh, 520px);
   padding-top: calc(var(--header-h) + 54px);
@@ -614,7 +597,6 @@ async function onSubmit() {
   content: none !important;
 }
 
-/* Socials */
 .hero-socials {
   display: flex;
   gap: 14px;

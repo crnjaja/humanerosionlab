@@ -1,6 +1,5 @@
 <template>
   <div class="team-page">
-    <!-- TOP HERO (COMPACT / FLAT) -->
     <section class="stage stage--top stage--top--compact stage--top--flat full-bleed">
       <div class="container stage-inner">
         <div class="hero hero--team">
@@ -9,7 +8,6 @@
             CURRENT PROJECT
           </div>
 
-          <!-- SAME WORD ANIMATION AS HOMEPAGE -->
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             MEET <span class="accent">the Team</span>
           </h1>
@@ -26,14 +24,10 @@
       </div>
     </section>
 
-    <!-- CONTENT -->
     <section class="content-block full-bleed">
       <div class="container">
-        <!-- Stronger offset (close to your reference team page) -->
         <div class="hero-offset team-hero-offset">
-          <!-- =========================
-               CORE TEAM
-               ========================= -->
+
           <section
             class="team-section"
             aria-labelledby="core-team-title"
@@ -115,9 +109,6 @@
 
           <div class="spacer" aria-hidden="true"></div>
 
-          <!-- =========================
-               VISITING FELLOWS — CURRENT
-               ========================= -->
           <section
             class="team-section"
             aria-labelledby="visiting-current-title"
@@ -199,9 +190,6 @@
 
           <div class="spacer" aria-hidden="true"></div>
 
-          <!-- =========================
-               VISITING FELLOWS — ALUMNI
-               ========================= -->
           <section
             class="team-section"
             aria-labelledby="visiting-former-title"
@@ -290,15 +278,12 @@
 import { RouterLink } from 'vue-router'
 import { useWordReveal } from '@/composables/useWordReveal'
 
-/* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,
 })
 
-/**
- * Turn a full name into initials (e.g., "Elisa Fornalé" => "EF")
- */
+
 function initials(fullName) {
   if (!fullName || typeof fullName !== 'string') return ''
   const parts = fullName.trim().split(/\s+/g).filter(Boolean)
@@ -308,14 +293,10 @@ function initials(fullName) {
   return (first + last).toUpperCase()
 }
 
-/**
- * Replace the placeholder content below with your real bios/links/photos.
- * `photo` can be a local file (/files/...) or an imported asset.
- */
 const coreTeam = [
   {
     key: 'elisa-fornale',
-    name: 'Elisa Fornalé',
+    name: 'Prof. Elisa Fornalé',
     role: 'Professor',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'elisa.fornale@unibe.ch',
@@ -323,7 +304,39 @@ const coreTeam = [
     location: 'Bern, Switzerland',
     photo: '',
   },
+    {
+    key: 'simone-ferrari',
+    name: 'Dr. Simone Ferrari',
+    role: 'Senior Postdoctoral Researcher',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+    email: 'simone.ferrari.fs@gmail.com',
+    linkedin: '#',
+    location: 'Bern, Switzerland',
+    photo: '',
+  },
+
   {
+    key: 'martina-sardo',
+    name: 'Dr. Martina Sardo',
+    role: 'Postdoctoral Researcher',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+    email: 'martina.sardo@unibe.ch',
+    linkedin: '#',
+    location: 'Bern, Switzerland',
+    photo: '',
+  },
+
+      {
+    key: 'camilla-paglia',
+    name: 'Camilla Paglia',
+    role: 'PhD Candidate',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+    email: 'camilla.paglia@students.unibe.ch',
+    linkedin: '#',
+    location: 'Bern, Switzerland',
+    photo: '',
+  },
+    {
     key: 'riccarda-heepen',
     name: 'Riccarda Heepen',
     role: 'Research Assistant',
@@ -333,121 +346,37 @@ const coreTeam = [
     location: 'Geneva, Switzerland',
     photo: '',
   },
-  {
-    key: 'martina-sardo',
-    name: 'Martina Sardo',
-    role: 'Postdoctoral Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'martina.sardo@unibe.ch',
-    linkedin: '#',
-    location: 'Bern, Switzerland',
-    photo: '',
-  },
-  {
-    key: 'simone-ferrari',
-    name: 'Simone Ferrari',
-    role: 'Senior Postdoctoral Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'simone.ferrari.fs@gmail.com',
-    linkedin: '#',
-    location: 'Bern, Switzerland',
-    photo: '',
-  },
 ]
 
 const visitingCurrent = [
   {
     key: 'john-doe-current-1',
-    name: 'John Doe',
-    role: 'Researcher',
+    name: 'To be announced',
+    role: 'Job Title',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'placeholder@placeholder.ch',
     linkedin: '#',
-    location: 'Bern, Switzerland',
+    location: 'Location',
     photo: '',
-  },
-  {
-    key: 'jane-doe-current-1',
-    name: 'Jane Doe',
-    role: 'Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'placeholder@placeholder.ch',
-    linkedin: '#',
-    location: 'Geneva, Switzerland',
-    photo: '',
-  },
-  {
-    key: 'john-doe-current-2',
-    name: 'John Doe',
-    role: 'Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'placeholder@placeholder.ch',
-    linkedin: '#',
-    location: 'Bern, Switzerland',
-    photo: '',
-  },
-  {
-    key: 'jane-doe-current-2',
-    name: 'Jane Doe',
-    role: 'Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'placeholder@placeholder.ch',
-    linkedin: '#',
-    location: 'Geneva, Switzerland',
-    photo: '',
-  },
+  }
 ]
 
 const visitingAlumni = [
   {
     key: 'john-doe-alumni-1',
-    name: 'John Doe',
-    role: 'Researcher',
+    name: 'To be announced',
+    role: 'Job Title',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'placeholder@placeholder.ch',
     linkedin: '#',
-    location: 'Zurich, Switzerland',
+    location: 'Locatin',
     photo: '',
-  },
-  {
-    key: 'jane-doe-alumni-1',
-    name: 'Jane Doe',
-    role: 'Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'placeholder@placeholder.ch',
-    linkedin: '#',
-    location: 'Lausanne, Switzerland',
-    photo: '',
-  },
-  {
-    key: 'john-doe-alumni-2',
-    name: 'John Doe',
-    role: 'Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'placeholder@placeholder.ch',
-    linkedin: '#',
-    location: 'Bern, Switzerland',
-    photo: '',
-  },
-  {
-    key: 'jane-doe-alumni-2',
-    name: 'Jane Doe',
-    role: 'Researcher',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'placeholder@placeholder.ch',
-    linkedin: '#',
-    location: 'Geneva, Switzerland',
-    photo: '',
-  },
+  }
 ]
 </script>
 
 <style scoped>
-/* =========================
-   TEAM PAGE – matches your theme tokens (square corners, panel, accent)
-   ========================= */
 
-/* Stronger lift (closer to your reference team page) */
 .team-hero-offset {
   margin-top: -20px;
   position: relative;
@@ -459,8 +388,6 @@ const visitingAlumni = [
   }
 }
 
-/* ✅ IMPORTANT: make each team section a stretching grid
-   so header + grid use EXACTLY the same available width */
 .team-section {
   display: grid;
   justify-items: stretch;
@@ -468,8 +395,6 @@ const visitingAlumni = [
   padding: clamp(10px, 1.6vw, 18px) 0;
 }
 
-/* Use your pill styling (already defined globally in cards.css for .feature-section etc),
-   but we also support it here in case the team page is outside those sections. */
 .pill {
   display: inline-block;
   font-size: 12px;
@@ -503,15 +428,14 @@ const visitingAlumni = [
   text-wrap: pretty;
 }
 
-/* ✅ Grid must also stretch full width (same reference as header) */
 .team-grid {
   width: 100%;
   justify-self: stretch;
   box-sizing: border-box;
 
   list-style: none;
-  padding: 0; /* remove UL left padding */
-  margin-left: 0; /* remove default margin */
+  padding: 0;
+  margin-left: 0;
   margin-right: 0;
 
   display: grid;
@@ -531,7 +455,6 @@ const visitingAlumni = [
   }
 }
 
-/* Member card (square, modern, matches your borders/shadows) */
 .member-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -555,7 +478,6 @@ const visitingAlumni = [
   border-color: rgba(216, 75, 139, 0.28);
 }
 
-/* Left accent rail on each card */
 .member-card::before {
   content: '';
   position: absolute;
@@ -566,7 +488,6 @@ const visitingAlumni = [
   pointer-events: none;
 }
 
-/* Header: avatar + name/role */
 .member-header {
   display: grid;
   grid-template-columns: 72px 1fr;
@@ -593,7 +514,6 @@ const visitingAlumni = [
   display: block;
 }
 
-/* Initials fallback if no image */
 .avatar[data-initials]:not(:has(img))::after {
   content: attr(data-initials);
   font-weight: 900;
@@ -629,7 +549,6 @@ const visitingAlumni = [
   margin: 12px 0 0;
 }
 
-/* Justified bio (like your reference) */
 .bio {
   margin: 12px 0 0;
   color: var(--muted);
@@ -643,7 +562,6 @@ const visitingAlumni = [
   text-wrap: pretty;
 }
 
-/* Meta rows (email / linkedin / location) */
 .meta {
   display: grid;
   gap: 8px;
@@ -678,7 +596,6 @@ const visitingAlumni = [
   color: var(--ink);
 }
 
-/* Links */
 .link {
   color: var(--accent);
   text-decoration: none;
@@ -693,7 +610,6 @@ const visitingAlumni = [
   border-color: var(--accent);
 }
 
-/* Respect user motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .member-card {
     transition: none !important;
@@ -703,7 +619,6 @@ const visitingAlumni = [
   }
 }
 
-/* Optional: tune the hero size just like your other inner pages */
 :deep(.stage--top--flat) {
   min-height: clamp(320px, 46vh, 520px);
   padding-top: calc(var(--header-h) + 54px);

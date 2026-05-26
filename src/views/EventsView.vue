@@ -1,6 +1,5 @@
 <template>
   <div class="events-page">
-    <!-- TOP HERO (COMPACT / FLAT) -->
     <section class="stage stage--top stage--top--compact stage--top--flat full-bleed">
       <div class="container stage-inner">
         <div class="hero hero--events">
@@ -9,7 +8,6 @@
             content
           </div>
 
-          <!-- SAME WORD ANIMATION AS HOMEPAGE -->
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             OUR <span class="accent">events</span>
           </h1>
@@ -26,13 +24,10 @@
       </div>
     </section>
 
-    <!-- CONTENT -->
     <section class="content-block full-bleed">
       <div class="container">
-        <!-- ✅ lowered content (no overlap on banner) -->
 
         <section class="events-section" aria-labelledby="events-title">
-          <!-- ✅ Publications-like head (title + actions) -->
           <div class="section-head">
             <h2 id="events-title" class="section-heading">Events</h2>
 
@@ -59,7 +54,6 @@
             </div>
           </div>
 
-          <!-- ===== Toolbar: search + filters + sort (SAME AS PUBLICATIONS FILTERBAR) ===== -->
           <section class="toolbar" aria-label="Filters and Search">
             <label class="search-input" aria-label="Search events">
               <svg
@@ -131,7 +125,6 @@
             </label>
           </section>
 
-          <!-- ✅ Active filters chips (same behavior as Publications) -->
           <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
             <button v-if="year" class="chip" type="button" @click="year = ''">
               Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
@@ -144,7 +137,6 @@
             </button>
           </div>
 
-          <!-- ✅ Stats row (same as Publications) -->
           <div class="stats-row" aria-live="polite">
             <span class="stat">
               <strong>{{ totalCount }}</strong>
@@ -155,7 +147,6 @@
             >
           </div>
 
-          <!-- ===== Grid ===== -->
           <section class="grid" :class="{ compact }" aria-label="Events list">
             <article
               v-for="(it, idx) in visibleItems"
@@ -169,7 +160,6 @@
               :aria-labelledby="`e${idx}-title`"
               ref="cardEls"
             >
-              <!-- ✅ Solid banner like Publications -->
               <header class="event-banner">
                 <div class="banner-inner">
                   <h3 :id="`e${idx}-title`" class="event-title">
@@ -189,7 +179,6 @@
               </header>
 
               <div class="event-body">
-                <!-- Meta pills row -->
                 <div class="meta-row meta-row--pills" aria-label="Event meta">
                   <span class="pill-chip">
                     <span class="pill-label">Location</span>
@@ -210,7 +199,6 @@
                   <p class="summary" :id="`e${idx}-summary`">{{ it.summary }}</p>
                 </div>
 
-                <!-- Media strip -->
                 <fieldset class="media-strip">
                   <legend class="visually-hidden">Event media</legend>
 
@@ -273,7 +261,6 @@
                   </button>
                 </fieldset>
 
-                <!-- Thumbs -->
                 <div v-if="(it.gallery || []).length" class="thumbs" aria-label="Gallery previews">
                   <button
                     v-for="(src, tIdx) in (it.gallery || []).slice(0, 6)"
@@ -286,7 +273,6 @@
                   />
                 </div>
 
-                <!-- Publications-like bottom actions -->
                 <footer class="event-actions event-actions--split" aria-label="Event actions">
                   <button
                     class="action action--read"
@@ -326,7 +312,6 @@
             </article>
           </section>
 
-          <!-- ===== Pagination ===== -->
           <nav class="pager" aria-label="Pagination">
             <button
               class="btn btn--load"
@@ -341,7 +326,6 @@
             </button>
           </nav>
 
-          <!-- Lightbox -->
           <dialog class="lightbox" ref="lbEl" @click="onBackdrop" @cancel.prevent="closeLightbox">
             <div class="lightbox-header">
               <h4 class="lightbox-title">{{ lbTitle }}</h4>
@@ -386,13 +370,11 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useWordReveal } from '@/composables/useWordReveal'
 
-/* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,
 })
 
-/** Data (same content as your HTML page) */
 const items = ref([
   {
     title: 'Conference: Climate Litigation Frontiers',
@@ -462,7 +444,6 @@ const items = ref([
   },
 ])
 
-/** UI state */
 const PAGE_SIZE = 8
 const page = ref(1)
 const q = ref('')
@@ -470,13 +451,11 @@ const year = ref('')
 const location = ref('')
 const sort = ref('date-desc')
 
-/** Density toggle (match Publications) */
 const compact = ref(false)
 function toggleCompact() {
   compact.value = !compact.value
 }
 
-/** Active filters (pubs-like) */
 const hasActiveFilters = computed(() => !!q.value || !!year.value || !!location.value)
 function clearAll() {
   q.value = ''
@@ -486,13 +465,10 @@ function clearAll() {
   page.value = 1
 }
 
-/** Expand state stable across filtering/sorting */
 const expandedKeys = ref(new Set())
 
-/** Reveal state stable across filtering/sorting */
 const revealedKeys = ref(new Set())
 
-/** Dropdown values */
 const years = computed(() => {
   const set = new Set(items.value.map((x) => (x.start || '').slice(0, 4)).filter(Boolean))
   return Array.from(set).sort((a, b) => b.localeCompare(a))
@@ -502,7 +478,6 @@ const locations = computed(() => {
   return Array.from(set).sort((a, b) => a.localeCompare(b))
 })
 
-/** Filter + sort */
 const filtered = computed(() => {
   const qq = q.value.trim().toLowerCase()
   const yy = year.value
@@ -552,12 +527,10 @@ const visibleItems = computed(() => filtered.value.slice(0, PAGE_SIZE * page.val
 
 const canLoadMore = computed(() => visibleItems.value.length < filtered.value.length)
 
-/** Stable key for each event card (no index). */
 function keyOf(it) {
   return `${it.title}__${it.start}__${it.location || ''}`
 }
 
-/** Reset paging/reveal/expand when filters change */
 watch([q, year, location, sort], async () => {
   page.value = 1
   expandedKeys.value = new Set()
@@ -567,7 +540,6 @@ watch([q, year, location, sort], async () => {
   observeCards()
 })
 
-/** Summary expand/collapse (stable by key) */
 function isCollapsed(it) {
   return !expandedKeys.value.has(keyOf(it))
 }
@@ -586,7 +558,6 @@ function loadMore() {
   }
 }
 
-/** Dates */
 function formatDateRange(startISO, endISO) {
   const s = new Date(startISO)
   if (!Number.isFinite(s.getTime())) return startISO
@@ -613,7 +584,6 @@ function timeRange(startISO, endISO) {
   }
 }
 
-/** Reveal on scroll (IntersectionObserver) */
 const cardEls = ref([])
 let io = null
 
@@ -645,7 +615,6 @@ onBeforeUnmount(() => {
   if (io) io.disconnect()
 })
 
-/** Lightbox */
 const lbEl = ref(null)
 const lbItem = ref(null)
 const lbTitle = ref('')
@@ -664,7 +633,6 @@ function onBackdrop(e) {
   if (e.target === lbEl.value) closeLightbox()
 }
 
-/** ICS download */
 function slugify(s) {
   return String(s)
     .toLowerCase()

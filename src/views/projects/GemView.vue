@@ -31,7 +31,6 @@
           <section class="feature-section">
             <h2 class="section-heading">Explore</h2>
 
-            <!-- ✅ Single block menu + content (like HRJust) -->
             <GemPanel />
           </section>
         </div>
@@ -44,7 +43,6 @@
 import { useWordReveal } from '@/composables/useWordReveal'
 import GemPanel from './subprojects/gem/GemPanel.vue'
 
-/* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,

@@ -1,6 +1,5 @@
 <template>
   <div class="project-page">
-    <!-- TOP HERO (COMPACT) -->
     <section class="stage stage--top stage--top--compact stage--top--flat full-bleed">
       <div class="container stage-inner">
         <div class="hero">
@@ -26,12 +25,9 @@
       </div>
     </section>
 
-    <!-- CONTENT -->
     <section class="content-block full-bleed">
       <div class="container">
-        <!-- ================== OBJECTIVES ONLY ================== -->
         <section class="project-section" aria-label="Objectives">
-          <!-- Events / Publications style header -->
           <div class="section-head">
             <h2 class="section-heading">Overview</h2>
           </div>
@@ -123,12 +119,10 @@ const { el: heroTitleEl } = useWordReveal({
 </script>
 
 <style scoped>
-/* Objectives section wrapper (matches Events / Publications) */
 .project-section {
   padding: 0;
 }
 
-/* Objectives grid */
 .objectives-grid {
   display: grid;
   gap: 16px;
@@ -141,7 +135,6 @@ const { el: heroTitleEl } = useWordReveal({
   }
 }
 
-/* Banner tune */
 :deep(.stage--top--flat) {
   min-height: clamp(320px, 46vh, 520px);
   padding-top: calc(var(--header-h) + 54px);

@@ -30,8 +30,6 @@
         <div class="hero-offset hrjust-hero-offset">
           <section class="feature-section">
             <h2 class="section-heading">Explore</h2>
-
-            <!-- ✅ Single block menu + content -->
             <HrJustPanel />
           </section>
         </div>
@@ -44,7 +42,6 @@
 import { useWordReveal } from '@/composables/useWordReveal'
 import HrJustPanel from './subprojects/hrjust/HrJustPanel.vue'
 
-/* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,

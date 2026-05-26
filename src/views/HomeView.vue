@@ -1,10 +1,7 @@
-<!-- src/views/HomeView.vue -->
 <template>
   <div class="home">
-    <!-- Hidden SVG filter defs (used by the looping "erosion" effect) -->
     <svg class="visually-hidden" width="0" height="0" aria-hidden="true" focusable="false">
       <filter id="erodeFilter" x="-20%" y="-20%" width="140%" height="140%">
-        <!-- noise -->
         <feTurbulence
           type="fractalNoise"
           baseFrequency="1.1"
@@ -12,14 +9,12 @@
           seed="2"
           result="noise"
         >
-          <!-- slow drift -->
           <animate
             attributeName="baseFrequency"
             dur="6s"
             values="0.9;1.4;0.9"
             repeatCount="indefinite"
           />
-          <!-- subtle variation -->
           <animate
             attributeName="seed"
             dur="2.2s"
@@ -28,7 +23,6 @@
           />
         </feTurbulence>
 
-        <!-- turn noise into a moving alpha mask (controls how much gets "eaten") -->
         <feComponentTransfer in="noise" result="mask">
           <feFuncA type="gamma" amplitude="1.05" exponent="1" offset="-0.06">
             <animate
@@ -40,10 +34,8 @@
           </feFuncA>
         </feComponentTransfer>
 
-        <!-- apply mask to the text (erodes holes) -->
         <feComposite in="SourceGraphic" in2="mask" operator="in" result="cut" />
 
-        <!-- wobble the remaining edges a bit -->
         <feDisplacementMap
           in="cut"
           in2="noise"
@@ -56,7 +48,6 @@
       </filter>
     </svg>
 
-    <!-- TOP HERO -->
     <section class="stage stage--top full-bleed">
       <div class="container stage-inner">
         <div class="hero">
@@ -65,10 +56,8 @@
             FOCUS
           </div>
 
-          <!-- Keep your word reveal animation (useWordReveal) -->
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             WHEN <span class="accent">CLIMATE CHANGE</span> ERODES
-            <!-- Looping erosion effect only on HUMAN RIGHTS -->
             <span class="erode-loop">HUMAN RIGHTS</span>
           </h1>
 
@@ -85,18 +74,14 @@
       </div>
     </section>
 
-    <!-- CONTENT (REPLACED) -->
     <section id="news" class="content-block full-bleed">
       <div class="container">
         <div class="hero-offset">
-          <!-- ================== TOP ROW: FOCUS (NEWS + PUBLICATION stacked) + AGENDA ================== -->
           <section class="feature-section" aria-label="Highlights">
             <h2 class="section-heading">Latest</h2>
 
             <div class="feature-grid focus-grid">
-              <!-- ===== LEFT: stacked cards ===== -->
               <div class="focus-left">
-                <!-- LAST NEWS -->
                 <article class="feature-row" aria-label="Last News">
                   <div class="media-frame">
                     <figure class="feature-media">
@@ -109,14 +94,11 @@
                     <div class="feature-card">
                       <div>
                         <div class="pill">Last News</div>
-                        <h3 class="feature-title">Policy Brief: Climate Risk Disclosure</h3>
+                        <h3 class="feature-title">UNCITRAL Transdanubian Days 2026</h3>
                         <p class="feature-text">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                          amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                          labore et dolore magna aliqua.
+On 11 June, the HRJust project and its Climate Claims Visual Tool will be presented during an expert meeting dedicated to climate litigation, investor-State dispute settlement, and ongoing UNCITRAL reform discussions. The event will bring together researchers and practitioners to explore emerging legal trends, empirical insights, and institutional responses to climate-related investment disputes.
                         </p>
-                        <p class="feature-meta">Published: 12 Oct 2025</p>
+                        <p class="feature-meta">Published: 26 May 2026</p>
                       </div>
                       <p class="feature-actions actions-right">
                         <a class="feature-link" href="#">All News →</a>
@@ -125,7 +107,6 @@
                   </div>
                 </article>
 
-                <!-- LAST PUBLICATION -->
                 <article class="feature-row" aria-label="Last Publication">
                   <div class="media-frame">
                     <figure class="feature-media">
@@ -160,7 +141,6 @@
                 </article>
               </div>
 
-              <!-- ===== RIGHT: AGENDA ===== -->
               <aside class="agenda" aria-label="Agenda">
                 <section class="agenda-card" aria-labelledby="agenda-title">
                   <div class="agenda-header">
@@ -224,12 +204,10 @@
             </div>
           </section>
 
-          <!-- ================== PROJECTS 2×2 ================== -->
           <section class="projects-section" aria-labelledby="projects-title">
             <h2 id="projects-title" class="projects-heading">Projects</h2>
 
             <div class="projects-grid">
-              <!-- 1 -->
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
@@ -255,7 +233,6 @@
                 </div>
               </article>
 
-              <!-- 2 -->
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
@@ -281,7 +258,6 @@
                 </div>
               </article>
 
-              <!-- 3 -->
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
@@ -307,7 +283,6 @@
                 </div>
               </article>
 
-              <!-- 4 -->
               <article class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
@@ -337,7 +312,6 @@
         </div>
       </div>
 
-      <!-- Popover -->
       <Teleport to="body">
         <div
           v-if="openMenuIndex !== null"
@@ -360,7 +334,6 @@
       </Teleport>
     </section>
 
-    <!-- BOTTOM IMAGE AREA -->
     <section class="stage stage--bottom full-bleed">
       <div class="container stage-inner stage-inner--bottom">
         <div class="partners">
@@ -410,53 +383,56 @@
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
 import { useWordReveal } from '@/composables/useWordReveal'
 
-/**
- * Hero title word reveal animation (kept exactly as you already had it)
- */
+
 const { el: heroTitleEl } = useWordReveal({
-  stagger: 140, // even slower stagger
-  duration: 1300, // longer easing per word
+  stagger: 140,
+  duration: 1300,
 })
 
-/**
- * Agenda mock data
- */
+
 const agendaConfig = {
   timezone: 'Europe/Zurich',
   items: [
     {
-      title: 'Conference: Climate Litigation — Plenary',
-      start: '2026-01-24T09:30:00',
-      end: '2026-01-24T11:00:00',
-      location: 'Auditorium A, Uni Campus',
+      title: 'Webinar : UNCITRAL Transadanubian Days 26',
+      start: '2026-06-11T14:00:00',
+      end: '2026-06-11T15:30:00',
+      location: 'Online',
       url: '#',
     },
     {
-      title: 'Webinar: Corporate Duty of Vigilance',
-      start: '2026-03-05T17:00:00',
-      end: '2026-03-05T18:15:00',
-      location: 'Online (Zoom)',
+      title: 'Gender Lecture Series #1',
+      start: '2026-07-05T17:00:00',
+      end: '2026-07-05T18:15:00',
+      location: 'World Trade Institute, Bern',
       url: '#',
     },
     {
-      title: 'Webinar: Corporate Duty of Vigilance',
-      start: '2026-02-05T17:00:00',
-      end: '2026-02-05T18:15:00',
-      location: 'Online (Zoom)',
+      title: 'Gender Lecture Series #2',
+      start: '2026-08-05T17:00:00',
+      end: '2026-08-05T18:15:00',
+      location: 'World Trade Institute, Bern',
       url: '#',
     },
     {
-      title: 'Workshop: Climate Claims Visuals',
-      start: '2026-11-13T14:00:00',
-      end: '2026-11-13T17:00:00',
-      location: 'Lab 3, Digital Hub',
+      title: 'Gender Lecture Series #3',
+      start: '2026-09-13T14:00:00',
+      end: '2026-09-13T17:00:00',
+      location: 'World Trade Institute, Bern',
       url: '#',
     },
     {
-      title: 'Seminar: Human Rights & Climate Justice',
-      start: '2026-12-02T12:30:00',
-      end: '2026-12-02T13:45:00',
-      location: 'Room B',
+      title: 'Gender Lecture Series #4',
+      start: '2026-10-02T12:30:00',
+      end: '2026-10-02T13:45:00',
+      location: 'World Trade Institute, Bern',
+      url: '#',
+    },
+        {
+      title: 'Gender Lecture Series #5',
+      start: '2026-11-02T12:30:00',
+      end: '2026-11-02T13:45:00',
+      location: 'World Trade Institute, Bern',
       url: '#',
     },
   ],
@@ -602,7 +578,6 @@ function downloadICS(ev) {
   closeMenu()
 }
 
-// Reveal animation
 let io = null
 
 function initReveal() {
@@ -651,7 +626,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* Hidden SVG defs helper */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -662,7 +636,6 @@ onBeforeUnmount(() => {
   clip-path: inset(50%);
 }
 
-/* Looping "erosion" effect only on the HUMAN RIGHTS span */
 .erode-loop {
   display: inline-block;
   filter: url(#erodeFilter);
@@ -670,7 +643,6 @@ onBeforeUnmount(() => {
   animation: erodeFloat 5.2s ease-in-out infinite;
 }
 
-/* premium micro-motion so it feels modern, not gimmicky */
 @keyframes erodeFloat {
   0% {
     transform: translate3d(0, 0, 0);
@@ -686,7 +658,6 @@ onBeforeUnmount(() => {
   }
 }
 
-/* accessibility */
 @media (prefers-reduced-motion: reduce) {
   .erode-loop {
     filter: none;

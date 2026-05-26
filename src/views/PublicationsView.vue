@@ -1,6 +1,5 @@
 <template>
   <div class="publications-page">
-    <!-- TOP HERO (COMPACT / FLAT) -->
     <section class="stage stage--top stage--top--compact stage--top--flat full-bleed">
       <div class="container stage-inner">
         <div class="hero hero--pubs">
@@ -9,7 +8,6 @@
             content
           </div>
 
-          <!-- SAME WORD ANIMATION AS HOMEPAGE -->
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             OUR <span class="accent">publications</span>
           </h1>
@@ -26,18 +24,14 @@
       </div>
     </section>
 
-    <!-- CONTENT -->
     <section class="content-block full-bleed">
       <div class="container">
-        <!-- ✅ lowered content (no overlap on banner) -->
 
         <section class="pubs-section" aria-labelledby="pubs-title">
-          <!-- ✅ Events-like head (title + actions) -->
           <div class="section-head">
             <h2 id="pubs-title" class="section-heading">Publications</h2>
 
             <div class="section-actions" aria-label="View options">
-              <!-- ✅ Compact/comfort toggle (same UX as Events page) -->
               <button
                 class="chip chip--ghost"
                 type="button"
@@ -60,7 +54,6 @@
             </div>
           </div>
 
-          <!-- ===== Toolbar: search + filters + sort (same as Events block) ===== -->
           <section class="toolbar" aria-label="Filters and Search">
             <label class="search-input" aria-label="Search publications">
               <svg
@@ -113,7 +106,6 @@
               </select>
             </label>
 
-            <!-- ✅ Authors (instead of location) -->
             <label class="select" for="author">
               <span class="pill" aria-hidden="true">Author</span>
               <select id="author" v-model="author" aria-label="Filter by author">
@@ -133,7 +125,6 @@
             </label>
           </section>
 
-          <!-- ✅ Active filters chips (same behavior as Events) -->
           <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
             <button v-if="year" class="chip" type="button" @click="year = ''">
               Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
@@ -146,7 +137,6 @@
             </button>
           </div>
 
-          <!-- ✅ Stats row -->
           <div class="stats-row" aria-live="polite">
             <span class="stat">
               <strong>{{ totalCount }}</strong>
@@ -157,7 +147,6 @@
             >
           </div>
 
-          <!-- ===== Grid ===== -->
           <section class="grid" :class="{ compact }" aria-label="Publications list">
             <article
               v-for="(it, idx) in visibleItems"
@@ -168,7 +157,6 @@
               :aria-labelledby="`p${idx}-title`"
               ref="cardEls"
             >
-              <!-- ✅ Colored header band (title + meta) -->
               <div class="pub-header">
                 <div class="pub-head">
                   <h3 :id="`p${idx}-title`" class="pub-title">{{ it.title }}</h3>
@@ -223,14 +211,12 @@
                     viewBox="0 0 24 24"
                     aria-hidden="true"
                   >
-                    <!-- external link icon -->
                     <path
                       d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"
                     />
                   </svg>
                 </a>
 
-                <!-- Optional: if no url, keep layout balanced -->
                 <span v-else class="action action--link action--disabled" aria-disabled="true">
                   <span class="action-label">No link</span>
                 </span>
@@ -238,7 +224,6 @@
             </article>
           </section>
 
-          <!-- ===== Pagination ===== -->
           <nav class="pager" aria-label="Pagination">
             <button
               class="btn"

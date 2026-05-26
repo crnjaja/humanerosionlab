@@ -31,7 +31,6 @@
           <section class="feature-section">
             <h2 class="section-heading">Explore</h2>
 
-            <!-- ✅ Same disposition as GEM -->
             <ClimCo2Panel />
           </section>
         </div>
@@ -44,7 +43,6 @@
 import { useWordReveal } from '@/composables/useWordReveal'
 import ClimCo2Panel from './subprojects/clim/ClimCo2Panel.vue'
 
-/* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,

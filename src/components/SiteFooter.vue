@@ -7,7 +7,6 @@
       </div>
 
       <nav class="footer-nav" aria-label="Liens">
-        <!-- If you have routes, prefer RouterLink -->
         <RouterLink class="footer-link" to="/imprint">Terms of Use</RouterLink>
         <RouterLink class="footer-link" to="/privacy-policy">Privacy Policy</RouterLink>
         <RouterLink class="footer-link" to="/cookies-consent">Cookies &amp; Consent</RouterLink>

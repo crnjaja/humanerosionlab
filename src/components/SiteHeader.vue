@@ -13,7 +13,6 @@
       <nav class="top-nav" aria-label="Navigation principale">
         <RouterLink class="top-nav-link" to="/">Home</RouterLink>
 
-        <!-- ABOUT DROPDOWN -->
         <div
           ref="aboutEl"
           class="nav-dropdown"
@@ -75,7 +74,6 @@
               <span class="nav-dropdown-hint">Lab Partners</span>
             </RouterLink>
 
-            <!-- TOOLS SUB-SUBMENU (inside About) -->
             <div
               ref="toolsSubEl"
               class="nav-subdropdown"
@@ -143,14 +141,12 @@
                 </RouterLink>
               </div>
             </div>
-            <!-- END TOOLS SUB-SUBMENU -->
           </div>
         </div>
 
         <RouterLink class="top-nav-link" to="/publications">Publications</RouterLink>
         <RouterLink class="top-nav-link" to="/events">Events</RouterLink>
 
-        <!-- PROJECTS DROPDOWN -->
         <div
           ref="projectsEl"
           class="nav-dropdown"
