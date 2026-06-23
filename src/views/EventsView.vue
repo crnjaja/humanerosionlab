@@ -362,7 +362,7 @@ const items = ref([
     end: '2026-06-11T16:30',
     location: 'Online',
     category: 'Webinar',
-    speakers: ['Prof. L. Nguyen', 'Dr. C. Rossi', 'R. Marguet'],
+    speakers: ['N. Kováčiková', 'Dr. F. Cristani', 'R. Marguet'],
     summary: `On 11 June 2026, the UNCITRAL Transdanubian Day 2026 hosted an online expert lecture and discussion on Climate Litigation, ISDS Reform, and State Support Mechanisms. Conducted in English via Zoom, the event brought together academics and practitioners to examine how climate change is increasingly shaping the landscape of international dispute settlement, including investor–State dispute settlement (ISDS).
 
 The discussion focused on several interconnected developments. Participants explored the growing body of climate litigation across domestic, regional, and international jurisdictions, as well as the implications of these cases for international investment law and dispute resolution. Particular attention was devoted to the ongoing reform efforts within the United Nations Commission on International Trade Law (UNCITRAL), especially the work of Working Group III on ISDS Reform, which continues to play a central role in shaping the future of investor–State dispute settlement.
