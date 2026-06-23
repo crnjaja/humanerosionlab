@@ -22,7 +22,6 @@
             repeatCount="indefinite"
           />
         </feTurbulence>
-
         <feComponentTransfer in="noise" result="mask">
           <feFuncA type="gamma" amplitude="1.05" exponent="1" offset="-0.06">
             <animate
@@ -33,9 +32,7 @@
             />
           </feFuncA>
         </feComponentTransfer>
-
         <feComposite in="SourceGraphic" in2="mask" operator="in" result="cut" />
-
         <feDisplacementMap
           in="cut"
           in2="noise"
@@ -51,21 +48,15 @@
     <section class="stage stage--top full-bleed">
       <div class="container stage-inner">
         <div class="hero">
-          <div class="hero-kicker">
-            <span class="kicker-dot" aria-hidden="true"></span>
-            FOCUS
-          </div>
-
+          <div class="hero-kicker"><span class="kicker-dot" aria-hidden="true"></span> FOCUS</div>
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             WHEN <span class="accent">CLIMATE CHANGE</span> ERODES
             <span class="erode-loop">HUMAN RIGHTS</span>
           </h1>
-
           <p class="hero-subtitle">
             Exploring how climate change, migration, and international law intersect to protect
             human dignity in an increasingly uninhabitable world.
           </p>
-
           <div class="hero-actions">
             <RouterLink class="btn btn--primary" to="projects/hel">About Us</RouterLink>
             <RouterLink class="btn btn--ghost" to="/contact">Contact</RouterLink>
@@ -82,59 +73,25 @@
 
             <div class="feature-grid focus-grid">
               <div class="focus-left">
-                <article class="feature-row" aria-label="Last News">
+                <article
+                  v-for="item in latestItems"
+                  :key="item.title"
+                  class="feature-row"
+                  :aria-label="item.label"
+                >
                   <div class="media-frame">
                     <figure class="feature-media">
-                      <img
-                        src="/images/backgrounds/background4.jpg"
-                        alt="News cover"
-                        loading="lazy"
-                      />
+                      <img :src="item.image" :alt="item.imageAlt" loading="lazy" />
                     </figure>
                     <div class="feature-card">
                       <div>
-                        <div class="pill">Last News</div>
-                        <h3 class="feature-title">UNCITRAL Transdanubian Days 2026</h3>
-                        <p class="feature-text">
-On 11 June, the HRJust project and its Climate Claims Visual Tool will be presented during an expert meeting dedicated to climate litigation, investor-State dispute settlement, and ongoing UNCITRAL reform discussions. The event will bring together researchers and practitioners to explore emerging legal trends, empirical insights, and institutional responses to climate-related investment disputes.
-                        </p>
-                        <p class="feature-meta">Published: 26 May 2026</p>
+                        <div class="pill">{{ item.label }}</div>
+                        <h3 class="feature-title">{{ item.title }}</h3>
+                        <p class="feature-text">{{ item.text }}</p>
+                        <p class="feature-meta">Published: {{ item.published }}</p>
                       </div>
                       <p class="feature-actions actions-right">
-                        <a class="feature-link" href="#">All News →</a>
-                      </p>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="feature-row" aria-label="Last Publication">
-                  <div class="media-frame">
-                    <figure class="feature-media">
-                      <img
-                        src="/images/backgrounds/rose.png"
-                        alt="Publications cover"
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div class="feature-card">
-                      <div>
-                        <div class="pill">Last Publication</div>
-                        <h3 class="feature-title">Working Paper: Corporate Climate Duties</h3>
-                        <p class="feature-text">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
-                          amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                          labore et dolore magna aliqua.
-                        </p>
-                        <p class="feature-meta">Published: 08 Oct 2025</p>
-                      </div>
-                      <p class="feature-actions actions-right">
-                        <a
-                          class="feature-link"
-                          href="https://www.human-erosion-lab.com/publications"
-                        >
-                          All Publications →
-                        </a>
+                        <a class="feature-link" :href="item.link">{{ item.linkLabel }}</a>
                       </p>
                     </div>
                   </div>
@@ -150,21 +107,20 @@ On 11 June, the HRJust project and its Climate Claims Visual Tool will be presen
 
                   <ol class="agenda-list" aria-live="polite">
                     <li v-if="upcomingAgenda.length === 0" class="agenda-item">
-                      <div class="agenda-main">
-                        <strong>No upcoming items.</strong>
-                      </div>
+                      <div class="agenda-main"><strong>No upcoming items.</strong></div>
                     </li>
 
-                    <li v-for="(ev, idx) in upcomingAgenda" :key="idx" class="agenda-item">
+                    <li v-for="(ev, idx) in upcomingAgenda" :key="ev.title" class="agenda-item">
                       <div class="agenda-date" aria-hidden="true">
-                        <div class="day">{{ fmtDay(ev.start) }}</div>
-                        <div class="month">{{ fmtMonth(ev.start) }}</div>
+                        <div class="day">{{ HomeService.formatDay(ev.start, tz) }}</div>
+                        <div class="month">{{ HomeService.formatMonth(ev.start, tz) }}</div>
                       </div>
 
                       <div class="agenda-main">
                         <span class="agenda-link">{{ ev.title }}</span>
                         <div class="agenda-meta">
-                          {{ fmtDateLong(ev.start) }} · {{ fmtTimeRange(ev.start, ev.end) }}
+                          {{ HomeService.formatDateLong(ev.start, tz) }} ·
+                          {{ HomeService.formatTimeRange(ev.start, ev.end, tz) }}
                           <span v-if="ev.location"> · {{ ev.location }}</span>
                         </div>
 
@@ -195,9 +151,9 @@ On 11 June, the HRJust project and its Climate Claims Visual Tool will be presen
                   </ol>
 
                   <div class="agenda-footer actions-right">
-                    <a class="feature-link" href="https://www.human-erosion-lab.com/events">
-                      All Events →
-                    </a>
+                    <a class="feature-link" href="https://www.human-erosion-lab.com/events"
+                      >All Events →</a
+                    >
                   </div>
                 </section>
               </aside>
@@ -208,101 +164,20 @@ On 11 June, the HRJust project and its Climate Claims Visual Tool will be presen
             <h2 id="projects-title" class="projects-heading">Projects</h2>
 
             <div class="projects-grid">
-              <article class="project-row">
+              <article v-for="project in projects" :key="project.title" class="project-row">
                 <div class="media-frame">
                   <figure class="project-media">
-                    <img src="/images/backgrounds/background4.jpg" alt="HEL cover" loading="lazy" />
+                    <img :src="project.image" :alt="project.imageAlt" loading="lazy" />
                   </figure>
                   <div class="project-card">
                     <div>
-                      <h3 class="project-title">HEL</h3>
-                      <p class="project-text">
-                        Resisting Human Erosion explores how international law can respond to
-                        climate migration and the protection gaps created by climate change. Through
-                        case studies in South Asia, Latin America, and the Pacific, the project
-                        examines the experiences of climate migrants and develops new legal
-                        approaches to safeguard human dignity in a changing world.
-                      </p>
+                      <h3 class="project-title">{{ project.title }}</h3>
+                      <p class="project-text">{{ project.text }}</p>
                     </div>
                     <p class="project-actions actions-right">
-                      <RouterLink class="feature-link" to="/projects/hel">
-                        Go to the HEL project →
-                      </RouterLink>
-                    </p>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project-row">
-                <div class="media-frame">
-                  <figure class="project-media">
-                    <img src="/images/backgrounds/bordeaux.png" alt="HRJUST cover" loading="lazy" />
-                  </figure>
-                  <div class="project-card">
-                    <div>
-                      <h3 class="project-title">HRJUST</h3>
-                      <p class="project-text">
-                        HRJUST explored gaps in human rights regulations and developed a theory of
-                        Human Rights Justifications (HRJ) through inclusive civil society
-                        engagement. The project also created an open-access climate litigation
-                        database to analyze climate cases, human rights arguments, and state
-                        practices across national and international jurisdictions.
-                      </p>
-                    </div>
-                    <p class="project-actions actions-right">
-                      <RouterLink class="feature-link" to="/projects/hrjust">
-                        Go to the HRJUST project →
-                      </RouterLink>
-                    </p>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project-row">
-                <div class="media-frame">
-                  <figure class="project-media">
-                    <img src="/images/backgrounds/rose.png" alt="GEM cover" loading="lazy" />
-                  </figure>
-                  <div class="project-card">
-                    <div>
-                      <h3 class="project-title">GEM</h3>
-                      <p class="project-text">
-                        GEM explored how women’s participation and gender equality could be
-                        strengthened within law and international institutions. Through legal
-                        analysis and case studies, the project examined participatory rights,
-                        affirmative action measures, and the institutional barriers that continued
-                        to limit equal representation between men and women.
-                      </p>
-                    </div>
-                    <p class="project-actions actions-right">
-                      <RouterLink class="feature-link" to="/projects/gem">
-                        Go to the GEM project →
-                      </RouterLink>
-                    </p>
-                  </div>
-                </div>
-              </article>
-
-              <article class="project-row">
-                <div class="media-frame">
-                  <figure class="project-media">
-                    <img src="/images/backgrounds/vert.png" alt="CLIMCO2 cover" loading="lazy" />
-                  </figure>
-                  <div class="project-card">
-                    <div>
-                      <h3 class="project-title">CLI-M-CO2</h3>
-                      <p class="project-text">
-                        The project explored environmental migration governance and examined
-                        climate-related human mobility as a common concern of humankind. Through
-                        legal research and fieldwork in the Pacific region, it analyzed migration
-                        policies, environmental displacement, and international responses to climate
-                        change and human mobility.
-                      </p>
-                    </div>
-                    <p class="project-actions actions-right">
-                      <RouterLink class="feature-link" to="/projects/cli-m-co2">
-                        Go to the CLI-M-CO2 project →
-                      </RouterLink>
+                      <RouterLink class="feature-link" :to="project.to">{{
+                        project.linkLabel
+                      }}</RouterLink>
                     </p>
                   </div>
                 </div>
@@ -324,7 +199,7 @@ On 11 June, the HRJust project and its Climate Claims Visual Tool will be presen
             Download .ics
           </button>
           <a
-            :href="googleCalendarURL(upcomingAgenda[openMenuIndex])"
+            :href="HomeService.googleCalendarURL(upcomingAgenda[openMenuIndex])"
             target="_blank"
             rel="noopener"
           >
@@ -341,36 +216,15 @@ On 11 June, the HRJust project and its Climate Claims Visual Tool will be presen
 
           <div class="logos">
             <a
+              v-for="partner in partners"
+              :key="partner.image"
               class="logo-box"
-              href="https://www.unibe.ch"
+              :href="partner.href"
               target="_blank"
               rel="noopener"
-              aria-label="University of Bern"
+              :aria-label="partner.ariaLabel"
             >
-              <img
-                class="logo-img logo-img--unibe"
-                src="/images/logos/unibe.png"
-                alt="University of Bern logo"
-              />
-            </a>
-
-            <a
-              class="logo-box"
-              href="https://www.wti.org/"
-              target="_blank"
-              rel="noopener"
-              aria-label="World Trade Institute"
-            >
-              <img src="/images/logos/WTI.png" alt="World Trade Institute logo" />
-            </a>
-            <a
-              class="logo-box"
-              href="https://www.wti.org/"
-              target="_blank"
-              rel="noopener"
-              aria-label="World Trade Institute"
-            >
-              <img src="/images/logos/SNF.png" alt="World Trade Institute logo" />
+              <img :class="partner.imageClass" :src="partner.image" :alt="partner.imageAlt" />
             </a>
           </div>
         </div>
@@ -380,236 +234,56 @@ On 11 June, the HRJust project and its Climate Claims Visual Tool will be presen
 </template>
 
 <script setup>
-import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useWordReveal } from '@/composables/useWordReveal'
-
+import { agendaConfig, latestItems, partners, projects } from '@/data/home.data'
+import { HomeService } from '@/services/HomeService'
 
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,
 })
 
-
-const agendaConfig = {
-  timezone: 'Europe/Zurich',
-  items: [
-    {
-      title: 'Webinar : UNCITRAL Transadanubian Days 26',
-      start: '2026-06-11T14:00:00',
-      end: '2026-06-11T15:30:00',
-      location: 'Online',
-      url: '#',
-    },
-    {
-      title: 'Gender Lecture Series #1',
-      start: '2026-07-05T17:00:00',
-      end: '2026-07-05T18:15:00',
-      location: 'World Trade Institute, Bern',
-      url: '#',
-    },
-    {
-      title: 'Gender Lecture Series #2',
-      start: '2026-08-05T17:00:00',
-      end: '2026-08-05T18:15:00',
-      location: 'World Trade Institute, Bern',
-      url: '#',
-    },
-    {
-      title: 'Gender Lecture Series #3',
-      start: '2026-09-13T14:00:00',
-      end: '2026-09-13T17:00:00',
-      location: 'World Trade Institute, Bern',
-      url: '#',
-    },
-    {
-      title: 'Gender Lecture Series #4',
-      start: '2026-10-02T12:30:00',
-      end: '2026-10-02T13:45:00',
-      location: 'World Trade Institute, Bern',
-      url: '#',
-    },
-        {
-      title: 'Gender Lecture Series #5',
-      start: '2026-11-02T12:30:00',
-      end: '2026-11-02T13:45:00',
-      location: 'World Trade Institute, Bern',
-      url: '#',
-    },
-  ],
-}
-
 const tz = agendaConfig.timezone || 'Europe/Zurich'
-
-function startOfDay(d) {
-  const z = new Date(d)
-  z.setHours(0, 0, 0, 0)
-  return z
-}
-
-const upcomingAgenda = computed(() => {
-  const now = new Date()
-  const today = startOfDay(now)
-
-  return (agendaConfig.items || [])
-    .map((x) => ({
-      ...x,
-      start: new Date(x.start),
-      end: x.end ? new Date(x.end) : null,
-    }))
-    .filter((x) => x.start >= today)
-    .sort((a, b) => a.start - b.start)
-    .slice(0, 8)
-})
-
-const fmtDay = (d) => new Intl.DateTimeFormat(undefined, { day: '2-digit', timeZone: tz }).format(d)
-const fmtMonth = (d) =>
-  new Intl.DateTimeFormat(undefined, { month: 'short', timeZone: tz }).format(d)
-const fmtTime = (d) =>
-  new Intl.DateTimeFormat(undefined, {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: tz,
-    hour12: false,
-  }).format(d)
-const fmtDateLong = (d) =>
-  new Intl.DateTimeFormat(undefined, {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-    timeZone: tz,
-  }).format(d)
-
-function fmtTimeRange(start, end) {
-  if (!end) return fmtTime(start)
-  return `${fmtTime(start)}–${fmtTime(end)}`
-}
+const upcomingAgenda = computed(() => HomeService.getUpcomingAgenda(agendaConfig.items, 8))
 
 const openMenuIndex = ref(null)
 const menuPos = ref({ top: 0, left: 0 })
+let io = null
 
-function toggleMenu(idx, evt) {
+function toggleMenu(idx, event) {
   if (openMenuIndex.value === idx) {
     closeMenu()
     return
   }
-  const rect = evt.currentTarget.getBoundingClientRect()
+
   openMenuIndex.value = idx
-  menuPos.value = {
-    top: Math.round(rect.bottom + 6),
-    left: Math.round(rect.right - 180),
-  }
+  menuPos.value = HomeService.getPopoverPosition(event.currentTarget)
 }
 
 function closeMenu() {
   openMenuIndex.value = null
 }
 
-function toUTCBlock(d) {
-  const iso = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()
-  return iso.replaceAll(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')
-}
-
-function googleCalendarURL(ev) {
-  if (!ev) return '#'
-  const text = encodeURIComponent(ev.title || 'Event')
-  const details = encodeURIComponent((ev.url || '') + (ev.url ? '\n' : '') + (ev.location || ''))
-  const location = encodeURIComponent(ev.location || '')
-  const start = toUTCBlock(ev.start)
-  const end = toUTCBlock(ev.end || new Date(ev.start.getTime() + 60 * 60 * 1000))
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${start}%2F${end}&details=${details}&location=${location}`
-}
-
-function toICSDate(d, tzid) {
-  const dtf = new Intl.DateTimeFormat('en-CA', {
-    timeZone: tzid,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  })
-  const parts = Object.fromEntries(dtf.formatToParts(d).map((p) => [p.type, p.value]))
-  return parts.year + parts.month + parts.day + 'T' + parts.hour + parts.minute + parts.second
-}
-
-function downloadICS(ev) {
-  if (!ev) return
-
-  const dtStart = toICSDate(ev.start, tz)
-  const dtEnd = toICSDate(ev.end || new Date(ev.start.getTime() + 60 * 60 * 1000), tz)
-  const uid = 'agenda-' + Math.random().toString(36).slice(2) + '@site'
-
-  const lines = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Your Site//Agenda//EN',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
-    `UID:${uid}`,
-    `DTSTAMP:${toICSDate(new Date(), 'UTC')}Z`,
-    `DTSTART;TZID=${tz}:${dtStart}`,
-    `DTEND;TZID=${tz}:${dtEnd}`,
-    `SUMMARY:${(ev.title || '').replaceAll('\n', ' ')}`,
-    ev.location ? `LOCATION:${String(ev.location).replaceAll('\n', ' ')}` : '',
-    ev.url ? `URL:${ev.url}` : '',
-    'END:VEVENT',
-    'END:VCALENDAR',
-  ]
-    .filter(Boolean)
-    .join('\r\n')
-
-  const blob = new Blob([lines], { type: 'text/calendar;charset=utf-8' })
-  const a = document.createElement('a')
-  a.href = URL.createObjectURL(blob)
-  a.download =
-    (ev.title || 'event')
-      .replaceAll(/[^\w\s-]+/g, '')
-      .trim()
-      .replaceAll(/\s+/g, '-') + '.ics'
-  document.body.appendChild(a)
-  a.click()
-  URL.revokeObjectURL(a.href)
-  a.remove()
-
+function downloadICS(event) {
+  HomeService.downloadICS(event, tz)
   closeMenu()
 }
 
-let io = null
-
-function initReveal() {
-  const targets = document.querySelectorAll(
-    '.focus-left .feature-row, .projects-section .project-row, .agenda',
-  )
-  io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('revealed')
-          io?.unobserve(e.target)
-        }
-      })
-    },
-    { threshold: 0.15 },
-  )
-  targets.forEach((t) => io.observe(t))
+function onDocKeydown(event) {
+  if (event.key === 'Escape') closeMenu()
 }
 
-function onDocKeydown(e) {
-  if (e.key === 'Escape') closeMenu()
-}
 function onDocClick() {
   if (openMenuIndex.value !== null) closeMenu()
 }
+
 function onAnyScrollOrResize() {
   if (openMenuIndex.value !== null) closeMenu()
 }
 
 onMounted(() => {
-  initReveal()
+  io = HomeService.initReveal('.focus-left .feature-row, .projects-section .project-row, .agenda')
   document.addEventListener('keydown', onDocKeydown)
   document.addEventListener('click', onDocClick)
   window.addEventListener('resize', onAnyScrollOrResize)

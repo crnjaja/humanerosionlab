@@ -26,7 +26,6 @@
 
     <section class="content-block full-bleed">
       <div class="container">
-
         <section class="pubs-section" aria-labelledby="pubs-title">
           <div class="section-head">
             <h2 id="pubs-title" class="section-heading">Publications</h2>
@@ -247,123 +246,67 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useWordReveal } from '@/composables/useWordReveal'
+import { publications } from '@/data/publications.data'
+import { PublicationsService } from '@/services/PublicationsService'
+import '@/assets/pages/publications.css'
 
-/* Same animation settings as homepage */
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,
   duration: 1300,
 })
 
-/** Data (same content as your HTML page) */
-const items = ref([
-  {
-    title: 'Policy Brief: Climate Risk Disclosure Duties',
-    authors: ['Jane Roe', 'Alex Smith'],
-    date: '2025-10-12',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['policy', 'disclosure', 'corporate'],
-  },
-  {
-    title: 'Working Paper: Corporate Climate Duties',
-    authors: ['M. Johnson'],
-    date: '2025-10-08',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['corporate', 'governance'],
-  },
-  {
-    title: 'Report: Human Rights Arguments in Climate Litigation (2020–2025)',
-    authors: ['A. Patel', 'L. Nguyen', 'C. Rossi'],
-    date: '2025-09-28',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['litigation', 'human rights'],
-  },
-  {
-    title: 'Dataset: Global Emissions and Enforcement (v2)',
-    authors: ['HEL Team'],
-    date: '2025-08-16',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['data', 'enforcement'],
-  },
-  {
-    title: 'Article: Visualizing Climate Claims',
-    authors: ['S. Duarte'],
-    date: '2025-07-04',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['design', 'visualization'],
-  },
-  {
-    title: 'Guide: Building a Climate Litigation Map',
-    authors: ['Human Erosion Lab'],
-    date: '2025-06-11',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['guide', 'visualization', 'web'],
-  },
-  {
-    title: 'Technical Note: Data Validation for Case Repositories',
-    authors: ['J. Müller', 'P. Alvarez'],
-    date: '2025-05-22',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['data', 'validation'],
-  },
-  {
-    title: 'Briefing: Strategic Litigation Pathways',
-    authors: ['E. Cornaro'],
-    date: '2025-04-10',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['litigation', 'strategy'],
-  },
-  {
-    title: 'Survey: Corporate Net-Zero Claims – A Reality Check',
-    authors: ['T. Okafor', 'R. Chen'],
-    date: '2025-03-02',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['corporate', 'net-zero'],
-  },
-  {
-    title: 'Memo: Procedural Hurdles in Cross-Border Actions',
-    authors: ['K. Dubois'],
-    date: '2024-12-14',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['procedure', 'cross-border'],
-  },
-])
-
-/** UI state */
 const PAGE_SIZE = 8
+
+const items = ref(publications)
 const page = ref(1)
 const q = ref('')
 const year = ref('')
 const author = ref('')
 const sort = ref('date-desc')
-
-/** ✅ Density toggle (same as Events) */
 const compact = ref(false)
+const expandedKeys = ref(new Set())
+const revealedKeys = ref(new Set())
+const cardEls = ref([])
+
+let io = null
+
+const filters = computed(() => ({
+  q: q.value,
+  year: year.value,
+  author: author.value,
+  sort: sort.value,
+}))
+
+const hasActiveFilters = computed(() => PublicationsService.hasActiveFilters(filters.value))
+const years = computed(() => PublicationsService.getYears(items.value))
+const authors = computed(() => PublicationsService.getAuthors(items.value))
+const filtered = computed(() => PublicationsService.filterAndSort(items.value, filters.value))
+const totalCount = computed(() => filtered.value.length)
+const visibleItems = computed(() =>
+  PublicationsService.paginate(filtered.value, page.value, PAGE_SIZE),
+)
+const canLoadMore = computed(() => visibleItems.value.length < filtered.value.length)
+
+function keyOf(publication) {
+  return PublicationsService.keyOf(publication)
+}
+
+function formatDate(iso) {
+  return PublicationsService.formatDate(iso)
+}
+
+function isCollapsed(publication) {
+  return PublicationsService.isCollapsed(publication, expandedKeys.value)
+}
+
+function toggle(publication) {
+  expandedKeys.value = PublicationsService.toggleExpanded(publication, expandedKeys.value)
+}
+
 function toggleCompact() {
   compact.value = !compact.value
 }
 
-/** Active filters (events-like) */
-const hasActiveFilters = computed(() => !!q.value || !!year.value || !!author.value)
 function clearAll() {
   q.value = ''
   year.value = ''
@@ -372,155 +315,54 @@ function clearAll() {
   page.value = 1
 }
 
-/**
- * ✅ Expand state should be stable across filtering/sorting:
- * store "expanded" by item key, not by index.
- */
-const expandedKeys = ref(new Set())
+function loadMore() {
+  if (!canLoadMore.value) return
 
-/**
- * ✅ Reveal state should be stable across filtering/sorting:
- * store revealed by item key, not by index.
- */
-const revealedKeys = ref(new Set())
-
-/** Dropdown values */
-const years = computed(() => {
-  const set = new Set(items.value.map((x) => (x.date || '').slice(0, 4)).filter(Boolean))
-  return Array.from(set).sort((a, b) => b.localeCompare(a))
-})
-const authors = computed(() => {
-  const set = new Set(items.value.flatMap((x) => x.authors || []))
-  return Array.from(set).sort((a, b) => a.localeCompare(b))
-})
-
-/** Filter + sort */
-const filtered = computed(() => {
-  const qq = q.value.trim().toLowerCase()
-  const yy = year.value
-  const aa = author.value
-  const ss = sort.value
-
-  const arr = items.value
-    .map((it) => ({ ...it, y: (it.date || '').slice(0, 4) }))
-    .filter((it) => {
-      const hay = [
-        it.title,
-        it.summary || '',
-        (it.tags || []).join(' '),
-        (it.authors || []).join(' '),
-      ]
-        .join(' ')
-        .toLowerCase()
-
-      const matchQ = !qq || hay.includes(qq)
-      const matchY = !yy || it.y === yy
-      const matchA = !aa || (it.authors || []).includes(aa)
-      return matchQ && matchY && matchA
-    })
-
-  arr.sort((A, B) => {
-    switch (ss) {
-      case 'date-asc':
-        return (A.date || '').localeCompare(B.date || '')
-      case 'title-asc':
-        return (A.title || '').localeCompare(B.title || '')
-      case 'title-desc':
-        return (B.title || '').localeCompare(A.title || '')
-      case 'date-desc':
-      default:
-        return (B.date || '').localeCompare(A.date || '')
-    }
-  })
-
-  return arr
-})
-
-const totalCount = computed(() => filtered.value.length)
-
-const visibleItems = computed(() => {
-  return filtered.value.slice(0, PAGE_SIZE * page.value)
-})
-
-const canLoadMore = computed(() => visibleItems.value.length < filtered.value.length)
-
-/**
- * ✅ Stable key for each publication card (no index).
- * Add url as a tie-breaker to reduce collisions.
- */
-function keyOf(it) {
-  return `${it.title}__${it.date}__${it.url || ''}`
+  page.value += 1
+  nextTick(observeCards)
 }
 
-/** Reset paging/reveal/expand when filters change */
-watch([q, year, author, sort], async () => {
+function resetViewState() {
   page.value = 1
   expandedKeys.value = new Set()
   revealedKeys.value = new Set()
-
-  await nextTick()
-  observeCards()
-})
-
-/** Summary expand/collapse (stable by key) */
-function isCollapsed(it) {
-  return !expandedKeys.value.has(keyOf(it))
 }
-function toggle(it) {
-  const k = keyOf(it)
-  const next = new Set(expandedKeys.value)
-  if (next.has(k)) next.delete(k)
-  else next.add(k)
-  expandedKeys.value = next
-}
-
-function loadMore() {
-  if (canLoadMore.value) {
-    page.value += 1
-    nextTick(() => observeCards())
-  }
-}
-
-/** Dates */
-function formatDate(iso) {
-  const d = new Date(iso)
-  if (!Number.isFinite(d.getTime())) return iso
-  return new Intl.DateTimeFormat(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-  }).format(d)
-}
-
-/** Reveal on scroll (IntersectionObserver) */
-const cardEls = ref([])
-let io = null
 
 function observeCards() {
-  if (io) io.disconnect()
-  const els = cardEls.value?.filter(Boolean) || []
-  if (!els.length) return
+  io?.disconnect()
+
+  const elements = cardEls.value?.filter(Boolean) || []
+  if (!elements.length) return
 
   io = new IntersectionObserver(
     (entries) => {
       const next = new Set(revealedKeys.value)
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          const k = e.target.dataset.k
-          if (k) next.add(k)
-          io?.unobserve(e.target)
-        }
+
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+
+        const key = entry.target.dataset.k
+        if (key) next.add(key)
+        io?.unobserve(entry.target)
       })
+
       revealedKeys.value = next
     },
     { threshold: 0.12 },
   )
 
-  els.forEach((el) => io.observe(el))
+  elements.forEach((element) => io.observe(element))
 }
 
-onMounted(() => nextTick(() => observeCards()))
+watch([q, year, author, sort], async () => {
+  resetViewState()
+  await nextTick()
+  observeCards()
+})
+
+onMounted(() => nextTick(observeCards))
+
 onBeforeUnmount(() => {
-  if (io) io.disconnect()
+  io?.disconnect()
 })
 </script>
