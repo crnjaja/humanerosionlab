@@ -307,7 +307,7 @@ const items = ref([
     end: '2026-06-11T16:30',
     location: 'Online',
     category: 'Webinar',
-    image: '/files/events/PerlmoMartina.jpg',
+    image: '/files/events/Bern.jpg',
     imageAlt: 'Climate litigation webinar',
     speakers: ['Romain Marguet'],
     summary: `On 11 June 2026, the UNCITRAL Transdanubian Day 2026 hosted an online expert lecture and discussion on Climate Litigation, ISDS Reform, and State Support Mechanisms. Conducted in English via Zoom, the event brought together academics and practitioners to examine how climate change is increasingly shaping the landscape of international dispute settlement, including investor–State dispute settlement (ISDS).
@@ -326,7 +326,7 @@ The event concluded with an open discussion, providing participants with an oppo
     end: '2026-02-10',
     location: 'University of London, UK',
     category: 'Seminar',
-    image: '/files/events/PerlmoMartina.jpg',
+    image: '/files/events/London.jpg',
     imageAlt: 'Seminar on non-refoulement',
     speakers: ['Elisa Fornalé'],
     summary: `On 10 February 2026, Prof. Elisa Fornalé participated as a panellist in the seminar “Non-refoulement: legal issues around the return of refugees” organized by the Refugee Law Initiative at the School of Advanced Study, University of London.
@@ -344,7 +344,7 @@ The seminar provided an opportunity to engage with current debates on internatio
     end: '2026-03-06',
     location: 'United Nations University, Tokyo, Japan',
     category: 'Conference',
-    image: '/files/events/PerlmoMartina.jpg',
+    image: '/files/events/Tokyo.jpg',
     imageAlt: 'NERPS 2026 conference',
     speakers: ['Elisa Fornalé'],
     summary: `On 6 March 2026, Prof. Elisa Fornalé participated in the NERPS 2026 Conference hosted by the United Nations University in Tokyo, Japan. As part of the session “Advancing Climate Justice: Prospects and Challenges of the Judicial Dialogue between Science and Law before the Judge”, she presented the paper “The IACtHR and Climate Emergency: Framing Climate Harm within the Inter-American Human Rights System.”
@@ -361,7 +361,7 @@ The conference offered an important forum for discussing the legal dimensions of
     end: '2026-04-02',
     location: 'University of Palermo, Italy',
     category: 'Lecture',
-    image: '/files/events/PerlmoMartina.jpg',
+    image: '/files/events/Palermo.jpg',
     imageAlt: 'Lecture on sea level rise and human mobility',
     speakers: ['Martina Sardo'],
     summary: `On 2 April 2026, Dr. Martina Sardo delivered a guest lecture entitled “Sea Level Rise and Human Mobility” at the University of Palermo, Italy.
@@ -379,7 +379,7 @@ The event provided students with an opportunity to engage with contemporary deba
     end: '2026-05-22',
     location: 'University of Turin, Italy',
     category: 'Seminar',
-    image: '/files/events/PerlmoMartina.jpg',
+    image: '/files/events/Turin.jpg',
     imageAlt: 'Seminar on slow violence and Indigenous knowledge systems',
     speakers: ['Simone Ferrari'],
     summary: `On 22 May 2026, Dr. Simone Ferrari delivered the lecture “Slow Violence and Slow Peace: A Perspective from Indigenous Knowledge Systems” as part of the seminar series Cosmografías de lo Posible, organized by Furman University and the University of Turin.
