@@ -105,11 +105,13 @@
               </select>
             </label>
 
-            <label class="select" for="location">
-              <span class="pill" aria-hidden="true">Location</span>
-              <select id="location" v-model="location" aria-label="Filter by location">
-                <option value="">All locations</option>
-                <option v-for="l in locations" :key="l" :value="l">{{ l }}</option>
+            <label class="select" for="speaker">
+              <span class="pill">Speaker</span>
+              <select id="speaker" v-model="speaker">
+                <option value="">All speakers</option>
+                <option v-for="s in speakers" :key="s" :value="s">
+                  {{ s }}
+                </option>
               </select>
             </label>
 
@@ -128,8 +130,8 @@
             <button v-if="year" class="chip" type="button" @click="year = ''">
               Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
             </button>
-            <button v-if="location" class="chip" type="button" @click="location = ''">
-              Location: {{ location }} <span class="chip-x" aria-hidden="true">×</span>
+            <button v-if="speaker" class="chip" @click="speaker = ''">
+              Speaker: {{ speaker }}
             </button>
             <button v-if="q" class="chip" type="button" @click="q = ''">
               Search: “{{ q }}” <span class="chip-x" aria-hidden="true">×</span>
@@ -458,55 +460,13 @@ const items = ref([
     },
     gallery: [],
   },
-  {
-    title: 'Workshop: Data Validation for Case Repositories',
-    start: '2025-10-28T14:00',
-    end: '2025-10-28T17:00',
-    location: 'Lausanne, Switzerland',
-    category: 'Workshop',
-    speakers: ['J. Müller', 'P. Alvarez'],
-    summary:
-      'Hands-on methodologies and tooling for ensuring data quality across multi-source legal case repositories.',
-    links: {
-      program: '#',
-      flyer: 'https://via.placeholder.com/1200x1600.png?text=Workshop+Flyer',
-    },
-    gallery: [
-      'https://via.placeholder.com/1200x900.png?text=Hands-on',
-      'https://via.placeholder.com/1200x900.png?text=Group+work',
-    ],
-  },
-  {
-    title: 'Roundtable: Corporate Net-Zero Claims',
-    start: '2025-09-10T12:00',
-    end: '2025-09-10T14:00',
-    location: 'Online',
-    category: 'Roundtable',
-    speakers: ['T. Okafor', 'R. Chen', 'HEL Team'],
-    summary:
-      'Critical discussion on reliability, verification, and enforcement of corporate net-zero claims.',
-    links: { program: '#', video: 'https://www.youtube.com/embed/ysz5S6PUM-U' },
-    gallery: ['https://via.placeholder.com/1200x900.png?text=Roundtable+Screenshot'],
-  },
-  {
-    title: 'Lecture: Human Rights Arguments in Climate Cases',
-    start: '2025-06-05T18:00',
-    end: '2025-06-05T19:30',
-    location: 'Zurich, Switzerland',
-    category: 'Lecture',
-    speakers: ['A. Patel'],
-    summary:
-      'An evening lecture reviewing the rise of human rights arguments in climate litigation (2020–2025), with case studies and visual analytics.',
-    links: { program: '#', flyer: 'https://via.placeholder.com/1200x1600.png?text=Lecture+Flyer' },
-    gallery: ['https://via.placeholder.com/1200x900.png?text=Lecture+Hall'],
-  },
 ])
 
 const PAGE_SIZE = 8
 const page = ref(1)
 const q = ref('')
 const year = ref('')
-const location = ref('')
+const speaker = ref('')
 const sort = ref('date-desc')
 
 const compact = ref(false)
@@ -515,12 +475,12 @@ function toggleCompact() {
   compact.value = !compact.value
 }
 
-const hasActiveFilters = computed(() => !!q.value || !!year.value || !!location.value)
+const hasActiveFilters = computed(() => !!q.value || !!year.value || !!speaker.value)
 
 function clearAll() {
   q.value = ''
   year.value = ''
-  location.value = ''
+  speaker.value = ''
   sort.value = 'date-desc'
   page.value = 1
 }
@@ -533,15 +493,16 @@ const years = computed(() => {
   return Array.from(set).sort((a, b) => b.localeCompare(a))
 })
 
-const locations = computed(() => {
-  const set = new Set(items.value.map((x) => x.location).filter(Boolean))
+const speakers = computed(() => {
+  const set = new Set(items.value.flatMap((x) => x.speakers || []).filter(Boolean))
+
   return Array.from(set).sort((a, b) => a.localeCompare(b))
 })
 
 const filtered = computed(() => {
   const qq = q.value.trim().toLowerCase()
   const yy = year.value
-  const ll = location.value
+  const sp = speaker.value
   const ss = sort.value
 
   const arr = items.value
@@ -559,9 +520,9 @@ const filtered = computed(() => {
 
       const matchQ = !qq || hay.includes(qq)
       const matchY = !yy || it.y === yy
-      const matchL = !ll || it.location === ll
+      const matchSpeaker = !sp || (it.speakers || []).includes(sp)
 
-      return matchQ && matchY && matchL
+      return matchQ && matchY && matchSpeaker
     })
 
   arr.sort((A, B) => {
@@ -589,7 +550,7 @@ function keyOf(it) {
   return `${it.title}__${it.start}__${it.location || ''}`
 }
 
-watch([q, year, location, sort], async () => {
+watch([q, year, speaker, sort], async () => {
   page.value = 1
   expandedKeys.value = new Set()
   revealedKeys.value = new Set()
