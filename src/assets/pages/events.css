@@ -410,7 +410,7 @@
 
 .events-page .event-body {
   display: grid;
-  gap: 14px;
+  gap: 10px;
   padding: clamp(16px, 2.2cqw, 22px);
 }
 
@@ -420,10 +420,14 @@
 
 .events-page .summary {
   margin: 0;
+  white-space: pre-line;
+  line-height: 1.25;
   color: rgba(11, 31, 51, 0.78);
   font-size: 15px;
-  line-height: 1.65;
-  text-align: left;
+
+  text-align: justify;
+  text-justify: inter-word;
+
   hyphens: auto;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;

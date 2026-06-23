@@ -356,14 +356,20 @@ const { el: heroTitleEl } = useWordReveal({
 
 const items = ref([
   {
-    title: 'Conference: Climate Litigation Frontiers',
-    start: '2025-11-19T09:00',
-    end: '2025-11-19T17:30',
-    location: 'Geneva, Switzerland',
-    category: 'Conference',
-    speakers: ['Prof. L. Nguyen', 'Dr. C. Rossi', 'A. Patel'],
-    summary:
-      'A one-day conference exploring cutting-edge strategies in climate litigation, with sessions on human rights arguments, corporate duties, and cross-border enforcement.',
+    title:
+      'Climate Litigation, ISDS Reform, and State Support Mechanisms: Data-Driven and Policy-Oriented Insights',
+    start: '2026-06-11T15:00',
+    end: '2026-06-11T16:30',
+    location: 'Online',
+    category: 'Webinar',
+    speakers: ['Prof. L. Nguyen', 'Dr. C. Rossi', 'R. Marguet'],
+    summary: `On 11 June 2026, the UNCITRAL Transdanubian Day 2026 hosted an online expert lecture and discussion on Climate Litigation, ISDS Reform, and State Support Mechanisms. Conducted in English via Zoom, the event brought together academics and practitioners to examine how climate change is increasingly shaping the landscape of international dispute settlement, including investor–State dispute settlement (ISDS).
+
+The discussion focused on several interconnected developments. Participants explored the growing body of climate litigation across domestic, regional, and international jurisdictions, as well as the implications of these cases for international investment law and dispute resolution. Particular attention was devoted to the ongoing reform efforts within the United Nations Commission on International Trade Law (UNCITRAL), especially the work of Working Group III on ISDS Reform, which continues to play a central role in shaping the future of investor–State dispute settlement.
+
+The panel also examined emerging State support mechanisms designed to help governments address increasingly complex climate-related disputes. Drawing on recent academic and empirical research, including new datasets on climate litigation, speakers highlighted evolving legal trends, risks, and the growing intersections between climate governance, investment protection, and human rights.
+
+The event concluded with an open discussion, providing participants with an opportunity to engage directly with the speakers and contribute to ongoing international debates on climate change, dispute settlement reform, and access to justice.`,
     links: {
       program: '#',
       flyer: 'https://via.placeholder.com/1200x1600.png?text=Flyer',
