@@ -272,7 +272,7 @@ const coreTeam = [
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
     email: 'romain.marguet@unibe.ch',
     linkedin: '#',
-    location: 'Geneva, Switzerland',
+    location: 'Sierre, Switzerland',
     photo: '',
   },
 ]
