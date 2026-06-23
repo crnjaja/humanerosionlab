@@ -209,6 +209,16 @@
   min-height: 0;
 }
 
+.events-page .event-card.expanded .event-tag-wrap {
+  position: static;
+  transform: none;
+  margin-bottom: 14px;
+}
+
+.events-page .event-card.expanded .event-content {
+  padding-top: clamp(18px, 2.2vw, 24px);
+}
+
 /* Summary balance classes from Vue */
 .events-page .event-card.summary-short {
   --summary-lines: 4;

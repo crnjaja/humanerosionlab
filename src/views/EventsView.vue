@@ -400,6 +400,7 @@ const speaker = ref('')
 const sort = ref('date-desc')
 const compact = ref(false)
 const expandedKeys = ref(new Set())
+const expandedOrder = ref([])
 const revealedKeys = ref(new Set())
 
 const hasActiveFilters = computed(() => !!q.value || !!year.value || !!speaker.value)
@@ -444,8 +445,20 @@ const filtered = computed(() => {
 })
 
 const totalCount = computed(() => filtered.value.length)
-const visibleItems = computed(() => filtered.value.slice(0, PAGE_SIZE * page.value))
-const canLoadMore = computed(() => visibleItems.value.length < filtered.value.length)
+const baseVisibleItems = computed(() => filtered.value.slice(0, PAGE_SIZE * page.value))
+
+const visibleItems = computed(() => {
+  const expanded = expandedOrder.value
+    .map((k) => baseVisibleItems.value.find((it) => keyOf(it) === k))
+    .filter(Boolean)
+
+  const expandedSet = new Set(expanded.map(keyOf))
+
+  const normal = baseVisibleItems.value.filter((it) => !expandedSet.has(keyOf(it)))
+
+  return [...expanded, ...normal]
+})
+const canLoadMore = computed(() => baseVisibleItems.value.length < filtered.value.length)
 
 function keyOf(it) {
   return `${it.title}__${it.start}__${it.location || ''}`
@@ -462,11 +475,42 @@ function isExpanded(it) {
   return expandedKeys.value.has(keyOf(it))
 }
 
-function toggle(it) {
+async function toggle(it) {
   const k = keyOf(it)
   const next = new Set(expandedKeys.value)
-  next.has(k) ? next.delete(k) : next.add(k)
+
+  if (next.has(k)) {
+    next.delete(k)
+    expandedOrder.value = expandedOrder.value.filter((x) => x !== k)
+  } else {
+    next.add(k)
+    expandedOrder.value = [...expandedOrder.value.filter((x) => x !== k), k]
+  }
+
   expandedKeys.value = next
+
+  await nextTick()
+  observeCards()
+
+  if (next.has(k)) {
+    scrollToCard(k)
+  }
+}
+
+function scrollToCard(k) {
+  const selector = `[data-k="${CSS.escape(k)}"]`
+  const el = document.querySelector(selector)
+  if (!el) return
+
+  const headerOffset =
+    parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72
+
+  const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 60
+
+  window.scrollTo({
+    top,
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+  })
 }
 
 function toggleCompact() {
@@ -512,6 +556,7 @@ function prettyDate(startISO) {
 watch([q, year, speaker, sort], async () => {
   page.value = 1
   expandedKeys.value = new Set()
+  expandedOrder.value = []
   revealedKeys.value = new Set()
   await nextTick()
   observeCards()
