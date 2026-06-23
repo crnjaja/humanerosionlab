@@ -26,7 +26,6 @@
 
     <section class="content-block full-bleed">
       <div class="container">
-
         <section class="events-section" aria-labelledby="events-title">
           <div class="section-head">
             <h2 id="events-title" class="section-heading">Events</h2>
@@ -142,9 +141,7 @@
               <strong>{{ totalCount }}</strong>
               result{{ totalCount === 1 ? '' : 's' }}
             </span>
-            <span class="hint"
-              >Tip: click “Read more” to expand. “Add to Calendar” downloads a .ics.</span
-            >
+            <span class="hint">Tip: click “Read more” under a description to expand it.</span>
           </div>
 
           <section class="grid" :class="{ compact }" aria-label="Events list">
@@ -153,61 +150,82 @@
               :key="keyOf(it)"
               class="event-card"
               :data-k="keyOf(it)"
-              :class="{
-                revealed: revealedKeys.has(keyOf(it)),
-                expanded: !isCollapsed(it),
-              }"
+              :class="[
+                `event-card--${it.category.toLowerCase()}`,
+                {
+                  revealed: revealedKeys.has(keyOf(it)),
+                  expanded: !isCollapsed(it),
+                },
+              ]"
               :aria-labelledby="`e${idx}-title`"
               ref="cardEls"
             >
-              <header class="event-banner">
-                <div class="banner-inner">
-                  <h3 :id="`e${idx}-title`" class="event-title">
-                    {{ it.title }}
-                  </h3>
+              <header class="event-header">
+                <time class="event-datebox" :datetime="it.start">
+                  <span class="datebox-month">{{ dateParts(it.start).month }}</span>
+                  <span class="datebox-day">{{ dateParts(it.start).day }}</span>
+                  <span class="datebox-year">{{ dateParts(it.start).year }}</span>
+                </time>
 
-                  <div class="event-meta">
-                    <span class="event-speakers" v-if="(it.speakers || []).length">
-                      {{ (it.speakers || []).join(', ') }}
-                    </span>
-                    <span class="event-date">· {{ formatDateRange(it.start, it.end) }}</span>
-                    <span v-if="timeRange(it.start, it.end)" class="event-time">
-                      · {{ timeRange(it.start, it.end) }}
-                    </span>
+                <div class="event-heading">
+                  <div class="event-kicker-row">
+                    <span class="event-category">{{ it.category }}</span>
                   </div>
+
+                  <h3 :id="`e${idx}-title`" class="event-title">{{ it.title }}</h3>
+
+                  <dl class="event-meta" aria-label="Event details">
+                    <div v-if="(it.speakers || []).length" class="meta-item meta-item--wide">
+                      <dt>Speakers</dt>
+                      <dd>{{ (it.speakers || []).join(', ') }}</dd>
+                    </div>
+                    <div class="meta-item">
+                      <dt>Location</dt>
+                      <dd>{{ it.location }}</dd>
+                    </div>
+                  </dl>
                 </div>
               </header>
 
               <div class="event-body">
-                <div class="meta-row meta-row--pills" aria-label="Event meta">
-                  <span class="pill-chip">
-                    <span class="pill-label">Location</span>
-                    <span class="pill-value">{{ it.location }}</span>
-                  </span>
-
-                  <span class="pill-chip">
-                    <span class="pill-label">Category</span>
-                    <span class="pill-value">{{ it.category }}</span>
-                  </span>
-                </div>
-
-                <div v-if="(it.tags || []).length" class="tags-row" aria-label="Tags">
-                  <span v-for="t in it.tags" :key="t" class="tag">{{ t }}</span>
-                </div>
-
                 <div class="summary-wrap" :data-collapsed="isCollapsed(it) ? 'true' : 'false'">
                   <p class="summary" :id="`e${idx}-summary`">{{ it.summary }}</p>
                 </div>
 
-                <fieldset class="media-strip">
+                <button
+                  class="read-more-btn"
+                  type="button"
+                  :aria-controls="`e${idx}-summary`"
+                  :aria-expanded="String(!isCollapsed(it))"
+                  @click="toggle(it)"
+                >
+                  <span>{{ isCollapsed(it) ? 'Read more' : 'Show less' }}</span>
+                  <svg
+                    class="read-more-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 10l5 5 5-5H7z" />
+                  </svg>
+                </button>
+
+                <fieldset
+                  v-if="
+                    it.links?.program ||
+                    it.links?.flyer ||
+                    it.links?.video ||
+                    (it.gallery || []).length
+                  "
+                  class="media-strip"
+                >
                   <legend class="visually-hidden">Event media</legend>
 
-                  <a
+                  <button
                     v-if="it.links?.program"
                     class="chip"
-                    :href="it.links.program"
-                    target="_blank"
-                    rel="noopener"
+                    type="button"
+                    @click="openPdf(`${it.title} - Program`, it.links.program)"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                       <path
@@ -215,14 +233,13 @@
                       />
                     </svg>
                     Program
-                  </a>
+                  </button>
 
-                  <a
+                  <button
                     v-if="it.links?.flyer"
                     class="chip"
-                    :href="it.links.flyer"
-                    target="_blank"
-                    rel="noopener"
+                    type="button"
+                    @click="openPdf(`${it.title} - Flyer`, it.links.flyer)"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                       <path
@@ -230,7 +247,7 @@
                       />
                     </svg>
                     Flyer
-                  </a>
+                  </button>
 
                   <button
                     v-if="it.links?.video"
@@ -260,54 +277,6 @@
                     Gallery ({{ it.gallery.length }})
                   </button>
                 </fieldset>
-
-                <div v-if="(it.gallery || []).length" class="thumbs" aria-label="Gallery previews">
-                  <button
-                    v-for="(src, tIdx) in (it.gallery || []).slice(0, 6)"
-                    :key="`${src}-${tIdx}`"
-                    class="thumb"
-                    type="button"
-                    :style="{ backgroundImage: `url('${src}')` }"
-                    aria-label="Open gallery"
-                    @click="openLightbox(it)"
-                  />
-                </div>
-
-                <footer class="event-actions event-actions--split" aria-label="Event actions">
-                  <button
-                    class="action action--read"
-                    type="button"
-                    :aria-controls="`e${idx}-summary`"
-                    :aria-expanded="String(!isCollapsed(it))"
-                    @click="toggle(it)"
-                  >
-                    <span class="action-label">{{
-                      isCollapsed(it) ? 'Read more' : 'Show less'
-                    }}</span>
-                    <svg
-                      class="action-icon"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d="M7 10l5 5 5-5H7z" />
-                    </svg>
-                  </button>
-
-                  <button class="action action--ics" type="button" @click="downloadICS(it)">
-                    <span class="action-label">Add to Calendar</span>
-                    <svg
-                      class="action-icon"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4V2zm14 8H3v10h18V10zM5 12h4v4H5v-4z"
-                      />
-                    </svg>
-                  </button>
-                </footer>
               </div>
             </article>
           </section>
@@ -340,16 +309,26 @@
             </div>
 
             <div class="lightbox-body">
+              <iframe v-if="lbPdf" class="pdf-viewer" :src="lbPdf" title="PDF viewer"></iframe>
+
               <iframe
-                v-if="lbItem?.links?.video"
+                v-else-if="lbItem?.links?.video"
                 class="video-embed"
                 :src="lbItem.links.video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                  web-share;
+                "
                 allowfullscreen
                 title="Event video"
               ></iframe>
 
-              <ul v-if="(lbItem?.gallery || []).length" class="gallery">
+              <ul v-if="!lbPdf && (lbItem?.gallery || []).length" class="gallery">
                 <li
                   v-for="(src, gIdx) in lbItem.gallery"
                   :key="`${src}-${gIdx}`"
@@ -395,7 +374,6 @@ const items = ref([
       'https://via.placeholder.com/1200x900.png?text=Panel',
       'https://via.placeholder.com/1200x900.png?text=Audience',
     ],
-    tags: ['litigation', 'human rights', 'corporate'],
   },
   {
     title: 'Workshop: Data Validation for Case Repositories',
@@ -414,7 +392,6 @@ const items = ref([
       'https://via.placeholder.com/1200x900.png?text=Hands-on',
       'https://via.placeholder.com/1200x900.png?text=Group+work',
     ],
-    tags: ['data', 'quality'],
   },
   {
     title: 'Roundtable: Corporate Net-Zero Claims',
@@ -427,7 +404,6 @@ const items = ref([
       'Critical discussion on reliability, verification, and enforcement of corporate net-zero claims.',
     links: { program: '#', video: 'https://www.youtube.com/embed/ysz5S6PUM-U' },
     gallery: ['https://via.placeholder.com/1200x900.png?text=Roundtable+Screenshot'],
-    tags: ['corporate', 'net-zero', 'enforcement'],
   },
   {
     title: 'Lecture: Human Rights Arguments in Climate Cases',
@@ -440,7 +416,6 @@ const items = ref([
       'An evening lecture reviewing the rise of human rights arguments in climate litigation (2020–2025), with case studies and visual analytics.',
     links: { program: '#', flyer: 'https://via.placeholder.com/1200x1600.png?text=Lecture+Flyer' },
     gallery: ['https://via.placeholder.com/1200x900.png?text=Lecture+Hall'],
-    tags: ['human rights', 'visualization'],
   },
 ])
 
@@ -452,11 +427,13 @@ const location = ref('')
 const sort = ref('date-desc')
 
 const compact = ref(false)
+
 function toggleCompact() {
   compact.value = !compact.value
 }
 
 const hasActiveFilters = computed(() => !!q.value || !!year.value || !!location.value)
+
 function clearAll() {
   q.value = ''
   year.value = ''
@@ -466,13 +443,13 @@ function clearAll() {
 }
 
 const expandedKeys = ref(new Set())
-
 const revealedKeys = ref(new Set())
 
 const years = computed(() => {
   const set = new Set(items.value.map((x) => (x.start || '').slice(0, 4)).filter(Boolean))
   return Array.from(set).sort((a, b) => b.localeCompare(a))
 })
+
 const locations = computed(() => {
   const set = new Set(items.value.map((x) => x.location).filter(Boolean))
   return Array.from(set).sort((a, b) => a.localeCompare(b))
@@ -493,7 +470,6 @@ const filtered = computed(() => {
         (it.speakers || []).join(' '),
         it.location || '',
         it.category || '',
-        (it.tags || []).join(' '),
       ]
         .join(' ')
         .toLowerCase()
@@ -501,6 +477,7 @@ const filtered = computed(() => {
       const matchQ = !qq || hay.includes(qq)
       const matchY = !yy || it.y === yy
       const matchL = !ll || it.location === ll
+
       return matchQ && matchY && matchL
     })
 
@@ -522,9 +499,7 @@ const filtered = computed(() => {
 })
 
 const totalCount = computed(() => filtered.value.length)
-
 const visibleItems = computed(() => filtered.value.slice(0, PAGE_SIZE * page.value))
-
 const canLoadMore = computed(() => visibleItems.value.length < filtered.value.length)
 
 function keyOf(it) {
@@ -543,11 +518,14 @@ watch([q, year, location, sort], async () => {
 function isCollapsed(it) {
   return !expandedKeys.value.has(keyOf(it))
 }
+
 function toggle(it) {
   const k = keyOf(it)
   const next = new Set(expandedKeys.value)
+
   if (next.has(k)) next.delete(k)
   else next.add(k)
+
   expandedKeys.value = next
 }
 
@@ -558,29 +536,17 @@ function loadMore() {
   }
 }
 
-function formatDateRange(startISO, endISO) {
-  const s = new Date(startISO)
-  if (!Number.isFinite(s.getTime())) return startISO
+function dateParts(startISO) {
+  const d = new Date(startISO)
 
-  const df = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: '2-digit' })
-  const sTxt = df.format(s)
+  if (!Number.isFinite(d.getTime())) {
+    return { day: '--', month: '', year: '' }
+  }
 
-  if (!endISO) return sTxt
-  const e = new Date(endISO)
-  if (!Number.isFinite(e.getTime())) return sTxt
-  const eTxt = df.format(e)
-
-  return sTxt === eTxt ? sTxt : `${sTxt} – ${eTxt}`
-}
-function timeRange(startISO, endISO) {
-  try {
-    const s = new Date(startISO)
-    const e = endISO ? new Date(endISO) : null
-    if (!Number.isFinite(s.getTime())) return ''
-    const tf = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit' })
-    return e && Number.isFinite(e.getTime()) ? `${tf.format(s)}–${tf.format(e)}` : tf.format(s)
-  } catch {
-    return ''
+  return {
+    day: new Intl.DateTimeFormat(undefined, { day: '2-digit' }).format(d),
+    month: new Intl.DateTimeFormat(undefined, { month: 'short' }).format(d),
+    year: new Intl.DateTimeFormat(undefined, { year: 'numeric' }).format(d),
   }
 }
 
@@ -589,12 +555,14 @@ let io = null
 
 function observeCards() {
   if (io) io.disconnect()
+
   const els = cardEls.value?.filter(Boolean) || []
   if (!els.length) return
 
   io = new IntersectionObserver(
     (entries) => {
       const next = new Set(revealedKeys.value)
+
       entries.forEach((e) => {
         if (e.isIntersecting) {
           const k = e.target.dataset.k
@@ -602,6 +570,7 @@ function observeCards() {
           io?.unobserve(e.target)
         }
       })
+
       revealedKeys.value = next
     },
     { threshold: 0.12 },
@@ -611,6 +580,7 @@ function observeCards() {
 }
 
 onMounted(() => nextTick(() => observeCards()))
+
 onBeforeUnmount(() => {
   if (io) io.disconnect()
 })
@@ -618,83 +588,30 @@ onBeforeUnmount(() => {
 const lbEl = ref(null)
 const lbItem = ref(null)
 const lbTitle = ref('')
+const lbPdf = ref(null)
 
 function openLightbox(item) {
   lbItem.value = item
+  lbPdf.value = null
   lbTitle.value = item?.title || 'Event media'
   lbEl.value?.showModal?.()
 }
+
+function openPdf(title, pdfUrl) {
+  lbItem.value = null
+  lbPdf.value = pdfUrl
+  lbTitle.value = title || 'PDF'
+  lbEl.value?.showModal?.()
+}
+
 function closeLightbox() {
   lbEl.value?.close?.()
   lbItem.value = null
+  lbPdf.value = null
   lbTitle.value = ''
 }
+
 function onBackdrop(e) {
   if (e.target === lbEl.value) closeLightbox()
-}
-
-function slugify(s) {
-  return String(s)
-    .toLowerCase()
-    .replaceAll(/[^a-z0-9]+/g, '-')
-    .replaceAll(/(^-|-$)/g, '')
-}
-function escapeICS(s) {
-  return String(s)
-    .replaceAll('\\', '\\\\')
-    .replaceAll('\n', String.raw`\n`)
-    .replaceAll(',', String.raw`\,`)
-    .replaceAll(';', String.raw`\;`)
-}
-function toICSDate(iso) {
-  const d = new Date(iso)
-  const pad = (n) => String(n).padStart(2, '0')
-  return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(
-    d.getUTCHours(),
-  )}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`
-}
-function randomUID() {
-  if (globalThis.crypto?.getRandomValues) {
-    const a = new Uint32Array(4)
-    globalThis.crypto.getRandomValues(a)
-    return Array.from(a)
-      .map((x) => x.toString(16))
-      .join('')
-  }
-  return String(Math.random()).slice(2)
-}
-function downloadICS(it) {
-  const uid = randomUID()
-  const ics = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//HEL//Events//EN',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
-    `UID:${uid}`,
-    `DTSTAMP:${toICSDate(new Date().toISOString())}`,
-    `DTSTART:${toICSDate(it.start)}`,
-    `DTEND:${toICSDate(it.end || it.start)}`,
-    `SUMMARY:${escapeICS(it.title || 'Event')}`,
-    it.location ? `LOCATION:${escapeICS(it.location)}` : '',
-    `DESCRIPTION:${escapeICS(
-      (it.summary || '') + (it.links?.program ? `\nProgram: ${it.links.program}` : ''),
-    )}`,
-    'END:VEVENT',
-    'END:VCALENDAR',
-  ]
-    .filter(Boolean)
-    .join('\r\n')
-
-  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `${slugify(it.title || 'event')}.ics`
-  document.body.appendChild(a)
-  a.click()
-  a.remove()
-  setTimeout(() => URL.revokeObjectURL(url), 3000)
 }
 </script>
