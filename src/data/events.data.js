@@ -2,6 +2,30 @@ export const fallbackImage = '/files/events/event-placeholder.jpg'
 
 export const events = [
   {
+    id: 'summer-school-reshaping-memory-and-nature',
+    title: 'Summer School: Reshaping Memory and Nature',
+    start: '2026-07-15T15:00',
+    end: '2026-07-19T16:30',
+    location: 'Galicia, Spain',
+    category: 'Summer School',
+    image: '/files/events/Galicia.jpg',
+    imageAlt: 'Summer School: Reshaping Memory and Nature',
+    speakers: ['Camilla Paglia'],
+    summary: `Camilla Paglia has been selected to participate in the international summer school Reshaping Memory and Nature. Commons in the Face of Climate Change, to be held in Galicia (Spain) from 15 to 19 July 2026.
+
+    Organised by the projects Whispers of Time: Heritage as Narratives of Climate Change (Universitat Autònoma de Barcelona) and Occupy Climate Change! (Universidade de Santiago de Compostela), the programme brings together scholars and practitioners working on climate justice, environmental humanities, heritage and political ecology.
+
+    The summer school will provide an opportunity to discuss the role of commons and collective action in addressing contemporary climate challenges.`,
+    links: {
+      program: '',
+      flyer: '',
+      video: '',
+      external:
+        'https://webs.uab.cat/wrench/2026/05/05/reshaping-memory-and-nature-commons-in-the-face-of-climate-change-summer-school-july-15-19th-galicia/',
+    },
+    gallery: [],
+  },
+  {
     id: 'we-are-not-islands-peace-actions',
     title: 'VI International Congress: We Are Not Islands: Peace Actions for the Care of the World',
     start: '2026-09-08T15:00',

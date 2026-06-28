@@ -58,7 +58,7 @@
               <input
                 v-model="q"
                 type="search"
-                placeholder="Search title, speakers, location, keywords…"
+                placeholder="Search title, representative, location, keywords…"
                 autocomplete="off"
                 @keydown.esc.prevent="q = ''"
               />
@@ -83,9 +83,9 @@
             </label>
 
             <label class="select">
-              <span class="pill">Speaker</span>
+              <span class="pill">Representative</span>
               <select v-model="speaker">
-                <option value="">All speakers</option>
+                <option value="">All representatives</option>
                 <option v-for="s in speakers" :key="s" :value="s">{{ s }}</option>
               </select>
             </label>
@@ -106,7 +106,7 @@
               Year: {{ year }} ×
             </button>
             <button v-if="speaker" class="chip" type="button" @click="speaker = ''">
-              Speaker: {{ speaker }} ×
+              Representative: {{ speaker }} ×
             </button>
             <button v-if="q" class="chip" type="button" @click="q = ''">Search: “{{ q }}” ×</button>
           </div>
@@ -160,7 +160,7 @@
 
                   <dl class="event-meta">
                     <div v-if="(it.speakers || []).length">
-                      <dt>Speaker</dt>
+                      <dt>Representative</dt>
                       <dd>{{ it.speakers.join(', ') }}</dd>
                     </div>
 

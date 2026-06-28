@@ -67,6 +67,13 @@ export const agendaConfig = {
       url: '/events?from=home#we-are-not-islands-peace-actions',
     },
     {
+      title: 'Summer School: Reshaping Memory and Nature',
+      start: '2026-07-15T15:00',
+      end: '2026-07-19T16:30',
+      location: 'Galicia, Spain',
+      url: '/events?from=home#summer-school-reshaping-memory-and-nature',
+    },
+    {
       title: 'Gender Lecture Series #1',
       start: '2026-09-13T14:00:00',
       end: '2026-09-13T17:00:00',
@@ -84,13 +91,6 @@ export const agendaConfig = {
       title: 'Gender Lecture Series #3',
       start: '2026-10-02T12:30:00',
       end: '2026-10-02T13:45:00',
-      location: 'World Trade Institute, Bern',
-      url: '#',
-    },
-    {
-      title: 'Gender Lecture Series #4',
-      start: '2026-11-02T12:30:00',
-      end: '2026-11-02T13:45:00',
       location: 'World Trade Institute, Bern',
       url: '#',
     },
