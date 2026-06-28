@@ -3,7 +3,7 @@ export const fallbackImage = '/files/events/event-placeholder.jpg'
 export const events = [
   {
     id: 'summer-school-reshaping-memory-and-nature',
-    title: 'Summer School: Reshaping Memory and Nature',
+    title: 'Summer School: Reshaping Memory and Nature. Commons in the Face of Climate Change.',
     start: '2026-07-15T15:00',
     end: '2026-07-19T16:30',
     location: 'Galicia, Spain',
@@ -17,7 +17,7 @@ export const events = [
 
     The summer school will provide an opportunity to discuss the role of commons and collective action in addressing contemporary climate challenges.`,
     links: {
-      program: '',
+      program: '/files/events/Galicia.pdf',
       flyer: '',
       video: '',
       external:
