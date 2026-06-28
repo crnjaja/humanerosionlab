@@ -26,6 +26,27 @@ export const events = [
     gallery: [],
   },
   {
+    id: 'cinets-2026-crimmigration-in-an-age-of-authoritarian-drift',
+    title: 'CINETS 2026: Crimmigration in an Age of Authoritarian Drift',
+    start: '2026-07-05T15:00',
+    end: '2026-07-07T16:30',
+    location: 'Leiden, Netherlands',
+    category: 'Conference',
+    image: '/files/events/Leiden.jpg',
+    imageAlt: 'CINETS 2026: Crimmigration in an Age of Authoritarian Drift',
+    speakers: ['Elisa Fornalé'],
+    summary: `Elisa Fornalé will participate in CINETS 2026 – Crimmigration in an Age of Authoritarian Drift, an international conference bringing together leading scholars, practitioners, and researchers to discuss the intersection of migration, criminal law, borders, and human rights. The conference will take place in Leiden, the Netherlands, and will focus on the growing challenges posed by authoritarian approaches to migration governance.
+
+    During the conference, Elisa Fornalé will present her paper, “Temporal (In)Humanity: Slow Violence and Migrants Families Detention,” as part of Panel 23 – Slow Death in Contemporary Migration Regimes. Her presentation will explore the impact of prolonged detention on migrant families, contributing to discussions on the human consequences of contemporary migration control policies alongside other international experts in the field.`,
+    links: {
+      program: '/files/events/CINETS.pdf',
+      flyer: '',
+      video: '',
+      external: 'https://www.staff.universiteitleiden.nl/events/2026/07/cinets-2026',
+    },
+    gallery: [],
+  },
+  {
     id: 'we-are-not-islands-peace-actions',
     title: 'VI International Congress: We Are Not Islands: Peace Actions for the Care of the World',
     start: '2026-09-08T15:00',

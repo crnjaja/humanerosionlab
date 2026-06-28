@@ -54,6 +54,14 @@ export const projects = [
     to: '/projects/cli-m-co2',
     linkLabel: 'Go to the CLI-M-CO2 project →',
   },
+  {
+    title: 'CLISEL',
+    text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+    image: '/images/backgrounds/background4.jpg',
+    imageAlt: 'CLISEL cover',
+    to: '/projects/clisel',
+    linkLabel: 'Go to the CLISEL project →',
+  },
 ]
 
 export const agendaConfig = {
@@ -72,6 +80,13 @@ export const agendaConfig = {
       end: '2026-07-19T16:30',
       location: 'Galicia, Spain',
       url: '/events?from=home#summer-school-reshaping-memory-and-nature',
+    },
+    {
+      title: 'CINETS 2026: Crimmigration in an Age of Authoritarian Drift',
+      start: '2026-07-05T15:00',
+      end: '2026-07-07T16:30',
+      location: 'Leiden, Netherlands',
+      url: '/events?from=home#cinets-2026-crimmigration-in-an-age-of-authoritarian-drift',
     },
     {
       title: 'Gender Lecture Series #1',
