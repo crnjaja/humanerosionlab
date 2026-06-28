@@ -48,8 +48,8 @@
               tabindex="-1"
               @click="closeAbout"
             >
-              The Lab
-              <span class="nav-dropdown-hint">Human Erosion Lab</span>
+              Resisting Human Erosion
+              <span class="nav-dropdown-hint">Project's Description</span>
             </RouterLink>
 
             <RouterLink
@@ -59,8 +59,8 @@
               tabindex="-1"
               @click="closeAbout"
             >
-              The Team
-              <span class="nav-dropdown-hint">Human Erosion Lab Team</span>
+              Our Team
+              <span class="nav-dropdown-hint">Project's Team</span>
             </RouterLink>
 
             <RouterLink
@@ -71,7 +71,7 @@
               @click="closeAbout"
             >
               Our Network
-              <span class="nav-dropdown-hint">Lab Partners</span>
+              <span class="nav-dropdown-hint">Project's Network</span>
             </RouterLink>
 
             <div

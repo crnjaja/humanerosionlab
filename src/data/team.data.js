@@ -52,13 +52,13 @@ export const coreTeam = [
     photo: '',
   },
   {
-    key: 'romain-marguet',
-    name: 'Romain Marguet',
-    role: 'Developer',
+    key: 'akhilesh-anil-kumar',
+    name: 'Akhilesh Anil Kumar',
+    role: 'Title',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-    email: 'romain.marguet@unibe.ch',
+    email: 'akhilesh.kumar@unibe.ch',
     linkedin: '#',
-    location: 'Sierre, Switzerland',
+    location: 'Bern, Switzerland',
     photo: '',
   },
 ]
