@@ -20,15 +20,15 @@ export class HomeService {
   }
 
   static formatDay(date, timezone) {
-    return new Intl.DateTimeFormat(undefined, { day: '2-digit', timeZone: timezone }).format(date)
+    return new Intl.DateTimeFormat('en-GB', { day: '2-digit', timeZone: timezone }).format(date)
   }
 
   static formatMonth(date, timezone) {
-    return new Intl.DateTimeFormat(undefined, { month: 'short', timeZone: timezone }).format(date)
+    return new Intl.DateTimeFormat('en-GB', { month: 'short', timeZone: timezone }).format(date)
   }
 
   static formatTime(date, timezone) {
-    return new Intl.DateTimeFormat(undefined, {
+    return new Intl.DateTimeFormat('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
       timeZone: timezone,
@@ -37,7 +37,7 @@ export class HomeService {
   }
 
   static formatDateLong(date, timezone) {
-    return new Intl.DateTimeFormat(undefined, {
+    return new Intl.DateTimeFormat('en-GB', {
       weekday: 'short',
       year: 'numeric',
       month: 'short',

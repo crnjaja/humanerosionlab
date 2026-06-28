@@ -70,9 +70,9 @@ export class EventsService {
   }
 
   static getSpeakers(events) {
-    return Array.from(new Set(events.flatMap((event) => event.speakers || []).filter(Boolean))).sort(
-      (a, b) => a.localeCompare(b),
-    )
+    return Array.from(
+      new Set(events.flatMap((event) => event.speakers || []).filter(Boolean)),
+    ).sort((a, b) => a.localeCompare(b))
   }
 
   static getVisibleItems(events, page, expandedOrder = []) {
@@ -96,9 +96,9 @@ export class EventsService {
     if (!Number.isFinite(date.getTime())) return { day: '--', month: '', year: '' }
 
     return {
-      day: new Intl.DateTimeFormat(undefined, { day: '2-digit' }).format(date),
-      month: new Intl.DateTimeFormat(undefined, { month: 'short' }).format(date),
-      year: new Intl.DateTimeFormat(undefined, { year: 'numeric' }).format(date),
+      day: new Intl.DateTimeFormat('en-GB', { day: '2-digit' }).format(date),
+      month: new Intl.DateTimeFormat('en-GB', { month: 'short' }).format(date),
+      year: new Intl.DateTimeFormat('en-GB', { year: 'numeric' }).format(date),
     }
   }
 
@@ -106,7 +106,7 @@ export class EventsService {
     const date = new Date(startISO)
     if (!Number.isFinite(date.getTime())) return ''
 
-    return new Intl.DateTimeFormat(undefined, {
+    return new Intl.DateTimeFormat('en-GB', {
       day: '2-digit',
       month: 'long',
       year: 'numeric',

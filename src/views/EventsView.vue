@@ -121,6 +121,7 @@
           <section class="grid" :class="{ compact }" aria-label="Events list">
             <article
               v-for="(it, idx) in visibleItems"
+              :id="it.id"
               :key="keyOf(it)"
               class="event-card"
               :class="[
@@ -174,66 +175,99 @@
                   </div>
 
                   <div class="event-footer">
-                    <button
-                      class="read-more-btn"
-                      type="button"
-                      :aria-controls="`e${idx}-summary`"
-                      :aria-expanded="String(isExpanded(it))"
-                      @click="toggle(it)"
-                    >
-                      <span>{{ isExpanded(it) ? 'Show less' : 'Show more' }}</span>
-                      <svg class="read-more-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M7 10l5 5 5-5H7z" />
-                      </svg>
-                    </button>
-
-                    <fieldset
+                    <div
                       v-if="
+                        true ||
                         it.links?.program ||
                         it.links?.flyer ||
                         it.links?.video ||
+                        it.links?.external ||
                         (it.gallery || []).length
                       "
-                      class="media-strip"
+                      class="event-resources"
                     >
-                      <legend class="visually-hidden">Event media</legend>
+                      <!-- Show More -->
+
+                      <button
+                        class="resource-btn resource-btn--primary"
+                        type="button"
+                        :aria-controls="`e${idx}-summary`"
+                        :aria-expanded="String(isExpanded(it))"
+                        @click="toggle(it)"
+                      >
+                        <svg
+                          class="resource-icon resource-arrow"
+                          :class="{ 'resource-arrow--open': isExpanded(it) }"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path d="M7 10l5 5 5-5H7z" />
+                        </svg>
+
+                        <span>{{ isExpanded(it) ? 'Less' : 'More' }}</span>
+                      </button>
+
+                      <!-- Program -->
 
                       <button
                         v-if="it.links?.program"
-                        class="chip"
+                        class="resource-btn"
                         type="button"
                         @click="openPdf(`${it.title} - Program`, it.links.program)"
                       >
-                        Program
+                        <span class="resource-icon">PDF</span>
+                        <span>Program</span>
                       </button>
+
+                      <!-- Flyer -->
 
                       <button
                         v-if="it.links?.flyer"
-                        class="chip"
+                        class="resource-btn"
                         type="button"
                         @click="openPdf(`${it.title} - Flyer`, it.links.flyer)"
                       >
-                        Flyer
+                        <span class="resource-icon">PDF</span>
+                        <span>Flyer</span>
                       </button>
+
+                      <!-- Video -->
 
                       <button
                         v-if="it.links?.video"
-                        class="chip"
+                        class="resource-btn"
                         type="button"
                         @click="openLightbox(it)"
                       >
-                        Video
+                        <span class="resource-icon">▶</span>
+                        <span>Video</span>
                       </button>
+
+                      <!-- Gallery -->
 
                       <button
                         v-if="(it.gallery || []).length"
-                        class="chip"
+                        class="resource-btn"
                         type="button"
                         @click="openLightbox(it)"
                       >
-                        Gallery
+                        <span class="resource-icon">IMG</span>
+                        <span>Gallery</span>
                       </button>
-                    </fieldset>
+
+                      <!-- External -->
+
+                      <a
+                        v-if="it.links?.external"
+                        class="resource-btn"
+                        :href="it.links.external"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span class="resource-icon">↗</span>
+                        <span>Website</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -375,7 +409,7 @@ async function toggle(it) {
   }
 }
 
-function scrollToCard(k) {
+function scrollToCard(k, extraOffset = 60) {
   const selector = `[data-k="${CSS.escape(k)}"]`
   const el = document.querySelector(selector)
   if (!el) return
@@ -383,7 +417,7 @@ function scrollToCard(k) {
   const headerOffset =
     parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72
 
-  const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 60
+  const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - extraOffset
 
   window.scrollTo({
     top,
@@ -448,7 +482,27 @@ function observeCards() {
   els.forEach((el) => io.observe(el))
 }
 
-onMounted(() => nextTick(observeCards))
+onMounted(async () => {
+  await nextTick()
+  observeCards()
+
+  const id = window.location.hash.replace('#', '')
+  const fromHome = new URLSearchParams(window.location.search).get('from') === 'home'
+
+  if (!id) return
+
+  history.replaceState(null, '', window.location.pathname + window.location.search)
+
+  const event = items.value.find((it) => it.id === id)
+  if (!event) return
+
+  expandedKeys.value = new Set([keyOf(event)])
+  expandedOrder.value = [keyOf(event)]
+
+  await nextTick()
+  observeCards()
+  scrollToCard(keyOf(event), fromHome ? 120 : 60)
+})
 
 onBeforeUnmount(() => {
   if (io) io.disconnect()
