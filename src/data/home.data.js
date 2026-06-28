@@ -82,8 +82,8 @@ export const agendaConfig = {
     },
     {
       title: 'Gender Lecture Series #2',
-      start: '2026-09-13T14:00:00',
-      end: '2026-09-13T17:00:00',
+      start: '2026-09-23T14:00:00',
+      end: '2026-09-23T17:00:00',
       location: 'World Trade Institute, Bern',
       url: '#',
     },
