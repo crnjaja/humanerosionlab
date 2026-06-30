@@ -285,7 +285,7 @@
   overflow-wrap: anywhere;
 }
 
-a[href^="mailto:"] {
+a[href^='mailto:'] {
   overflow-wrap: anywhere;
   word-break: break-word;
 }

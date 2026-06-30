@@ -13,12 +13,12 @@
   container-type: inline-size;
 }
 
-/* Sections */
 .feature-section {
-  padding: clamp(26px, 5vw, 58px) 0;
+  padding: clamp(26px, 5vw, 58px) 0 clamp(16px, 2vw, 28px);
 }
+
 .projects-section {
-  padding: clamp(26px, 5vw, 78px) 0;
+  padding: clamp(12px, 2vw, 24px) 0 clamp(26px, 5vw, 78px);
 }
 
 /* Big headings */

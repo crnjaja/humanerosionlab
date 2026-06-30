@@ -16,6 +16,9 @@
 
 @import './pages/publications.css' layer(pages);
 @import './pages/events.css' layer(pages);
+@import './pages/team.css' layer(pages);
+@import './pages/network.css' layer(pages);
+@import './pages/contact.css' layer(pages);
 
 @import './pages/hrjust.css' layer(pages);
 @import './pages/gem.css' layer(pages);

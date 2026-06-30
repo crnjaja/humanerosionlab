@@ -30,8 +30,7 @@
           <section class="network-section" aria-labelledby="partners-title">
             <div class="section-topline">
               <div>
-                <div class="pill">Partners</div>
-                <h2 id="partners-title" class="section-heading">Partner Network</h2>
+                <h2 id="partners-title" class="section-heading">Partners</h2>
               </div>
             </div>
 
@@ -83,10 +82,8 @@
           <section class="network-section" aria-labelledby="advisory-title">
             <div class="section-topline">
               <div>
-                <div class="pill">Advisory Board</div>
-                <h2 id="advisory-title" class="section-heading">Scientific Advisors</h2>
+                <h2 id="advisory-title" class="section-heading">Advisors</h2>
               </div>
-
             </div>
 
             <ul class="advisor-grid" aria-label="Advisory board members">
@@ -131,7 +128,9 @@
 
                   <div v-if="member.linkedin && member.linkedin !== '#'" class="meta-row">
                     <svg class="fill-primary" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.07c.67-1.2 2.3-2.47 4.73-2.47C22.4 7.73 24 10 24 14.06V24h-5v-8.5c0-2.03-.04-4.65-2.83-4.65-2.83 0-3.27 2.21-3.27 4.49V24H8z" />
+                      <path
+                        d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.07c.67-1.2 2.3-2.47 4.73-2.47C22.4 7.73 24 10 24 14.06V24h-5v-8.5c0-2.03-.04-4.65-2.83-4.65-2.83 0-3.27 2.21-3.27 4.49V24H8z"
+                      />
                     </svg>
                     <a
                       class="link"
@@ -146,7 +145,10 @@
 
                   <div v-if="member.location" class="meta-row">
                     <svg fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z" stroke-width="1.6" />
+                      <path
+                        d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"
+                        stroke-width="1.6"
+                      />
                       <circle cx="12" cy="9" r="2.5" stroke-width="1.6" />
                     </svg>
                     <span class="meta-text">{{ member.location }}</span>
@@ -179,7 +181,8 @@ const partners = [
     key: 'university-of-bern',
     name: 'GQUAL',
     type: 'Global Advocacy Campaign',
-    description: 'GQUAL is a global campaign dedicated to advancing gender parity in international representation. It works to promote transparent and inclusive selection processes, ensuring that women have equal opportunities to serve in international courts, monitoring bodies, and other global decision-making institutions.',
+    description:
+      'GQUAL is a global campaign dedicated to advancing gender parity in international representation. It works to promote transparent and inclusive selection processes, ensuring that women have equal opportunities to serve in international courts, monitoring bodies, and other global decision-making institutions.',
     logo: '/images/logos/network/GQUAL.png',
     url: 'https://gqualcampaign.org/',
   },
@@ -187,7 +190,8 @@ const partners = [
     key: 'partner-two',
     name: 'International Gender Champions (IGC)',
     type: 'Leadership Network',
-    description: 'International Gender Champions is a leadership network that brings together decision-makers committed to breaking down gender barriers. Through concrete commitments and collaborative action, the network helps leaders make gender equality a reality within their institutions and spheres of influence.',
+    description:
+      'International Gender Champions is a leadership network that brings together decision-makers committed to breaking down gender barriers. Through concrete commitments and collaborative action, the network helps leaders make gender equality a reality within their institutions and spheres of influence.',
     logo: '/images/logos/network/IGC.png',
     url: 'https://genderchampions.com/hub/geneva',
   },
@@ -195,7 +199,8 @@ const partners = [
     key: 'partner-three',
     name: 'World Trade Organization (WTO)',
     type: 'Intergovernmental Organization',
-    description: 'The World Trade Organization (WTO) is the international organization responsible for the global rules of trade between nations. It provides a forum for negotiating trade agreements, resolving trade disputes, and supporting a predictable, open, and inclusive multilateral trading system.',
+    description:
+      'The World Trade Organization (WTO) is the international organization responsible for the global rules of trade between nations. It provides a forum for negotiating trade agreements, resolving trade disputes, and supporting a predictable, open, and inclusive multilateral trading system.',
     logo: '/images/logos/network/wto.png',
     logoClass: 'partner-logo--large',
     url: 'https://www.wto.org/',
@@ -210,4 +215,3 @@ const portraitAlt = TeamService.portraitAlt
 const emailAriaLabel = TeamService.emailAriaLabel
 const linkedinAriaLabel = TeamService.linkedinAriaLabel
 </script>
-
