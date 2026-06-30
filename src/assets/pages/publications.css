@@ -756,3 +756,199 @@
   padding: 0 !important;
   margin: 0 !important;
 }
+
+/* =========================================================
+   Unified toolbar / filters / compact view styling
+   Keeps Events and Publications controls visually identical
+   ========================================================= */
+
+/* Toolbar shell */
+.events-page .toolbar,
+.publications-page .toolbar {
+  position: sticky;
+  top: calc(var(--header-h, 72px) + 10px);
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(10, 34, 59, 0.14);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@media (max-width: 900px) {
+  .events-page .toolbar,
+  .publications-page .toolbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Search, selects, and sort controls */
+.events-page .search-input,
+.events-page .select,
+.events-page .sort,
+.publications-page .search-input,
+.publications-page .select,
+.publications-page .sort {
+  display: flex !important;
+  align-items: center !important;
+  height: 44px !important;
+  gap: 10px !important;
+  padding: 0 12px !important;
+  border: 1px solid rgba(10, 34, 59, 0.14) !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08) !important;
+  color: var(--ink) !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+.events-page .search-input input,
+.events-page .select select,
+.events-page .sort select,
+.publications-page .search-input input,
+.publications-page .select select,
+.publications-page .sort select {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  font: inherit !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+
+.events-page .search-input input,
+.publications-page .search-input input {
+  width: 100% !important;
+  min-width: 0 !important;
+  font-size: 15px !important;
+}
+
+/* Compact View / count pill */
+.events-page .toolbar .pill,
+.publications-page .toolbar .pill,
+.events-page .pill,
+.publications-page .pill {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  border: 1px solid var(--accent) !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  color: var(--accent) !important;
+  font: inherit !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  box-sizing: border-box !important;
+  transform: translateY(0) !important;
+}
+
+/* Active filter bar */
+.events-page .active-filters,
+.publications-page .active-filters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+
+/* Filter chips and Clear Filter */
+.events-page .chip,
+.publications-page .chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 34px !important;
+  padding: 0 11px !important;
+  border: 1px solid rgba(21, 138, 201, 0.35) !important;
+  border-radius: 0 !important;
+  background: rgba(21, 138, 201, 0.08) !important;
+  color: rgba(11, 31, 51, 0.9) !important;
+  font: inherit !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+.events-page .chip:hover,
+.publications-page .chip:hover {
+  background: rgba(21, 138, 201, 0.14) !important;
+}
+
+.events-page .chip--ghost,
+.publications-page .chip--ghost {
+  border-color: rgba(10, 34, 59, 0.18) !important;
+  background: #fff !important;
+  color: rgba(11, 31, 51, 0.85) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+.events-page .chip--ghost:hover,
+.publications-page .chip--ghost:hover {
+  background: #f7fbff !important;
+}
+
+.events-page .chip--ghost:disabled,
+.publications-page .chip--ghost:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+}
+
+.events-page .chip-x,
+.publications-page .chip-x {
+  font-size: 16px !important;
+  line-height: 1 !important;
+  opacity: 0.75 !important;
+}
+
+/* Clear search / icon button */
+.events-page .icon-btn,
+.publications-page .icon-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(11, 31, 51, 0.72) !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  opacity: 0.8 !important;
+}
+
+.events-page .icon-btn:hover,
+.publications-page .icon-btn:hover {
+  opacity: 1 !important;
+}
+
+.events-page .icon-btn svg,
+.publications-page .icon-btn svg {
+  fill: currentColor !important;
+}
+
+/* Compact grid consistency */
+@media (min-width: 1200px) {
+  .events-page .grid.compact,
+  .publications-page .grid.compact {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+  }
+}
