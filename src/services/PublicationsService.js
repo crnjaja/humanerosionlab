@@ -20,7 +20,9 @@ export class PublicationsService {
   }
 
   static filter(publications = [], filters = {}) {
-    const q = String(filters.q || '').trim().toLowerCase()
+    const q = String(filters.q || '')
+      .trim()
+      .toLowerCase()
     const year = filters.year || ''
     const author = filters.author || ''
 
@@ -61,16 +63,43 @@ export class PublicationsService {
     return publications.slice(0, pageSize * page)
   }
 
+  /**
+   * Moves expanded publications to the top while preserving
+   * the order in which they were expanded (same behavior as Events).
+   */
+  static putExpandedFirst(publications = [], expandedOrder = []) {
+    if (!expandedOrder.length) return publications
+
+    const order = new Map(expandedOrder.map((key, index) => [key, index]))
+
+    return [...publications].sort((a, b) => {
+      const ak = this.keyOf(a)
+      const bk = this.keyOf(b)
+
+      const ai = order.has(ak) ? order.get(ak) : Number.POSITIVE_INFINITY
+      const bi = order.has(bk) ? order.get(bk) : Number.POSITIVE_INFINITY
+
+      return ai - bi
+    })
+  }
+
+  static isExpanded(publication, expandedKeys = new Set()) {
+    return expandedKeys.has(this.keyOf(publication))
+  }
+
   static isCollapsed(publication, expandedKeys = new Set()) {
-    return !expandedKeys.has(this.keyOf(publication))
+    return !this.isExpanded(publication, expandedKeys)
   }
 
   static toggleExpanded(publication, expandedKeys = new Set()) {
     const key = this.keyOf(publication)
     const next = new Set(expandedKeys)
 
-    if (next.has(key)) next.delete(key)
-    else next.add(key)
+    if (next.has(key)) {
+      next.delete(key)
+    } else {
+      next.add(key)
+    }
 
     return next
   }
