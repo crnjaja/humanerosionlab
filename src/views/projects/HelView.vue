@@ -144,4 +144,17 @@ const { el: heroTitleEl } = useWordReveal({
 :deep(.stage--top--flat::after) {
   content: none !important;
 }
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(18px, 3vw, 36px);
+}
+
+.section-heading {
+  margin: 0;
+}
 </style>

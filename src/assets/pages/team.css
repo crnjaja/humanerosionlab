@@ -253,8 +253,14 @@
 }
 
 .section-heading {
+  position: relative;
   display: inline-block;
   width: max-content;
+  margin: 0 0 clamp(18px, 3vw, 36px);
+}
+
+.section-heading::after {
+  margin-top: clamp(6px, 0.9cqw, 10px);
 }
 
 .team-grid {

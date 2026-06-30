@@ -300,6 +300,24 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+
+.section-heading {
+  position: relative;
+  display: inline-block;
+  width: max-content;
+  margin: 0 0 clamp(18px, 3vw, 36px);
+}
+
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+  margin-top: clamp(6px, 0.9vw, 10px);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
