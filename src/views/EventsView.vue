@@ -31,8 +31,14 @@
           <div class="section-head">
             <h2 id="events-title" class="section-heading">Events</h2>
 
-            <div class="section-actions">
-              <button class="chip chip--ghost" type="button" @click="toggleCompact">
+            <div class="section-actions" aria-label="View options">
+              <button
+                class="chip chip--ghost"
+                type="button"
+                @click="toggleCompact"
+                :aria-pressed="String(compact)"
+                title="Toggle compact/comfort view"
+              >
                 {{ compact ? 'Comfort view' : 'Compact view' }}
               </button>
 
@@ -41,6 +47,7 @@
                 type="button"
                 @click="clearAll"
                 :disabled="!hasActiveFilters"
+                title="Clear filters"
               >
                 Clear filters
               </button>
@@ -101,14 +108,16 @@
             </label>
           </section>
 
-          <div v-if="hasActiveFilters" class="active-filters">
+          <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
             <button v-if="year" class="chip" type="button" @click="year = ''">
-              Year: {{ year }} ×
+              Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
             </button>
             <button v-if="speaker" class="chip" type="button" @click="speaker = ''">
-              Representative: {{ speaker }} ×
+              Representative: {{ speaker }} <span class="chip-x" aria-hidden="true">×</span>
             </button>
-            <button v-if="q" class="chip" type="button" @click="q = ''">Search: “{{ q }}” ×</button>
+            <button v-if="q" class="chip" type="button" @click="q = ''">
+              Search: “{{ q }}” <span class="chip-x" aria-hidden="true">×</span>
+            </button>
           </div>
 
           <div class="stats-row" aria-live="polite">
@@ -327,6 +336,7 @@ import { RouterLink } from 'vue-router'
 import { useWordReveal } from '@/composables/useWordReveal'
 import { events, fallbackImage } from '@/data/events.data'
 import { EventsService } from '@/services/EventsService'
+import '@/assets/pages/events.css'
 
 const { el: heroTitleEl } = useWordReveal({
   stagger: 140,

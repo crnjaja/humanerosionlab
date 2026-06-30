@@ -976,10 +976,3 @@
   padding: 0 !important;
   margin: 0 !important;
 }
-.events-page .section-head {
-  margin-bottom: clamp(18px, 3vw, 36px);
-}
-
-.events-page .section-heading {
-  margin-bottom: 0;
-}
