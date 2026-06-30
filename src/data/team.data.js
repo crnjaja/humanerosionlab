@@ -95,6 +95,16 @@ export const advisoryBoard = [
     photo: '',
   },
   {
+    key: 'bruce-burson',
+    name: 'Bruce Burson',
+    role: 'Advisor',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+    email: 'bruceburson@icloud.com',
+    linkedin: '#',
+    location: 'New Zealand Immigration and Protection Tribunal',
+    photo: '',
+  },
+  {
     key: 'asuncion-fresnoza-flot',
     name: 'Asuncion Fresnoza-Flot',
     role: 'Advisor',
@@ -132,6 +142,16 @@ export const advisoryBoard = [
     email: 'olear@ku.edu',
     linkedin: '#',
     location: 'University of Kansas, Lawrence, USA',
+    photo: '',
+  },
+  {
+    key: 'antonios-zanakopoulos',
+    name: "Antonios Tzanakopoulos",
+    role: 'Advisor',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+    email: 'antonios.tzanakopoulos@law.ox.ac.uk',
+    linkedin: '#',
+    location: 'University of Oxford, UK',
     photo: '',
   },
 ]

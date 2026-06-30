@@ -34,10 +34,10 @@ export const events = [
     category: 'Conference',
     image: '/files/events/Leiden.jpg',
     imageAlt: 'CINETS 2026: Crimmigration in an Age of Authoritarian Drift',
-    speakers: ['Elisa Fornalé'],
-    summary: `Elisa Fornalé will participate in CINETS 2026 – Crimmigration in an Age of Authoritarian Drift, an international conference bringing together leading scholars, practitioners, and researchers to discuss the intersection of migration, criminal law, borders, and human rights. The conference will take place in Leiden, the Netherlands, and will focus on the growing challenges posed by authoritarian approaches to migration governance.
+    speakers: ['Elisa Fornalé, Simone Ferrari'],
+    summary: `Elisa Fornalé and Simone Ferrari will participate in CINETS 2026 – Crimmigration in an Age of Authoritarian Drift, an international conference bringing together leading scholars, practitioners, and researchers to discuss the intersection of migration, criminal law, borders, and human rights. The conference will take place in Leiden, the Netherlands, and will focus on the growing challenges posed by authoritarian approaches to migration governance.
 
-    During the conference, Elisa Fornalé will present her paper, “Temporal (In)Humanity: Slow Violence and Migrants Families Detention,” as part of Panel 23 – Slow Death in Contemporary Migration Regimes. Her presentation will explore the impact of prolonged detention on migrant families, contributing to discussions on the human consequences of contemporary migration control policies alongside other international experts in the field.`,
+    During the conference, Elisa Fornalé will present her paper, “Temporal (In)Humanity: Slow Violence and Migrants Families Detention” and Dr. Simone Ferrari will present his paper, “Borders of Death: Family Separation and Return Memories in the Darién Gap” as part of Panel 23 – Slow Death in Contemporary Migration Regimes. Their presentations will examine the impact of prolonged detention on migrant families, family separation, and return memories in contemporary migration contexts, contributing to discussions on the human consequences of migration control policies alongside other international experts in the field.`,
     links: {
       program: '/files/events/CINETS.pdf',
       flyer: '',
@@ -190,5 +190,49 @@ Drawing on themes closely connected to the theoretical framework of Resisting Hu
       external: 'https://www.lared.red/cosmografias-de-lo-posible/',
     },
     gallery: [],
+  },
+  {
+    id: 'roundtable-on-gender-related-vulnerabilities',
+    title:
+      'Roundtable on Gender-Related Vulnerabilities: New Challenges for the Protection of Migrants and Asylum Seekers',
+    start: '2026-05-28',
+    end: '2026-05-28',
+    location: 'Università di Roma, Italy',
+    category: 'Roundtable',
+    image: '/files/events/Roma.jpg',
+    imageAlt: 'Roundtable on Gender-Related Vulnerabilities',
+    speakers: ['Martina Sardo'],
+    summary: `On 28 May 2026, Dr. Martina Sardo served as moderator of the Roundtable entitled “Gender-Related Vulnerabilities: New Challenges for the Protection of Migrants and Asylum Seekers” was organized by the DIEMA Interest Group (International and European Migration and Asylum Law) on 28 May in Rome, within the framework of the 30th Annual Conference of the Italian Society of International Law and European Union Law (SIDI).
+
+    The roundtable provided an opportunity to discuss, together with the authors of the contributions included in the special focus section bearing the same title, published in 2026 in Freedom, Security & Justice: European Legal Studies, the most recent legislative and judicial developments concerning gender-related vulnerabilities in the protection of migrants and asylum seekers. Particular attention was devoted to the challenges that gender-related vulnerabilities pose for international, European and domestic protection frameworks, as well as to the evolving approaches adopted by courts and policymakers in this field.`,
+    links: {
+      program: '',
+      flyer: '/files/events/Tavola-Rotonda-DIEMA-28.05.2026.pdf',
+      video: '',
+      external: '',
+    },
+    gallery: [],
+  },
+  {
+    id: 'roundtable-on-gender-related-vulnerabilities',
+    title:
+      'Colombian Border Narratives discussed at the AISI 2026 Congress',
+    start: '2026-06-25',
+    end: '2026-06-27',
+    location: 'University of Turin, Italy',
+    category: 'Congress',
+    image: '/files/events/Turin.jpg',
+    imageAlt: 'Colombian Border Narratives discussed at the AISI 2026 Congress',
+    speakers: ['Simone Ferrari'],
+    summary: `During the AISI 2026 International Congress, held in Turin from 25 to 27 June 2026, Dr. Simone Ferrari took part in the roundtable Radiografía a la literatura colombiana del siglo XXI: géneros narrativos y transculturación.
+
+    His presentation explored the narrative construction of slow violence along Colombia's borderlands, with particular attention to the Darién Gap and the representation of the migratory experience through the rainforest. The contribution examined how contemporary Colombian literature portrays the intertwined dimensions of environmental degradation, structural violence, and forced mobility. The roundtable formed part of the scientific programme of the VIII International Congress of the Italian Association of Ibero-American Studies (AISI), Circulación de modelos en las literaturas latinoamericanas: trayectorias, desvíos y tergiversaciones transculturales, hosted by the University of Turin from 25 to 27 June 2026.`,
+    links: {
+      program: '/files/events/PROGRAMA-DE-MANO-AISI-2026-V20062026.pdf',
+      flyer: '',
+      video: '',
+      external: 'https://www.associazioneaisi.it/eventi-e-bandi/convegni-aisi/',
+    },
+    gallery: ['/files/events/AISI2026.jpg'],
   },
 ]

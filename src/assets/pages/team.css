@@ -58,6 +58,7 @@
   padding: 0;
   margin-left: 0;
   margin-right: 0;
+  align-items: stretch;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -90,6 +91,7 @@
   padding: 20px;
   outline: none;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .member-card:hover,
@@ -253,4 +255,31 @@
 .section-heading {
   display: inline-block;
   width: max-content;
+}
+
+.team-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.member-card {
+  width: 100%;
+  min-width: 0;
+}
+
+.member-header,
+.member-heading,
+.bio,
+.meta,
+.meta-text {
+  min-width: 0;
+}
+
+.meta-text,
+.bio {
+  overflow-wrap: anywhere;
+}
+
+a[href^="mailto:"] {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }

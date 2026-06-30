@@ -6,14 +6,14 @@ export const CONTACT_CONFIG = {
   },
 
   location: {
-    name: 'World Trade Institute',
-    street: 'Hallerstrasse 6',
+    name: 'Universität Bern',
+    street: 'Schanzeneckstrasse 1',
     postalCode: '3012',
     city: 'Bern',
     country: 'Switzerland',
-    logo: '/images/logos/WTI.png',
-    mapUrl: 'https://www.google.com/maps?q=Hallerstrasse+6,3012+Bern,Switzerland&output=embed',
-    directionsUrl: 'https://www.google.com/maps/dir//Hallerstrasse+6,+3012+Bern,+Switzerland',
+    logo: '/images/logos/unibe.png',
+    mapUrl: 'https://www.google.com/maps/embed?origin=mfe&pb=!1m2!2m1!1sSchanzeneckstrasse+1,3012+Bern,Switzerland',
+    directionsUrl: 'https://www.google.com/maps/dir//Schanzeneckstrasse+1,+3012+Bern,+Switzerland',
   },
 
   socials: [
