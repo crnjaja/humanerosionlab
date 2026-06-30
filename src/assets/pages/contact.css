@@ -42,7 +42,53 @@
   }
 }
 
-.contact-page .contact-card,
+/* Message card — partner-card inspired */
+.contact-page .contact-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(145deg, #02989e 0%, #0b635b 58%, #6b9760 100%);
+  box-shadow: 0 22px 56px rgba(2, 152, 158, 0.28);
+  color: #fff;
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
+.contact-page .contact-card:hover,
+.contact-page .contact-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 72px rgba(0, 0, 0, 0.24);
+}
+
+.contact-page .contact-card::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute;
+  inset: -78px -74px auto auto;
+  width: 210px;
+  height: 210px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.contact-page .contact-card::after {
+  content: '';
+  position: absolute;
+  inset: auto auto -96px -72px;
+  width: 248px;
+  height: 248px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Keep location card clean, but still polished */
 .contact-page .location-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -50,11 +96,7 @@
   box-shadow: var(--shadow-soft-3);
   overflow: hidden;
   position: relative;
-}
-
-.contact-page .contact-card::before {
-  content: none !important;
-  display: none !important;
+  padding-bottom: 16px;
 }
 
 .contact-page .location-card::before {
@@ -66,7 +108,24 @@
 }
 
 .contact-page .card-head {
-  padding: 18px 18px 0;
+  position: relative;
+  z-index: 1;
+  padding: clamp(22px, 2.8vw, 34px) clamp(20px, 3vw, 34px) 0;
+}
+
+.contact-page .contact-card .card-head,
+.contact-page .contact-card .contact-form {
+  color: #fff;
+}
+
+.contact-page .contact-card .card-head h1,
+.contact-page .contact-card .card-head h2,
+.contact-page .contact-card .card-head h3,
+.contact-page .contact-card .card-head h4,
+.contact-page .contact-card .card-head p,
+.contact-page .contact-card .card-head span,
+.contact-page .contact-card .form-group label {
+  color: #fff;
 }
 
 .contact-page .pill {
@@ -82,44 +141,75 @@
   border-radius: 0;
 }
 
+.contact-page .contact-card .pill {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+/* Inner glass frame */
 .contact-page .contact-form {
-  padding: 18px;
+  position: relative;
+  z-index: 1;
+  margin: clamp(18px, 2vw, 24px) clamp(18px, 2.8vw, 30px) clamp(18px, 2.8vw, 30px);
+  padding: clamp(18px, 2.4vw, 28px);
   display: grid;
-  gap: 14px;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 18px 42px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(16px);
 }
 
 .contact-page .form-group {
   display: grid;
-  gap: 6px;
+  gap: 7px;
   position: relative;
 }
 
 .contact-page .form-group label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 900;
-  color: rgba(11, 31, 51, 0.82);
-  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .contact-page .form-group input,
 .contact-page .form-group textarea {
   width: 100%;
   border-radius: 0;
-  border: 1px solid rgba(10, 34, 59, 0.18);
-  padding: 12px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  padding: 13px 14px;
   font-size: 15px;
   color: var(--ink);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.92);
   outline: none;
+  box-sizing: border-box;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease;
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.contact-page .form-group input::placeholder,
+.contact-page .form-group textarea::placeholder {
+  color: rgba(11, 31, 51, 0.44);
 }
 
 .contact-page .form-group input:focus,
 .contact-page .form-group textarea:focus {
-  border-color: color-mix(in srgb, var(--accentbis-2) 55%, transparent);
-  background: color-mix(in srgb, var(--accentbis) 12%, transparent);
+  border-color: #fff;
+  background: #fff;
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.18),
+    0 14px 30px rgba(0, 0, 0, 0.14);
+  transform: translateY(-1px);
 }
 
 .contact-page .form-group textarea {
@@ -136,39 +226,95 @@
   right: 10px;
   bottom: 10px;
   font-size: 12px;
-  color: rgba(11, 31, 51, 0.6);
-  background: rgba(255, 255, 255, 0.88);
-  padding: 2px 6px;
-  border: 1px solid rgba(10, 34, 59, 0.12);
+  color: rgba(11, 31, 51, 0.72);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 3px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .contact-page .char-count--warn {
-  color: rgba(216, 75, 139, 0.95);
-  border-color: rgba(216, 75, 139, 0.35);
+  color: rgba(216, 75, 139, 0.98);
+  border-color: rgba(216, 75, 139, 0.45);
 }
 
 .contact-page .error-border {
-  border-color: rgba(205, 57, 57, 0.85) !important;
-  box-shadow: 0 0 0 4px rgba(205, 57, 57, 0.12) !important;
+  border-color: rgba(255, 180, 180, 0.75) !important;
+  box-shadow:
+    0 0 0 3px rgba(255, 120, 120, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
 .contact-page .error-message {
+  margin-top: 6px;
+  padding: 8px 12px;
   font-size: 13px;
-  color: rgba(205, 57, 57, 0.95);
-  font-weight: 800;
+  font-weight: 700;
+
+  color: #fff;
+
+  background: rgba(220, 53, 69, 0.18);
+  border: 1px solid rgba(255, 170, 170, 0.28);
+  backdrop-filter: blur(10px);
+
+  border-radius: 10px;
 }
 
 .contact-page .form-actions {
   display: flex;
   justify-content: center;
-  padding-top: 6px;
+  padding-top: 8px;
+}
+
+/* Send button — partner arrow/button inspired */
+.contact-page .btn-submit {
+  min-width: 170px;
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contact-page .btn-submit:hover,
+.contact-page .btn-submit:focus-visible {
+  transform: translateY(-3px);
+  background: #fff;
+  color: #0b635b;
+  border-color: #fff;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.24);
+  outline: none;
+}
+
+.contact-page .btn-submit:active {
+  transform: translateY(-1px);
 }
 
 .contact-page .btn-submit:disabled {
   opacity: 0.65;
   cursor: not-allowed;
   transform: none !important;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .contact-page .response-msg {
@@ -176,18 +322,21 @@
   font-weight: 900;
   font-size: 14px;
   text-align: center;
+  color: #fff;
 }
 
 .contact-page .response-msg--ok {
-  color: rgba(24, 135, 64, 0.98);
+  color: #fff;
+  background: rgba(24, 135, 64, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 10px;
 }
 
 .contact-page .response-msg--error {
-  color: rgba(205, 57, 57, 0.98);
-}
-
-.contact-page .location-card {
-  padding-bottom: 16px;
+  color: #fff;
+  background: rgba(205, 57, 57, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 10px;
 }
 
 .contact-page .map-frame {
@@ -287,5 +436,84 @@
 @media (max-width: 520px) {
   .contact-page .hero-socials {
     justify-content: center;
+  }
+
+  .contact-page .contact-form {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  .contact-page .btn-submit {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-page .contact-card,
+  .contact-page .form-group input,
+  .contact-page .form-group textarea,
+  .contact-page .btn-submit,
+  .contact-page .social-box {
+    transition: none !important;
+  }
+
+  .contact-page .contact-card:hover,
+  .contact-page .contact-card:focus-within,
+  .contact-page .form-group input:focus,
+  .contact-page .form-group textarea:focus,
+  .contact-page .btn-submit:hover,
+  .contact-page .social-box:hover {
+    transform: none !important;
+  }
+}
+
+.contact-page .form-group textarea {
+    padding: 12px 12px 36px;
+}
+
+.contact-page .char-count {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.contact-page .error-message {
+    margin-top: 8px;
+}
+
+/* Fix: keep textarea character counter inside the textarea even when errors appear */
+.contact-page .form-group--textarea {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+  position: relative;
+  padding-bottom: 0;
+}
+
+.contact-page .form-group--textarea textarea {
+  grid-row: 2;
+  padding: 13px 14px 38px;
+}
+
+.contact-page .form-group--textarea .char-count {
+  position: absolute;
+  right: 12px;
+  top: calc(13px + 1.3em + 7px + 160px - 34px);
+  bottom: auto;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.contact-page .form-group--textarea .error-message {
+  position: static;
+  margin-top: 0;
+  grid-row: 3;
+}
+
+@supports (anchor-name: --textarea) {
+  .contact-page .form-group--textarea textarea {
+    anchor-name: --message-field;
   }
 }
