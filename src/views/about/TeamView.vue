@@ -115,10 +115,10 @@
             aria-labelledby="visiting-former-title"
             aria-describedby="visiting-former-desc"
           >
-            <h2 class="section-heading">Advisory Board</h2>
+            <h2 class="section-heading">Visiting Alumni</h2>
 
             <ul class="team-grid" aria-label="Former visiting fellows">
-              <li v-for="member in visitingAlumni" :key="member.key" class="member-card">
+              <li v-for="member in visitingAlumni2" :key="member.key" class="member-card">
                 <div class="member-header">
                   <div class="avatar" :data-initials="initials(member.name)">
                     <img

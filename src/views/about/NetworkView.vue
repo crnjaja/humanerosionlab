@@ -9,7 +9,7 @@
           </div>
 
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
-            Our <span class="accent">Network</span>
+            Explore <span class="accent">our Network</span>
           </h1>
 
           <p class="hero-subtitle">
@@ -47,6 +47,7 @@
                   <div class="partner-logo-wrap">
                     <img
                       class="partner-logo"
+                      :class="partner.logoClass"
                       :src="partner.logo"
                       :alt="`${partner.name} logo`"
                       loading="lazy"
@@ -60,7 +61,18 @@
                     <p class="partner-text">{{ partner.description }}</p>
                   </div>
 
-                  <span class="partner-arrow" aria-hidden="true">→</span>
+                  <span class="partner-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M5 12h14M13 5l7 7-7 7"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </a>
               </li>
             </ul>
@@ -165,26 +177,27 @@ const { el: heroTitleEl } = useWordReveal({
 const partners = [
   {
     key: 'university-of-bern',
-    name: 'Gender Parity',
-    type: 'Academic Partner',
-    description: 'RLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere.',
+    name: 'GQUAL',
+    type: 'Global Advocacy Campaign',
+    description: 'GQUAL is a global campaign dedicated to advancing gender parity in international representation. It works to promote transparent and inclusive selection processes, ensuring that women have equal opportunities to serve in international courts, monitoring bodies, and other global decision-making institutions.',
     logo: '/images/logos/network/GQUAL.png',
     url: 'https://gqualcampaign.org/',
   },
   {
     key: 'partner-two',
-    name: 'International Gender Champions',
-    type: 'Research Partner in International Representation',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere.',
+    name: 'International Gender Champions (IGC)',
+    type: 'Leadership Network',
+    description: 'International Gender Champions is a leadership network that brings together decision-makers committed to breaking down gender barriers. Through concrete commitments and collaborative action, the network helps leaders make gender equality a reality within their institutions and spheres of influence.',
     logo: '/images/logos/network/IGC.png',
     url: 'https://genderchampions.com/hub/geneva',
   },
   {
     key: 'partner-three',
-    name: 'World Trade Organization',
-    type: 'Network Partner',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere.',
+    name: 'World Trade Organization (WTO)',
+    type: 'Intergovernmental Organization',
+    description: 'The World Trade Organization (WTO) is the international organization responsible for the global rules of trade between nations. It provides a forum for negotiating trade agreements, resolving trade disputes, and supporting a predictable, open, and inclusive multilateral trading system.',
     logo: '/images/logos/network/wto.png',
+    logoClass: 'partner-logo--large',
     url: 'https://www.wto.org/',
   },
 ]

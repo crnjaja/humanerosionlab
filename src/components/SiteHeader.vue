@@ -49,18 +49,7 @@
               @click="closeAbout"
             >
               Resisting Human Erosion
-              <span class="nav-dropdown-hint">Project's Description</span>
-            </RouterLink>
-
-            <RouterLink
-              class="nav-dropdown-item"
-              to="/projects/team"
-              role="menuitem"
-              tabindex="-1"
-              @click="closeAbout"
-            >
-              Our Team
-              <span class="nav-dropdown-hint">Project's Team</span>
+              <span class="nav-dropdown-hint">Learn about the project</span>
             </RouterLink>
 
             <RouterLink
@@ -71,7 +60,18 @@
               @click="closeAbout"
             >
               Our Network
-              <span class="nav-dropdown-hint">Project's Network</span>
+              <span class="nav-dropdown-hint">Explore our network members</span>
+            </RouterLink>
+
+            <RouterLink
+              class="nav-dropdown-item"
+              to="/projects/team"
+              role="menuitem"
+              tabindex="-1"
+              @click="closeAbout"
+            >
+              Our Team
+              <span class="nav-dropdown-hint">Meet our team members</span>
             </RouterLink>
 
             <div
