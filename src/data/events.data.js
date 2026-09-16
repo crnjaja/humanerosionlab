@@ -91,7 +91,7 @@ Participation is open to the public and free of charge. The hybrid events will b
     category: 'Conference',
     image: '/files/events/Leiden.jpg',
     imageAlt: 'CINETS 2026: Crimmigration in an Age of Authoritarian Drift',
-    speakers: ['Elisa Fornalé, Simone Ferrari'],
+    speakers: ['Elisa Fornalé', 'Simone Ferrari'],
     summary: `Elisa Fornalé and Simone Ferrari participated in CINETS 2026 – Crimmigration in an Age of Authoritarian Drift, an international conference that brought together leading scholars, practitioners, and researchers to discuss the intersection of migration, criminal law, borders, and human rights. The conference took place in Leiden, the Netherlands, and focused on the growing challenges posed by authoritarian approaches to migration governance.
 
     During the conference, Elisa Fornalé presented her paper, “Temporal (In)Humanity: Slow Violence and Migrants Families Detention,” while Dr. Simone Ferrari presented his paper, “Borders of Death: Family Separation and Return Memories in the Darién Gap,” as part of Panel 23 – Slow Death in Contemporary Migration Regimes. Their presentations examined the impact of prolonged detention on migrant families, family separation, and return memories in contemporary migration contexts, contributing to discussions on the human consequences of migration control policies alongside other international experts in the field.`,
@@ -100,6 +100,70 @@ Participation is open to the public and free of charge. The hybrid events will b
       flyer: '',
       video: '',
       external: 'https://www.staff.universiteitleiden.nl/events/2026/07/cinets-2026',
+    },
+    gallery: [],
+  },
+  {
+    id: 'fieldwork-tapachula-mexico',
+    title: 'Fieldwork in Tapachula, Mexico',
+    start: '2026-08-16T15:00',
+    end: '2026-08-24T16:30',
+    location: 'Tapachula, Mexico',
+    category: 'Fieldwork',
+    image: '/files/events/Tapachula.jpg',
+    imageAlt: 'Fieldwork in Tapachula, Mexico',
+    speakers: ['Elisa Fornalé', 'Simone Ferrari'],
+    summary: `As part of the research activities of the Resisting Human Erosion project, from 16 to 24 August, Prof. Elisa Fornalé and Dr. Simone Ferrari were hosted by Hospitalidad y Solidaridad, a migrant shelter in Tapachula providing accommodation, humanitarian assistance, and support to people on the move.
+
+    Thanks to the collaboration of the shelter’s directors, Alonso Hernández and José Pablo Mora, its coordinator, Joana Vargas, and the entire team, the researchers carried out an eight-day immersive fieldwork stay within the shelter. This provided an opportunity to engage directly with dozens of migrants hosted there, as well as with legal practitioners, NGOs, and local institutions in Tapachula involved in supporting migrants and accompanying them through procedures related to their legal and migratory status. During the visit, the researchers also had the opportunity to exchange perspectives with Melanie Guerrero, a PhD researcher at El Colegio de la Frontera Norte (El Colef), whose research focuses on climate-related migration from Honduras.`,
+    links: {
+      program: '',
+      flyer: '',
+      video: '',
+      external: 'https://hospitalidadysolidaridad.com',
+    },
+    gallery: [],
+  },
+  {
+    id: 'fieldwork-tapachula-mexico-2',
+    title: 'Fieldwork in Tapachula, Mexico',
+    start: '2026-08-10T15:00',
+    end: '2026-08-25T16:30',
+    location: 'Tapachula, Mexico',
+    category: 'Fieldwork',
+    image: '/files/events/Tapachula.jpg',
+    imageAlt: 'Fieldwork in Tapachula, Mexico',
+    speakers: ['Simone Ferrari'],
+    summary: `As part of his fieldwork in Mexico, Dr. Simone Ferrari conducted research activities at El Colegio de la Frontera Norte (El Colef) in Tijuana, hosted by Prof. Rafael Alonso Hernández, former coordinator of El Colef’s PhD programme in Migration Studies.
+
+    The visit included an expert interview with Prof. Hernández and field visits to key sites along the Tijuana border area. Together with Prof. Hernández, Dr. Ferrari also held institutional meetings with the UNHCR office in Tijuana and Al Otro Lado, an organization providing legal support to migrants and asylum seekers`,
+    links: {
+      program: '',
+      flyer: '',
+      video: '',
+      external: 'https://www.colef.mx/',
+    },
+    gallery: [],
+  },
+  {
+    id: 'fieldwork-cedh-chiapas',
+    title: 'Meeting with CEDH Chiapas',
+    start: '2026-08-19T15:00',
+    end: '2026-08-19T16:30',
+    location: 'State of Chiapas, Mexico',
+    category: 'Fieldwork',
+    image: '/files/events/Tapachula.jpg',
+    imageAlt: 'Fieldwork in Tapachula, Mexico',
+    speakers: ['Elisa Fornalé', 'Simone Ferrari'],
+    summary: `As part of the research activities of the Resisting Human Erosion project in Tapachula, Prof. Elisa Fornalé and Dr. Simone Ferrari held an institutional meeting with the Human Rights Commission of the State of Chiapas (CEDH Chiapas), where they were received by Juan Carlos de la Cruz Velázquez, Head of Migrant Affairs.
+
+    The meeting provided an opportunity to learn more about the Commission’s work to protect the rights of migrants in transit across the Guatemala–Mexico border and within the country. The exchange focused particularly on the connections between human mobility, environmental degradation, and violations of migrants’ rights, as well as on the institutional challenges involved in protecting people on the move in one of Mexico’s most complex border regions.`,
+    links: {
+      program: '',
+      flyer: '',
+      video: '',
+      external:
+        'https://www.facebook.com/CEDHChiapas/posts/pfbid0wtRsMqTaizrU8yakuZB46oTqXggcgMCqRc4eK4XaBXsxGMwXMbyxnyug8Qw443Ssl',
     },
     gallery: [],
   },

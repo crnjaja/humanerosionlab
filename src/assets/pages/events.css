@@ -260,6 +260,11 @@
   --event-color-soft: color-mix(in srgb, var(--accent-2) 10%, white);
 }
 
+.events-page .event-card--fieldwork {
+  --event-color: var(--accent-2);
+  --event-color-soft: color-mix(in srgb, var(--accent-2) 10%, white);
+}
+
 /* Image */
 
 .events-page .event-media {
