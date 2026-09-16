@@ -437,6 +437,7 @@
   text-justify: inter-word;
   hyphens: auto;
   text-wrap: pretty;
+  white-space: pre-line;
 }
 
 .team-bio-location {

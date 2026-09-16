@@ -156,15 +156,14 @@ export const partners = [
     imageClass: 'logo-img logo-img--unibe',
   },
   {
-    href: 'https://www.wti.org/',
-    ariaLabel: 'World Trade Institute',
-    image: '/images/logos/WTI.png',
-    imageAlt: 'World Trade Institute logo',
-  },
-  {
     href: 'https://www.snf.ch/',
     ariaLabel: 'Swiss National Science Foundation',
     image: '/images/logos/SNF.png',
     imageAlt: 'Swiss National Science Foundation logo',
+  },
+  {
+    type: 'disclaimer',
+    title: '',
+    text: 'This project is supported by the Swiss National Science Foundation (SNSF) under Grant Agreement TMCG-1_223245. The views expressed in this website and publication are solely those of the authors and do not necessarily reflect the position of the Swiss National Science Foundation. Neither the Swiss National Science Foundation nor the granting authority can be held responsible for them.',
   },
 ]

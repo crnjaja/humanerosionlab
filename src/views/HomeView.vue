@@ -314,17 +314,25 @@
           <div class="partners-kicker">THE PROJECT IS A COLLABORATIVE INITIATIVE BY</div>
 
           <div class="logos">
-            <a
-              v-for="partner in partners"
-              :key="partner.image"
-              class="logo-box"
-              :href="partner.href"
-              target="_blank"
-              rel="noopener"
-              :aria-label="partner.ariaLabel"
-            >
-              <img :class="partner.imageClass" :src="partner.image" :alt="partner.imageAlt" />
-            </a>
+            <template v-for="partner in partners" :key="partner.image || partner.title">
+              <div v-if="partner.type === 'disclaimer'" class="logo-box disclaimer-box">
+                <div class="disclaimer-content">
+                  <strong>{{ partner.title }}</strong>
+                  <p>{{ partner.text }}</p>
+                </div>
+              </div>
+
+              <a
+                v-else
+                class="logo-box"
+                :href="partner.href"
+                target="_blank"
+                rel="noopener"
+                :aria-label="partner.ariaLabel"
+              >
+                <img :class="partner.imageClass" :src="partner.image" :alt="partner.imageAlt" />
+              </a>
+            </template>
           </div>
         </div>
       </div>

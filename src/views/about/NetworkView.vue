@@ -246,32 +246,31 @@ const { el: heroTitleEl } = useWordReveal({
 
 const partners = [
   {
-    key: 'university-of-bern',
-    name: 'GQUAL',
-    type: 'Global Advocacy Campaign',
+    key: 'intersect-observatory',
+    name: 'Intersect Observatory',
+    type: 'Observatory',
     description:
-      'GQUAL is a global campaign dedicated to advancing gender parity in international representation. It works to promote transparent and inclusive selection processes, ensuring that women have equal opportunities to serve in international courts, monitoring bodies, and other global decision-making institutions.',
-    logo: '/images/logos/network/GQUAL.png',
-    url: 'https://gqualcampaign.org/',
+      'Developed within the Horizon Europe HRJust project, the Intersect Observatory explores how States use human rights justifications in situations involving climate change, COVID and migration through a gender and intersectionality lens. This digital living lab collects and disseminates knowledge while highlighting regulatory and legal gaps in human rights protection across these interconnected areas.',
+    logo: '/images/logos/network/hrjust.png',
+    url: 'https://hrjust-intersect-observatory.eu/',
   },
   {
-    key: 'partner-two',
-    name: 'International Gender Champions (IGC)',
-    type: 'Leadership Network',
+    key: 'unruly-nature',
+    name: 'Unruly Nature',
+    type: 'Collective',
     description:
-      'International Gender Champions is a leadership network that brings together decision-makers committed to breaking down gender barriers. Through concrete commitments and collaborative action, the network helps leaders make gender equality a reality within their institutions and spheres of influence.',
-    logo: '/images/logos/network/IGC.png',
-    url: 'https://genderchampions.com/hub/geneva',
+      'Unruly Nature is a collaborative research project exploring socio-natural relations through Political Geography, Environmental Humanities, Natural Sciences, Design, Philosophy, Critical Theory and Visual Arts. This interdisciplinary initiative fosters dialogue, research collaboration and public awareness around environmental issues while providing a digital space for its transdisciplinary network and the publication of the Unruly Natures journal.',
+    logo: '/images/logos/network/unruly.png',
+    url: 'https://unrulynatures.ch/',
   },
   {
-    key: 'partner-three',
-    name: 'World Trade Organization (WTO)',
-    type: 'Intergovernmental Organization',
+    key: 'warredoc',
+    name: 'WARREDOC',
+    type: 'Research Centre',
     description:
-      'The World Trade Organization (WTO) is the international organization responsible for the global rules of trade between nations. It provides a forum for negotiating trade agreements, resolving trade disputes, and supporting a predictable, open, and inclusive multilateral trading system.',
-    logo: '/images/logos/network/wto.png',
-    logoClass: 'partner-logo--large',
-    url: 'https://www.wto.org/',
+      'WARREDOC is a Water Resources Research and Documentation Centre at the University for Foreigners of Perugia. It advances research, education and knowledge exchange on water, environment and climate disaster risks. Through multidisciplinary and multicultural approaches, the Centre promotes sustainable development, international academic cooperation and scientific progress in the field of water resources management.',
+    logo: '/images/logos/network/warredoc.png',
+    url: 'https://warredoc-unistrapg.org/en/',
   },
 ]
 
