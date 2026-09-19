@@ -82,7 +82,7 @@ export const advisoryBoard = [
     email: '',
     linkedin: '#',
     location: 'Max Planck Institute, Heidelberg, Germany',
-    photo: '',
+    photo: '/images/logos/network/Zaker.jpg',
     institutionLogo: '/images/logos/network/Planck.png',
   },
   {
@@ -93,7 +93,7 @@ export const advisoryBoard = [
     email: '',
     linkedin: '#',
     location: 'University Santiago de Compostela, Spain',
-    photo: '',
+    photo: '/images/logos/network/Marco.jpg',
     institutionLogo: '/images/logos/network/Compostelle.webp',
   },
   {
@@ -115,7 +115,7 @@ export const advisoryBoard = [
     email: '',
     linkedin: '#',
     location: 'Université Libre de Bruxelles, Brussels, Belgium',
-    photo: '',
+    photo: '/images/logos/network/Asuncion.jpg',
     institutionLogo: '/images/logos/network/ULB.webp',
   },
   {
@@ -126,7 +126,7 @@ export const advisoryBoard = [
     email: '',
     linkedin: '#',
     location: 'University of St.Gallen, Switzerland',
-    photo: '',
+    photo: '/images/logos/network/Federico.jpg',
     institutionLogo: '/images/logos/network/STG.png',
   },
   {
@@ -137,7 +137,7 @@ export const advisoryBoard = [
     email: '',
     linkedin: '#',
     location: 'University of Foreigners Perugia, Italy',
-    photo: '',
+    photo: '/images/logos/network/Maura.jpg',
     institutionLogo: '/images/logos/network/Perugia.webp',
   },
   {
@@ -159,7 +159,7 @@ export const advisoryBoard = [
     email: '',
     linkedin: '#',
     location: 'University of Oxford, United Kingdom',
-    photo: '',
+    photo: '/images/logos/network/Antonios.jpg',
     institutionLogo: '/images/logos/network/Oxford.webp',
   },
 ]
