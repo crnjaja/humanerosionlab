@@ -2,9 +2,11 @@ import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 import { CookieConsentService } from './CookieConsentService'
 
+type DataLayerItem = IArguments | Record<string, unknown>
+
 declare global {
   interface Window {
-    dataLayer: unknown[][]
+    dataLayer: DataLayerItem[]
     gtag: (...args: unknown[]) => void
     [key: `ga-disable-${string}`]: boolean
   }
@@ -17,16 +19,26 @@ export class AnalyticsService {
 
   static scriptLoading: Promise<void> | null = null
 
+  /**
+   * Initialise dataLayer et gtag en suivant le fonctionnement
+   * du snippet officiel Google.
+   */
   static initializeDataLayer(): void {
     window.dataLayer = window.dataLayer || []
 
     if (typeof window.gtag !== 'function') {
-      window.gtag = (...args: unknown[]) => {
-        window.dataLayer.push(args)
+      window.gtag = function () {
+        window.dataLayer.push(arguments)
       }
     }
   }
 
+  /**
+   * Consentement par défaut.
+   *
+   * À appeler le plus tôt possible au démarrage de l'application,
+   * avant l'initialisation de Google Analytics.
+   */
   static setDefaultConsent(): void {
     this.initializeDataLayer()
 
@@ -38,18 +50,23 @@ export class AnalyticsService {
     })
   }
 
+  /**
+   * Met à jour le Consent Mode Google.
+   */
   static updateConsent(granted: boolean): void {
     this.initializeDataLayer()
 
     window.gtag('consent', 'update', {
       analytics_storage: granted ? 'granted' : 'denied',
-
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied',
     })
   }
 
+  /**
+   * Charge gtag.js une seule fois.
+   */
   static loadScript(): Promise<void> {
     if (this.scriptLoading) {
       return this.scriptLoading
@@ -89,6 +106,10 @@ export class AnalyticsService {
     return this.scriptLoading
   }
 
+  /**
+   * Active Google Analytics lorsque le consentement Analytics
+   * a été donné.
+   */
   static async enable(): Promise<boolean> {
     if (!CookieConsentService.hasAnalyticsConsent()) {
       return false
@@ -96,21 +117,34 @@ export class AnalyticsService {
 
     this.initializeDataLayer()
 
+    // S'assurer que GA n'est pas désactivé.
     window[`ga-disable-${this.measurementId}`] = false
 
+    // Informer Google que le consentement Analytics est accordé.
     this.updateConsent(true)
 
     try {
-      await this.loadScript()
-
       if (!this.initialized) {
+        /*
+         * Important :
+         * on place la commande "js" dans dataLayer AVANT
+         * le chargement de gtag.js.
+         */
         window.gtag('js', new Date())
 
+        await this.loadScript()
+
+        /*
+         * On désactive le page_view automatique car Vue Router
+         * enverra les page_view manuellement.
+         */
         window.gtag('config', this.measurementId, {
           send_page_view: false,
         })
 
         this.initialized = true
+      } else {
+        await this.loadScript()
       }
 
       return true
@@ -121,6 +155,9 @@ export class AnalyticsService {
     }
   }
 
+  /**
+   * Désactive Google Analytics.
+   */
   static disable(): void {
     this.initializeDataLayer()
 
@@ -131,6 +168,9 @@ export class AnalyticsService {
     this.removeGoogleAnalyticsCookies()
   }
 
+  /**
+   * Applique le choix actuellement enregistré.
+   */
   static async applyConsent(): Promise<boolean> {
     if (CookieConsentService.hasAnalyticsConsent()) {
       return this.enable()
@@ -141,6 +181,11 @@ export class AnalyticsService {
     return false
   }
 
+  /**
+   * Envoie manuellement une vue de page.
+   *
+   * À utiliser avec Vue Router.
+   */
   static pageView(route?: RouteLocationNormalizedLoaded): void {
     if (!this.initialized) {
       return
@@ -150,17 +195,22 @@ export class AnalyticsService {
       return
     }
 
-    const path = route?.fullPath || window.location.pathname
+    const path =
+      route?.fullPath || window.location.pathname + window.location.search + window.location.hash
 
     const pageLocation = new URL(path, window.location.origin).href
 
     window.gtag('event', 'page_view', {
+      send_to: this.measurementId,
       page_title: document.title,
       page_location: pageLocation,
       page_path: path,
     })
   }
 
+  /**
+   * Envoie un événement GA4 personnalisé.
+   */
   static event(eventName: string, parameters: Record<string, unknown> = {}): void {
     if (!this.initialized) {
       return
@@ -170,9 +220,16 @@ export class AnalyticsService {
       return
     }
 
-    window.gtag('event', eventName, parameters)
+    window.gtag('event', eventName, {
+      ...parameters,
+      send_to: this.measurementId,
+    })
   }
 
+  /**
+   * Supprime les cookies Google Analytics accessibles
+   * depuis le domaine courant.
+   */
   static removeGoogleAnalyticsCookies(): void {
     const cookieNames = document.cookie
       .split(';')
@@ -196,7 +253,11 @@ export class AnalyticsService {
       domains.forEach((domain) => {
         const domainPart = domain ? `; domain=${domain}` : ''
 
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domainPart}; SameSite=Lax`
+        document.cookie =
+          `${name}=; ` +
+          `expires=Thu, 01 Jan 1970 00:00:00 GMT; ` +
+          `path=/${domainPart}; ` +
+          `SameSite=Lax`
       })
     })
   }
