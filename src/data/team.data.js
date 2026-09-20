@@ -39,7 +39,7 @@ export const coreTeam = [
     email: 'camilla.paglia@students.unibe.ch',
     linkedin: '#',
     location: 'Bern, Switzerland',
-    photo: '/images/profilePictures/Camilla.png',
+    photo: '',
   },
   {
     key: 'riccarda-heepen',
@@ -59,7 +59,7 @@ export const coreTeam = [
     email: 'akhilesh.kumar@unibe.ch',
     linkedin: 'https://www.linkedin.com/in/akhileshanil/',
     location: 'Bern, Switzerland',
-    photo: '/images/profilePictures/Akhilesh.jpg',
+    photo: '',
   },
   {
     key: 'romain-marguet',
