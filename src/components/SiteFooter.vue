@@ -23,15 +23,7 @@
         <RouterLink class="footer-link" to="/privacy-policy"> Privacy Policy </RouterLink>
 
         <!-- DÉSACTIVÉ -->
-        <RouterLink
-          class="footer-link is-disabled"
-          to="/cookies-consent"
-          aria-disabled="true"
-          tabindex="-1"
-          @click.prevent
-        >
-          Cookies &amp; Consent
-        </RouterLink>
+        <RouterLink class="footer-link" to="/cookies-consent"> Cookies &amp; Consent </RouterLink>
       </nav>
     </div>
   </footer>

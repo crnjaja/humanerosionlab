@@ -344,8 +344,7 @@
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 950;
-  text-align: justify;
-  text-align-last: left;
+  text-align: left;
 }
 
 .publications-page .pub-meta {

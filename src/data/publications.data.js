@@ -1,92 +1,20 @@
 export const publications = [
   {
-    title: 'Policy Brief: Climate Risk Disclosure Duties',
-    authors: ['Jane Roe', 'Alex Smith'],
-    date: '2025-10-12',
+    title: 'Sea Level Rise : Implications for Human Rights, Security, and Peace',
+    authors: ['Elisa Fornalé'],
+    date: '2025-11-01',
     summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['policy', 'disclosure', 'corporate'],
+      'By mapping existing regulatory frameworks and by examining the interpretation and application of human rights and climate change laws, this book investigates the evolution of the international law in relation to the human implications of sea level rise. This book explores how States collectively respond to present and future slow-onset events, while considering intersectional discrimination, socio-economic disadvantage, the impact on human mobility through an intergenerational perspective.\n\nThe volume is organized around the contributions of eleven leading experts in three core parts: (I) Sea Level Rise, Stability and Security; (II) Sea Level Rise and the Rights of Affected Populations; and (III) Sea Level Rise: New Developments at International Level. The book aims to offer critical insights and solutions to manage and address the gaps outlined. The book has been presented and shared at the United Nations Library & Archives Geneva. The interview is available at the following link:  https://www.youtube.com/watch?v=-xgLDxYaEk8. \n\n',
+    url: 'https://link.springer.com/book/10.1007/978-3-031-89171-7',
+    tags: ['climate', 'human-rights', 'sea-level-rise', 'mobility'],
   },
   {
-    title: 'Working Paper: Corporate Climate Duties',
-    authors: ['M. Johnson'],
-    date: '2025-10-08',
+    title: 'Women, Travellers and Globetrotters: A Story Beyond Switzerland',
+    authors: ['Elisa Fornalé', 'Rym Tlili'],
+    date: '2026-09-17',
     summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['corporate', 'governance'],
-  },
-  {
-    title: 'Report: Human Rights Arguments in Climate Litigation (2020–2025)',
-    authors: ['A. Patel', 'L. Nguyen', 'C. Rossi'],
-    date: '2025-09-28',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['litigation', 'human rights'],
-  },
-  {
-    title: 'Dataset: Global Emissions and Enforcement (v2)',
-    authors: ['HEL Team'],
-    date: '2025-08-16',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['data', 'enforcement'],
-  },
-  {
-    title: 'Article: Visualizing Climate Claims',
-    authors: ['S. Duarte'],
-    date: '2025-07-04',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['design', 'visualization'],
-  },
-  {
-    title: 'Guide: Building a Climate Litigation Map',
-    authors: ['Human Erosion Lab'],
-    date: '2025-06-11',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['guide', 'visualization', 'web'],
-  },
-  {
-    title: 'Technical Note: Data Validation for Case Repositories',
-    authors: ['J. Müller', 'P. Alvarez'],
-    date: '2025-05-22',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['data', 'validation'],
-  },
-  {
-    title: 'Briefing: Strategic Litigation Pathways',
-    authors: ['E. Cornaro'],
-    date: '2025-04-10',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['litigation', 'strategy'],
-  },
-  {
-    title: 'Survey: Corporate Net-Zero Claims – A Reality Check',
-    authors: ['T. Okafor', 'R. Chen'],
-    date: '2025-03-02',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['corporate', 'net-zero'],
-  },
-  {
-    title: 'Memo: Procedural Hurdles in Cross-Border Actions',
-    authors: ['K. Dubois'],
-    date: '2024-12-14',
-    summary:
-      'This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions. This brief synthesizes recent developments in mandatory climate risk disclosure for corporations, outlining regulatory baselines, investor expectations, and practical steps for compliance across jurisdictions.',
-    url: '#',
-    tags: ['procedure', 'cross-border'],
+      'Authored by Elisa Fornalé and Rym Tlili and included in Les globetrotters et la Suisse, du XIXe siècle à nos jours, Géo-Regards, Société neuchâteloise de géographie and Institut de géographie de l’Université de Neuchâtel, No. 18 (2026), this article investigates how the advent of modernity and globalisation—characterised by rapid industrialisation, the expansion of the British Empire, and the imposition of rigid social norms—may have contributed to women’s emancipation. \n\nAdopting a distinctive perspective, it explores the history of some of the first women to complete a tour du monde. The article focuses primarily on Cäcilie von Rodt and Lina Bögli, two Swiss travellers, examining the challenges they faced and exploring how and when they came into contact with other women during their journeys.\n\nThe article was presented on Thursday, 17 September 2026, at Maison d’Ailleurs, Place Pestalozzi 14, Yverdon-les-Bains, Switzerland.\n\n',
+    url: 'https://www.alphil.com/revues/1490-1860-geo-regards-n-18-2025.html',
+    tags: ['women', 'travel', 'history', 'globalisation'],
   },
 ]
