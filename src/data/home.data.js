@@ -1,6 +1,6 @@
 export const latestItems = [
   {
-    label: 'Latest News',
+    label: 'Latest Event',
     title: 'VI International Congress: We Are Not Islands',
     text: `Resisting Human Erosion co-organised the VI International Congress on Literature and Human Rights, held in Bogotá from 8 to 11 September 2026. Elisa Fornalé and Simone Ferrari represented the project, with a dedicated session presenting its latest research developments and outcomes.`,
     published: '08 Sep 2026',
