@@ -6,7 +6,7 @@ export const latestItems = [
     published: '08 Sep 2026',
     image: '/images/backgrounds/rose.png',
     imageAlt: 'VI International Congress in Bogotá',
-    link: '/news',
+    link: '/events',
     linkLabel: 'Full Article →',
   },
   {
