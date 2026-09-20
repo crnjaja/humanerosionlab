@@ -18,8 +18,9 @@
           </p>
 
           <div class="hero-actions">
-            <RouterLink class="btn btn--primary" to="/contact">Any Questions?</RouterLink>
-            <RouterLink class="btn btn--ghost" to="/">Back to Home</RouterLink>
+            <RouterLink class="btn btn--primary" to="/contact"> Any Questions? </RouterLink>
+
+            <RouterLink class="btn btn--ghost" to="/"> Back to Home </RouterLink>
           </div>
         </div>
       </div>
@@ -54,6 +55,7 @@
             </div>
           </div>
 
+          <!-- Filters -->
           <section class="toolbar" aria-label="Filters and Search">
             <label class="search-input" aria-label="Search events">
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
@@ -83,22 +85,31 @@
 
             <label class="select">
               <span class="pill">Year</span>
+
               <select v-model="year">
                 <option value="">All years</option>
-                <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
+
+                <option v-for="y in years" :key="y" :value="y">
+                  {{ y }}
+                </option>
               </select>
             </label>
 
             <label class="select">
               <span class="pill">Representative</span>
+
               <select v-model="speaker">
                 <option value="">All representatives</option>
-                <option v-for="s in speakers" :key="s" :value="s">{{ s }}</option>
+
+                <option v-for="s in speakers" :key="s" :value="s">
+                  {{ s }}
+                </option>
               </select>
             </label>
 
             <label class="sort">
               <span class="pill">Sort</span>
+
               <select v-model="sort">
                 <option value="date-desc">Newest first</option>
                 <option value="date-asc">Oldest first</option>
@@ -108,25 +119,35 @@
             </label>
           </section>
 
+          <!-- Active filters -->
           <div v-if="hasActiveFilters" class="active-filters" aria-label="Active filters">
             <button v-if="year" class="chip" type="button" @click="year = ''">
-              Year: {{ year }} <span class="chip-x" aria-hidden="true">×</span>
+              Year: {{ year }}
+              <span class="chip-x" aria-hidden="true">×</span>
             </button>
+
             <button v-if="speaker" class="chip" type="button" @click="speaker = ''">
-              Representative: {{ speaker }} <span class="chip-x" aria-hidden="true">×</span>
+              Representative: {{ speaker }}
+              <span class="chip-x" aria-hidden="true">×</span>
             </button>
+
             <button v-if="q" class="chip" type="button" @click="q = ''">
-              Search: “{{ q }}” <span class="chip-x" aria-hidden="true">×</span>
+              Search: “{{ q }}”
+              <span class="chip-x" aria-hidden="true">×</span>
             </button>
           </div>
 
+          <!-- Stats -->
           <div class="stats-row" aria-live="polite">
-            <span
-              ><strong>{{ totalCount }}</strong> result{{ totalCount === 1 ? '' : 's' }}</span
-            >
-            <span class="hint">Expand a card to read the full event description.</span>
+            <span>
+              <strong>{{ totalCount }}</strong>
+              result{{ totalCount === 1 ? '' : 's' }}
+            </span>
+
+            <span class="hint"> Expand a card to read the full event description. </span>
           </div>
 
+          <!-- Events -->
           <section class="grid" :class="{ compact }" aria-label="Events list">
             <article
               v-for="(it, idx) in visibleItems"
@@ -161,11 +182,15 @@
 
               <div class="event-content">
                 <div class="event-tag-wrap">
-                  <span class="event-category">{{ it.category }}</span>
+                  <span class="event-category">
+                    {{ it.category }}
+                  </span>
                 </div>
 
                 <div class="event-main">
-                  <h3 :id="`e${idx}-title`" class="event-title">{{ it.title }}</h3>
+                  <h3 :id="`e${idx}-title`" class="event-title">
+                    {{ it.title }}
+                  </h3>
 
                   <dl class="event-meta">
                     <div v-if="(it.speakers || []).length">
@@ -180,7 +205,9 @@
                   </dl>
 
                   <div class="summary-wrap" :class="{ open: isExpanded(it) }">
-                    <p class="summary" :id="`e${idx}-summary`">{{ it.summary }}</p>
+                    <p class="summary" :id="`e${idx}-summary`">
+                      {{ it.summary }}
+                    </p>
                   </div>
 
                   <div class="event-footer">
@@ -196,7 +223,6 @@
                       class="event-resources"
                     >
                       <!-- Show More -->
-
                       <button
                         class="resource-btn resource-btn--primary"
                         type="button"
@@ -206,18 +232,21 @@
                       >
                         <svg
                           class="resource-icon resource-arrow"
-                          :class="{ 'resource-arrow--open': isExpanded(it) }"
+                          :class="{
+                            'resource-arrow--open': isExpanded(it),
+                          }"
                           viewBox="0 0 24 24"
                           aria-hidden="true"
                         >
                           <path d="M7 10l5 5 5-5H7z" />
                         </svg>
 
-                        <span>{{ isExpanded(it) ? 'Less' : 'More' }}</span>
+                        <span>
+                          {{ isExpanded(it) ? 'Less' : 'More' }}
+                        </span>
                       </button>
 
                       <!-- Program -->
-
                       <button
                         v-if="it.links?.program"
                         class="resource-btn"
@@ -229,7 +258,6 @@
                       </button>
 
                       <!-- Flyer -->
-
                       <button
                         v-if="it.links?.flyer"
                         class="resource-btn"
@@ -241,7 +269,6 @@
                       </button>
 
                       <!-- Video -->
-
                       <button
                         v-if="it.links?.video"
                         class="resource-btn"
@@ -253,7 +280,6 @@
                       </button>
 
                       <!-- Gallery -->
-
                       <button
                         v-if="(it.gallery || []).length"
                         class="resource-btn"
@@ -265,7 +291,6 @@
                       </button>
 
                       <!-- External -->
-
                       <a
                         v-if="it.links?.external"
                         class="resource-btn"
@@ -283,23 +308,26 @@
             </article>
           </section>
 
-          <nav class="pager" aria-label="Pagination">
-            <button
-              class="btn btn--load"
-              type="button"
-              @click="loadMore"
-              :disabled="totalCount === 0 || !canLoadMore"
-              v-show="canLoadMore || totalCount === 0"
-            >
-              {{
-                totalCount === 0 ? 'No results' : canLoadMore ? 'Load more' : 'All results shown'
-              }}
-            </button>
-          </nav>
+          <!--
+            Infinite-scroll sentinel.
 
+            When this approaches the viewport, another PAGE_SIZE
+            events are rendered automatically.
+          -->
+          <div
+            v-if="canLoadMore"
+            ref="loadMoreSentinel"
+            class="load-more-sentinel"
+            aria-hidden="true"
+          ></div>
+
+          <!-- Lightbox -->
           <dialog class="lightbox" ref="lbEl" @click="onBackdrop" @cancel.prevent="closeLightbox">
             <div class="lightbox-header">
-              <h4 class="lightbox-title">{{ lbTitle }}</h4>
+              <h4 class="lightbox-title">
+                {{ lbTitle }}
+              </h4>
+
               <button class="close-btn" type="button" @click="closeLightbox">Close</button>
             </div>
 
@@ -319,7 +347,9 @@
                   v-for="(src, gIdx) in lbItem.gallery"
                   :key="`${src}-${gIdx}`"
                   class="gallery-item"
-                  :style="{ backgroundImage: `url('${src}')` }"
+                  :style="{
+                    backgroundImage: `url('${src}')`,
+                  }"
                 ></li>
               </ul>
             </div>
@@ -332,6 +362,7 @@
 
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+
 import { RouterLink } from 'vue-router'
 import { useWordReveal } from '@/composables/useWordReveal'
 import { events, fallbackImage } from '@/data/events.data'
@@ -343,20 +374,33 @@ const { el: heroTitleEl } = useWordReveal({
   duration: 1300,
 })
 
+/* -------------------------------------------------------
+ * Data
+ * ----------------------------------------------------- */
+
 const items = ref(events)
 
 const page = ref(1)
+
 const q = ref('')
 const year = ref('')
 const speaker = ref('')
 const sort = ref('date-desc')
+
 const compact = ref(false)
+
 const expandedKeys = ref(new Set())
 const expandedOrder = ref([])
 const revealedKeys = ref(new Set())
 
+/* -------------------------------------------------------
+ * Filtering / sorting
+ * ----------------------------------------------------- */
+
 const hasActiveFilters = computed(() => !!q.value || !!year.value || !!speaker.value)
+
 const years = computed(() => EventsService.getYears(items.value))
+
 const speakers = computed(() => EventsService.getSpeakers(items.value))
 
 const filtered = computed(() =>
@@ -368,14 +412,25 @@ const filtered = computed(() =>
   }),
 )
 
+/* -------------------------------------------------------
+ * Pagination / infinite scroll
+ * ----------------------------------------------------- */
+
 const totalCount = computed(() => filtered.value.length)
+
 const baseVisibleItems = computed(() =>
   filtered.value.slice(0, EventsService.PAGE_SIZE * page.value),
 )
+
 const visibleItems = computed(() =>
   EventsService.putExpandedFirst(baseVisibleItems.value, expandedOrder.value),
 )
+
 const canLoadMore = computed(() => baseVisibleItems.value.length < filtered.value.length)
+
+/* -------------------------------------------------------
+ * Helpers
+ * ----------------------------------------------------- */
 
 function keyOf(it) {
   return EventsService.keyOf(it)
@@ -397,21 +452,28 @@ function isExpanded(it) {
   return expandedKeys.value.has(keyOf(it))
 }
 
+/* -------------------------------------------------------
+ * Expand / collapse cards
+ * ----------------------------------------------------- */
+
 async function toggle(it) {
   const k = keyOf(it)
   const next = new Set(expandedKeys.value)
 
   if (next.has(k)) {
     next.delete(k)
+
     expandedOrder.value = expandedOrder.value.filter((x) => x !== k)
   } else {
     next.add(k)
+
     expandedOrder.value = [...expandedOrder.value.filter((x) => x !== k), k]
   }
 
   expandedKeys.value = next
 
   await nextTick()
+
   observeCards()
 
   if (next.has(k)) {
@@ -421,7 +483,9 @@ async function toggle(it) {
 
 function scrollToCard(k, extraOffset = 60) {
   const selector = `[data-k="${CSS.escape(k)}"]`
+
   const el = document.querySelector(selector)
+
   if (!el) return
 
   const headerOffset =
@@ -435,6 +499,10 @@ function scrollToCard(k, extraOffset = 60) {
   })
 }
 
+/* -------------------------------------------------------
+ * UI
+ * ----------------------------------------------------- */
+
 function toggleCompact() {
   compact.value = !compact.value
 }
@@ -447,30 +515,107 @@ function clearAll() {
   page.value = 1
 }
 
-function loadMore() {
-  if (canLoadMore.value) {
-    page.value += 1
-    nextTick(observeCards)
+/* -------------------------------------------------------
+ * Infinite scrolling
+ * ----------------------------------------------------- */
+
+const loadMoreSentinel = ref(null)
+
+let loadMoreObserver = null
+let loadingMore = false
+
+async function loadMore() {
+  if (loadingMore || !canLoadMore.value) {
+    return
   }
+
+  loadingMore = true
+
+  page.value += 1
+
+  await nextTick()
+
+  /*
+   * New cards have now been inserted into the DOM,
+   * so reconnect the reveal observer.
+   */
+  observeCards()
+
+  /*
+   * The sentinel moves further down after new cards
+   * are rendered, so observe its new position.
+   */
+  observeLoadMore()
+
+  loadingMore = false
 }
+
+function observeLoadMore() {
+  loadMoreObserver?.disconnect()
+
+  if (!loadMoreSentinel.value || !canLoadMore.value) {
+    return
+  }
+
+  loadMoreObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0]
+
+      if (entry?.isIntersecting && canLoadMore.value && !loadingMore) {
+        loadMore()
+      }
+    },
+    {
+      root: null,
+
+      /*
+       * Start loading before the user reaches
+       * the actual bottom.
+       */
+      rootMargin: '400px 0px',
+
+      threshold: 0,
+    },
+  )
+
+  loadMoreObserver.observe(loadMoreSentinel.value)
+}
+
+/* -------------------------------------------------------
+ * Filters changed
+ * ----------------------------------------------------- */
 
 watch([q, year, speaker, sort], async () => {
   page.value = 1
+
   expandedKeys.value = new Set()
   expandedOrder.value = []
   revealedKeys.value = new Set()
+
   await nextTick()
+
   observeCards()
+  observeLoadMore()
 })
 
+/* -------------------------------------------------------
+ * Card reveal observer
+ * ----------------------------------------------------- */
+
 const cardEls = ref([])
+
 let io = null
 
 function observeCards() {
-  if (io) io.disconnect()
+  if (io) {
+    io.disconnect()
+  }
 
   const els = cardEls.value?.filter(Boolean) || []
-  if (!els.length) return
+
+  if (!els.length) {
+    return
+  }
 
   io = new IntersectionObserver(
     (entries) => {
@@ -479,7 +624,11 @@ function observeCards() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const k = entry.target.dataset.k
-          if (k) next.add(k)
+
+          if (k) {
+            next.add(k)
+          }
+
           io?.unobserve(entry.target)
         }
       })
@@ -492,14 +641,23 @@ function observeCards() {
     },
   )
 
-  els.forEach((el) => io.observe(el))
+  els.forEach((el) => {
+    io.observe(el)
+  })
 }
+
+/* -------------------------------------------------------
+ * Mount
+ * ----------------------------------------------------- */
 
 onMounted(async () => {
   await nextTick()
+
   observeCards()
+  observeLoadMore()
 
   const id = window.location.hash.replace('#', '')
+
   const fromHome = new URLSearchParams(window.location.search).get('from') === 'home'
 
   if (!id) return
@@ -507,19 +665,44 @@ onMounted(async () => {
   history.replaceState(null, '', window.location.pathname + window.location.search)
 
   const event = items.value.find((it) => it.id === id)
+
   if (!event) return
 
   expandedKeys.value = new Set([keyOf(event)])
+
   expandedOrder.value = [keyOf(event)]
 
+  /*
+   * If the linked event isn't within the
+   * currently visible first page, make enough
+   * pages visible to include it.
+   */
+  const eventIndex = filtered.value.findIndex((it) => keyOf(it) === keyOf(event))
+
+  if (eventIndex >= 0) {
+    page.value = Math.max(page.value, Math.ceil((eventIndex + 1) / EventsService.PAGE_SIZE))
+  }
+
   await nextTick()
+
   observeCards()
+  observeLoadMore()
+
   scrollToCard(keyOf(event), fromHome ? 120 : 60)
 })
 
+/* -------------------------------------------------------
+ * Cleanup
+ * ----------------------------------------------------- */
+
 onBeforeUnmount(() => {
-  if (io) io.disconnect()
+  io?.disconnect()
+  loadMoreObserver?.disconnect()
 })
+
+/* -------------------------------------------------------
+ * Lightbox
+ * ----------------------------------------------------- */
 
 const lbEl = ref(null)
 const lbItem = ref(null)
@@ -529,25 +712,32 @@ const lbPdf = ref(null)
 function openLightbox(item) {
   lbItem.value = item
   lbPdf.value = null
+
   lbTitle.value = item?.title || 'Event media'
+
   lbEl.value?.showModal?.()
 }
 
 function openPdf(title, pdfUrl) {
   lbItem.value = null
   lbPdf.value = pdfUrl
+
   lbTitle.value = title || 'PDF'
+
   lbEl.value?.showModal?.()
 }
 
 function closeLightbox() {
   lbEl.value?.close?.()
+
   lbItem.value = null
   lbPdf.value = null
   lbTitle.value = ''
 }
 
 function onBackdrop(e) {
-  if (e.target === lbEl.value) closeLightbox()
+  if (e.target === lbEl.value) {
+    closeLightbox()
+  }
 }
 </script>

@@ -165,6 +165,10 @@
   margin-top: clamp(16px, 2.6vw, 28px);
 }
 
+.events-page .events-section {
+  padding-bottom: 28px;
+}
+
 /* Event cards */
 
 .events-page .event-card {
