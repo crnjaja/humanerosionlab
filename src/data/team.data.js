@@ -65,7 +65,7 @@ export const coreTeam = [
     key: 'romain-marguet',
     name: 'Romain Marguet',
     role: 'Developer',
-    bio: 'Romain Marguet holds a Bachelor of Science in Business Information Technology.He worked as a Software Developer for the Horizon Europe HRJust project, contributing to the development of the Climate Claims Open-Access Case Law Database and its data visualization tools.\n\nHe is currently a Business Analyst at a leading Swiss organization in the health and social protection sector. His expertise includes software development and improvement, user experience, data analysis, and data visualization.',
+    bio: 'Romain Marguet holds a Bachelor of Science in Business Information Technology. He worked as a Software Developer for the Horizon Europe HRJust project, contributing to the development of the Climate Claims Open-Access Case Law Database and its data visualization tools.\n\nHe is currently a Business Analyst at a leading Swiss organization in the health and social protection sector. His expertise includes software development and improvement, user experience, data analysis, and data visualization.',
     email: 'romain.marguet@unibe.ch',
     linkedin: '#',
     location: 'Sierre, Switzerland',

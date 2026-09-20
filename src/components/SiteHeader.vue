@@ -1,17 +1,40 @@
 <template>
-  <header class="site-header" :class="{ 'site-header--solid': isSolid }">
+  <header class="site-header" :class="{ 'site-header--solid': isSolid || mobileMenuOpen }">
     <div class="container header-inner">
-      <RouterLink to="/" class="brand brand--logo-only">
+      <!-- LOGO -->
+      <RouterLink to="/" class="brand brand--logo-only" @click="closeMobileMenu">
         <img
           class="brand-logo"
-          :class="{ 'brand-logo--top': !isSolid }"
+          :class="{ 'brand-logo--top': !isSolid && !mobileMenuOpen }"
           src="/files/HEL.png"
           alt="Logo"
         />
       </RouterLink>
 
-      <nav class="top-nav" aria-label="Navigation principale">
-        <RouterLink class="top-nav-link" to="/">Home</RouterLink>
+      <!-- MOBILE MENU BUTTON -->
+      <button
+        type="button"
+        class="mobile-menu-toggle"
+        :class="{ 'mobile-menu-toggle--open': mobileMenuOpen }"
+        aria-label="Toggle navigation"
+        :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
+        aria-controls="main-navigation"
+        @click.stop="toggleMobileMenu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- NAVIGATION -->
+      <nav
+        id="main-navigation"
+        class="top-nav"
+        :class="{ 'top-nav--mobile-open': mobileMenuOpen }"
+        aria-label="Navigation principale"
+      >
+        <!-- HOME -->
+        <RouterLink class="top-nav-link" to="/" @click="closeMobileMenu"> Home </RouterLink>
 
         <!-- ABOUT -->
         <div
@@ -27,13 +50,13 @@
             :class="{ 'is-active': isAboutActive }"
             aria-haspopup="menu"
             :aria-expanded="aboutOpen ? 'true' : 'false'"
-            @click="toggleAbout"
+            @click.stop="toggleAbout"
             @keydown.enter.prevent="toggleAbout"
             @keydown.space.prevent="toggleAbout"
             @keydown.escape.prevent="closeAbout"
             @keydown.down.prevent="focusFirstItem('about')"
           >
-            About
+            <span>About</span>
 
             <span class="dropdown-icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -48,10 +71,10 @@
               to="/projects/hel"
               role="menuitem"
               tabindex="-1"
-              @click="closeAbout"
+              @click="closeMobileMenu"
             >
               Resisting Human Erosion
-              <span class="nav-dropdown-hint">Learn about the project</span>
+              <span class="nav-dropdown-hint"> Learn about the project </span>
             </RouterLink>
 
             <RouterLink
@@ -59,10 +82,10 @@
               to="/projects/network"
               role="menuitem"
               tabindex="-1"
-              @click="closeAbout"
+              @click="closeMobileMenu"
             >
               Our Network
-              <span class="nav-dropdown-hint">Explore our network members</span>
+              <span class="nav-dropdown-hint"> Explore our network members </span>
             </RouterLink>
 
             <RouterLink
@@ -70,14 +93,20 @@
               to="/projects/team"
               role="menuitem"
               tabindex="-1"
-              @click="closeAbout"
+              @click="closeMobileMenu"
             >
               Our Team
-              <span class="nav-dropdown-hint">Meet our team members</span>
+              <span class="nav-dropdown-hint"> Meet our team members </span>
             </RouterLink>
 
-            <!-- TOOLS : DÉSACTIVÉ -->
-            <div ref="toolsSubEl" class="nav-subdropdown">
+            <!-- TOOLS : TEMPORARILY DISABLED -->
+            <div
+              ref="toolsSubEl"
+              class="nav-subdropdown"
+              :class="{ 'nav-subdropdown--open': toolsSubOpen }"
+              @mouseenter="onToolsSubEnter"
+              @mouseleave="onToolsSubLeave"
+            >
               <button
                 type="button"
                 class="nav-dropdown-item nav-dropdown-item--submenu is-disabled"
@@ -98,7 +127,8 @@
               </button>
 
               <!--
-                Sous-menu conservé pour pouvoir le réactiver facilement.
+                Tools submenu kept in place so it can
+                easily be re-enabled later.
               -->
               <div class="nav-subdropdown-panel" role="menu" aria-label="Tools submenu" @click.stop>
                 <RouterLink
@@ -106,10 +136,10 @@
                   to="/tools/infographics"
                   role="menuitem"
                   tabindex="-1"
-                  @click="closeAll"
+                  @click="closeMobileMenu"
                 >
                   Infographics
-                  <span class="nav-dropdown-hint">Visual summaries</span>
+                  <span class="nav-dropdown-hint"> Visual summaries </span>
                 </RouterLink>
 
                 <RouterLink
@@ -117,10 +147,10 @@
                   to="/tools/database"
                   role="menuitem"
                   tabindex="-1"
-                  @click="closeAll"
+                  @click="closeMobileMenu"
                 >
                   Database
-                  <span class="nav-dropdown-hint">Browse &amp; search data</span>
+                  <span class="nav-dropdown-hint"> Browse &amp; search data </span>
                 </RouterLink>
 
                 <RouterLink
@@ -128,7 +158,7 @@
                   to="/tools/map"
                   role="menuitem"
                   tabindex="-1"
-                  @click="closeAll"
+                  @click="closeMobileMenu"
                 >
                   Interactive Map
                   <span class="nav-dropdown-hint"> Explore cases geographically </span>
@@ -138,9 +168,13 @@
           </div>
         </div>
 
-        <RouterLink class="top-nav-link" to="/publications"> Publications </RouterLink>
+        <!-- PUBLICATIONS -->
+        <RouterLink class="top-nav-link" to="/publications" @click="closeMobileMenu">
+          Publications
+        </RouterLink>
 
-        <RouterLink class="top-nav-link" to="/events"> Events </RouterLink>
+        <!-- EVENTS -->
+        <RouterLink class="top-nav-link" to="/events" @click="closeMobileMenu"> Events </RouterLink>
 
         <!-- ARCHIVED PROJECTS -->
         <div
@@ -156,13 +190,13 @@
             :class="{ 'is-active': isProjectsActive }"
             aria-haspopup="menu"
             :aria-expanded="projectsOpen ? 'true' : 'false'"
-            @click="toggleProjects"
+            @click.stop="toggleProjects"
             @keydown.enter.prevent="toggleProjects"
             @keydown.space.prevent="toggleProjects"
             @keydown.escape.prevent="closeProjects"
             @keydown.down.prevent="focusFirstItem('projects')"
           >
-            Archived Projects
+            <span>Archived Projects</span>
 
             <span class="dropdown-icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -177,13 +211,13 @@
               to="/projects/hrjust"
               role="menuitem"
               tabindex="-1"
-              @click="closeProjects"
+              @click="closeMobileMenu"
             >
               HRJust
               <span class="nav-dropdown-hint"> Human Rights Justification </span>
             </RouterLink>
 
-            <!-- DÉSACTIVÉ -->
+            <!-- DISABLED -->
             <RouterLink
               class="nav-dropdown-item is-disabled"
               to="/projects/gem"
@@ -196,7 +230,7 @@
               <span class="nav-dropdown-hint"> Data to be imported </span>
             </RouterLink>
 
-            <!-- DÉSACTIVÉ -->
+            <!-- DISABLED -->
             <RouterLink
               class="nav-dropdown-item is-disabled"
               to="/projects/cli-m-co2"
@@ -209,7 +243,7 @@
               <span class="nav-dropdown-hint"> Data to be imported </span>
             </RouterLink>
 
-            <!-- DÉSACTIVÉ -->
+            <!-- DISABLED -->
             <RouterLink
               class="nav-dropdown-item is-disabled"
               to="/projects/clisel"
@@ -224,7 +258,10 @@
           </div>
         </div>
 
-        <RouterLink class="top-nav-link" to="/contact"> Contact </RouterLink>
+        <!-- CONTACT -->
+        <RouterLink class="top-nav-link" to="/contact" @click="closeMobileMenu">
+          Contact
+        </RouterLink>
       </nav>
     </div>
   </header>
@@ -232,26 +269,50 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+
 import { useRoute } from 'vue-router'
 
-const isSolid = ref(false)
 const route = useRoute()
+
+/* =========================================================
+   HEADER STATE
+   ========================================================= */
+
+const isSolid = ref(false)
+const mobileMenuOpen = ref(false)
 
 const onScroll = () => {
   isSolid.value = window.scrollY > 16
 }
 
+/* =========================================================
+   ELEMENT REFS
+   ========================================================= */
+
 const aboutEl = ref<HTMLElement | null>(null)
 const toolsSubEl = ref<HTMLElement | null>(null)
 const projectsEl = ref<HTMLElement | null>(null)
+
+/* =========================================================
+   MENU STATE
+   ========================================================= */
 
 const aboutOpen = ref(false)
 const toolsSubOpen = ref(false)
 const projectsOpen = ref(false)
 
+/* =========================================================
+   ACTIVE ROUTES
+   ========================================================= */
+
 const ABOUT_ALIASES = new Set(['/projects/network', '/projects/hel', '/projects/team'])
 
-const TOOLS_ALIASES = new Set(['/tools/infographics', '/tools/database', '/tools/interactive-map'])
+const TOOLS_ALIASES = new Set([
+  '/tools/infographics',
+  '/tools/database',
+  '/tools/interactive-map',
+  '/tools/map',
+])
 
 const isAboutActive = computed(() => ABOUT_ALIASES.has(route.path) || TOOLS_ALIASES.has(route.path))
 
@@ -259,13 +320,42 @@ const isProjectsActive = computed(
   () => route.path.startsWith('/projects/') && !ABOUT_ALIASES.has(route.path),
 )
 
+/* =========================================================
+   DEVICE HELPERS
+   ========================================================= */
+
 const canHover = () => globalThis.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches
+
+/* =========================================================
+   CLOSE EVERYTHING
+   ========================================================= */
 
 function closeAll() {
   aboutOpen.value = false
   toolsSubOpen.value = false
   projectsOpen.value = false
 }
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+function toggleMobileMenu() {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+
+  if (!mobileMenuOpen.value) {
+    closeAll()
+  }
+}
+
+function closeMobileMenu() {
+  mobileMenuOpen.value = false
+  closeAll()
+}
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
 
 function openAbout() {
   projectsOpen.value = false
@@ -286,6 +376,10 @@ function toggleAbout() {
   }
 }
 
+/* =========================================================
+   ARCHIVED PROJECTS
+   ========================================================= */
+
 function openProjects() {
   closeAbout()
   projectsOpen.value = true
@@ -300,6 +394,10 @@ function toggleProjects() {
   projectsOpen.value = !projectsOpen.value
 }
 
+/* =========================================================
+   TOOLS
+   ========================================================= */
+
 function openToolsSub() {
   toolsSubOpen.value = true
 }
@@ -312,33 +410,57 @@ function toggleToolsSub() {
   toolsSubOpen.value = !toolsSubOpen.value
 }
 
-function onAboutEnter() {
-  if (canHover()) openAbout()
-}
-
-function onAboutLeave() {
-  if (canHover()) closeAbout()
-}
-
-function onProjectsEnter() {
-  if (canHover()) openProjects()
-}
-
-function onProjectsLeave() {
-  if (canHover()) closeProjects()
-}
-
-/*
- * Tools est temporairement désactivé.
- * On garde les fonctions afin de pouvoir le réactiver facilement.
- */
 function onToolsSubEnter() {
-  // if (canHover()) openToolsSub()
+  /*
+   * Tools is temporarily disabled.
+   *
+   * Re-enable with:
+   *
+   * if (canHover()) openToolsSub()
+   */
 }
 
 function onToolsSubLeave() {
-  // if (canHover()) closeToolsSub()
+  /*
+   * Tools is temporarily disabled.
+   *
+   * Re-enable with:
+   *
+   * if (canHover()) closeToolsSub()
+   */
 }
+
+/* =========================================================
+   DESKTOP HOVER
+   ========================================================= */
+
+function onAboutEnter() {
+  if (canHover()) {
+    openAbout()
+  }
+}
+
+function onAboutLeave() {
+  if (canHover()) {
+    closeAbout()
+  }
+}
+
+function onProjectsEnter() {
+  if (canHover()) {
+    openProjects()
+  }
+}
+
+function onProjectsLeave() {
+  if (canHover()) {
+    closeProjects()
+  }
+}
+
+/* =========================================================
+   KEYBOARD FOCUS
+   ========================================================= */
 
 function focusFirstItem(which: 'about' | 'toolsSub' | 'projects') {
   requestAnimationFrame(() => {
@@ -365,27 +487,61 @@ function openToolsSubAndFocusFirst() {
   })
 }
 
-function onDocClick(e: MouseEvent) {
-  const t = e.target as Node
+/* =========================================================
+   OUTSIDE CLICK
+   ========================================================= */
 
-  if (aboutOpen.value && aboutEl.value && !aboutEl.value.contains(t)) {
+function onDocClick(e: MouseEvent) {
+  const target = e.target as Node
+
+  /*
+   * Desktop dropdown closing.
+   */
+
+  if (aboutOpen.value && aboutEl.value && !aboutEl.value.contains(target)) {
     closeAbout()
   }
 
-  if (toolsSubOpen.value && toolsSubEl.value && !toolsSubEl.value.contains(t)) {
+  if (toolsSubOpen.value && toolsSubEl.value && !toolsSubEl.value.contains(target)) {
     closeToolsSub()
   }
 
-  if (projectsOpen.value && projectsEl.value && !projectsEl.value.contains(t)) {
+  if (projectsOpen.value && projectsEl.value && !projectsEl.value.contains(target)) {
     closeProjects()
   }
 }
 
+/* =========================================================
+   ESCAPE KEY
+   ========================================================= */
+
 function onDocKeydown(e: KeyboardEvent) {
-  if (e.key === 'Escape') closeAll()
+  if (e.key !== 'Escape') {
+    return
+  }
+
+  if (mobileMenuOpen.value) {
+    closeMobileMenu()
+    return
+  }
+
+  closeAll()
 }
 
-watch(() => route.fullPath, closeAll)
+/* =========================================================
+   ROUTE CHANGE
+   ========================================================= */
+
+watch(
+  () => route.fullPath,
+  () => {
+    closeMobileMenu()
+  },
+)
+
+/* =========================================================
+   LIFECYCLE
+   ========================================================= */
 
 onMounted(() => {
   onScroll()
@@ -400,19 +556,17 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
+
   document.removeEventListener('click', onDocClick)
   document.removeEventListener('keydown', onDocKeydown)
 })
 </script>
 
 <style scoped>
-/*
- * LIENS / BOUTONS TEMPORAIREMENT DÉSACTIVÉS
- *
- * Pour les réactiver :
- * retire simplement la classe "is-disabled"
- * ainsi que @click.prevent / disabled si présents.
- */
+/* =========================================================
+   TEMPORARILY DISABLED LINKS / BUTTONS
+   ========================================================= */
+
 .is-disabled {
   opacity: 0.4;
   cursor: not-allowed !important;

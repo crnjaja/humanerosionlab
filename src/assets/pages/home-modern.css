@@ -1066,3 +1066,124 @@
   height: auto;
   object-fit: contain;
 }
+
+/* =========================================================
+   HOMEPAGE MOBILE LAYOUT FIX
+   Forces the homepage wrappers to use the full mobile viewport
+   without changing the desktop Latest + Agenda layout.
+========================================================= */
+@media (max-width: 700px) {
+  .home.home-modern-cards {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: clip;
+  }
+
+  .home-modern-cards .full-bleed,
+  .home-modern-cards .stage,
+  .home-modern-cards .content-block,
+  .home-modern-cards .feature-section,
+  .home-modern-cards .projects-section {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .container,
+  .home-modern-cards .stage-inner,
+  .home-modern-cards .hero-offset {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .home-modern-cards .hero {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .hero-title,
+  .home-modern-cards .hero-subtitle,
+  .home-modern-cards .hero-actions {
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .home-modern-cards .feature-grid,
+  .home-modern-cards .focus-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .focus-left,
+  .home-modern-cards .agenda {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    grid-column: 1 / -1 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .projects-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .feature-row,
+  .home-modern-cards .project-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .media-frame {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .partners,
+  .home-modern-cards .logos {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-modern-cards .logos {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
