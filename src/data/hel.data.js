@@ -195,9 +195,15 @@ export const mapRoutes = [
   {
     key: 'darien-usa',
     className: 'route-line--one',
-    from: [-77.66, 8.67],
-    to: [-98.58, 39.83],
-    lift: 0.2,
+
+    from: [-77.66, 8.67], // Darién Gap
+    to: [-98.58, 39.83], // USA
+
+    waypoints: [
+      [-96.0, 19.4], // Mexico
+    ],
+
+    lift: 0.05,
     duration: '5.8s',
     delay: '0s',
     label: 'Darién Gap to USA',

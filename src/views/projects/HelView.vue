@@ -4,19 +4,15 @@
       <div class="container stage-inner">
         <div class="hero hero--project">
           <div class="hero-kicker">
-            <span class="kicker-dot" aria-hidden="true"></span>
-            CURRENT PROJECT
+            <span class="kicker-dot" aria-hidden="true"></span>CURRENT PROJECT
           </div>
-
           <h1 class="hero-title hero-title--words" ref="heroTitleEl">
             HUMAN <span class="accent">EROSION</span>
           </h1>
-
           <p class="hero-subtitle">
             Reimagining international law for climate migration, temporal justice and the protection
             of human integrity in a progressively uninhabitable planet.
           </p>
-
           <div class="hero-actions">
             <RouterLink class="btn btn--primary" to="/contact">Any Questions?</RouterLink>
             <RouterLink class="btn btn--ghost" to="/">Back to Home</RouterLink>
@@ -30,11 +26,8 @@
         <div class="project-hero-offset">
           <section class="project-section project-intro" aria-labelledby="project-title">
             <div class="section-topline">
-              <div>
-                <h2 id="project-title" class="section-heading">Project</h2>
-              </div>
+              <div><h2 id="project-title" class="section-heading">Project</h2></div>
             </div>
-
             <div class="project-feature-grid">
               <article class="project-statement-card">
                 <span class="statement-eyebrow">Core vision</span>
@@ -46,7 +39,6 @@
                   unevenly and across multiple temporal horizons.
                 </p>
               </article>
-
               <dl class="project-facts" aria-label="Project facts">
                 <div v-for="fact in facts" :key="fact.label" class="fact-card">
                   <dt>{{ fact.label }}</dt>
@@ -55,23 +47,18 @@
               </dl>
             </div>
           </section>
-
           <div class="spacer" aria-hidden="true"></div>
           <div class="spacer" aria-hidden="true"></div>
           <div class="spacer" aria-hidden="true"></div>
 
           <section class="project-section" aria-labelledby="timeline-title">
             <div class="section-topline">
-              <div>
-                <h2 id="timeline-title" class="section-heading">Timeline</h2>
-              </div>
+              <div><h2 id="timeline-title" class="section-heading">Timeline</h2></div>
             </div>
-
             <div class="timeline-shell" aria-label="Project timeline from year one to year five">
               <div class="timeline-years" aria-hidden="true">
                 <span v-for="year in years" :key="year">Year {{ year }}</span>
               </div>
-
               <div class="timeline-rows">
                 <article
                   v-for="item in timeline"
@@ -80,9 +67,9 @@
                   :class="workPackageClass(item.workPackage)"
                   :style="timelineStyle(item)"
                 >
-                  <span>{{ item.workPackage }}</span>
-                  <strong>{{ item.title }}</strong>
-                  <small>{{ item.owner }}</small>
+                  <span>{{ item.workPackage }}</span
+                  ><strong>{{ item.title }}</strong
+                  ><small>{{ item.owner }}</small>
                 </article>
               </div>
             </div>
@@ -93,26 +80,22 @@
               <span class="case-index">{{ workPackage.index }}</span>
               <div>
                 <h3>
-                  <span>{{ workPackage.title }}</span>
-                  <span class="work-package-subtitle">{{ workPackage.subtitle }}</span>
+                  <span>{{ workPackage.title }}</span
+                  ><span class="work-package-subtitle">{{ workPackage.subtitle }}</span>
                 </h3>
                 <p>{{ workPackage.description }}</p>
                 <p class="work-package-aims">Aims: {{ workPackage.aims }}</p>
               </div>
             </li>
           </ul>
-
           <div class="spacer" aria-hidden="true"></div>
           <div class="spacer" aria-hidden="true"></div>
           <div class="spacer" aria-hidden="true"></div>
 
           <section class="project-section" aria-labelledby="map-title">
             <div class="section-topline">
-              <div>
-                <h2 id="map-title" class="section-heading">Case Studies</h2>
-              </div>
+              <div><h2 id="map-title" class="section-heading">Case Studies</h2></div>
             </div>
-
             <ul class="case-grid" aria-label="Regional case studies">
               <li v-for="study in caseStudies" :key="study.key" class="case-card">
                 <span class="case-index">{{ study.index }}</span>
@@ -122,7 +105,6 @@
                 </div>
               </li>
             </ul>
-
             <div class="word-map" aria-label="Detailed map of climate mobility routes">
               <img
                 class="world-map-layer"
@@ -130,9 +112,7 @@
                 alt=""
                 aria-hidden="true"
               />
-
               <div class="map-glow" aria-hidden="true"></div>
-
               <svg
                 class="map-routes"
                 viewBox="0 0 1000 520"
@@ -154,7 +134,6 @@
                     </feMerge>
                   </filter>
                 </defs>
-
                 <g
                   v-for="route in mapRoutes"
                   :key="route.key"
@@ -183,7 +162,6 @@
                   />
                 </g>
               </svg>
-
               <div
                 v-for="point in mapPoints"
                 :key="point.key"
@@ -191,23 +169,19 @@
                 :class="[point.type, point.labelClass]"
                 :style="pointStyle(point)"
               >
-                <span class="map-dot" aria-hidden="true"></span>
-                <span class="map-label">{{ point.label }}</span>
+                <span class="map-dot" aria-hidden="true"></span
+                ><span class="map-label">{{ point.label }}</span>
               </div>
             </div>
           </section>
-
           <div class="spacer" aria-hidden="true"></div>
           <div class="spacer" aria-hidden="true"></div>
           <div class="spacer" aria-hidden="true"></div>
 
           <section class="project-section" aria-labelledby="outputs-title">
             <div class="section-topline">
-              <div>
-                <h2 id="outputs-title" class="section-heading">Outputs</h2>
-              </div>
+              <div><h2 id="outputs-title" class="section-heading">Outputs</h2></div>
             </div>
-
             <div class="output-grid">
               <article v-for="group in outputs" :key="group.key" class="output-card">
                 <span class="output-eyebrow">{{ group.type }}</span>
@@ -233,11 +207,7 @@ import { useWordReveal } from '@/composables/useWordReveal'
 import { HelService } from '@/services/HelService'
 import '@/assets/pages/hel.css'
 
-const { el: heroTitleEl } = useWordReveal({
-  stagger: 140,
-  duration: 1300,
-})
-
+const { el: heroTitleEl } = useWordReveal({ stagger: 140, duration: 1300 })
 const years = HelService.years()
 const facts = HelService.facts
 const caseStudies = HelService.caseStudies
@@ -250,15 +220,12 @@ const outputs = HelService.outputs
 function workPackageClass(workPackage) {
   return HelService.workPackageClass(workPackage)
 }
-
 function timelineStyle(item) {
   return HelService.timelineStyle(item)
 }
-
 function pointStyle(point) {
   return HelService.pointStyle(point)
 }
-
 function routeStyle(route) {
   return HelService.routeStyle(route)
 }
