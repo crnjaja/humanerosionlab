@@ -1,7 +1,7 @@
 export const coreTeam = [
   {
     key: 'elisa-fornale',
-    name: 'Elisa Fornalé',
+    name: 'Prof. Elisa Fornalé',
     role: 'Senior Researcher',
     bio: 'Elisa Fornalé is Associate Professor at the Faculty of Law of the University of Bern. Since 2025, she leads the SNF Consolidator Project ‘Resisting Human Erosion’, funded by the Swiss National Scientific Foundation (SNF). She has implemented the SNF project ‘Slow Violence and Human Rights’ and she has been the Climate WP Leader  of the Horizon Europe HRJust project (States’ Practice of Human Rights Justification: A Study in Civil Society Engagement and Human Rights Through the Lens of Gender and Intersectionality). \n\nShe served as Co-rapporteur of the International Law Association (ILA) Committee on International Law and Sea Level Rise. Her most recent publications include the edited volume Sea Level Rise - Implications for Human Rights, Security, and Peace. She holds a PhD in human rights from the University of Palermo (IT).',
     email: 'elisa.fornale@unibe.ch',
@@ -11,7 +11,7 @@ export const coreTeam = [
   },
   {
     key: 'simone-ferrari',
-    name: 'Simone Ferrari',
+    name: 'Dr. Simone Ferrari',
     role: 'Senior Postdoctoral Researcher',
     bio: 'Simone Ferrari is a postdoctoral researcher in the Resisting Human Erosion project at the University of Bern. He holds a PhD in Linguistic, Literary and Intercultural Studies from the University of Milan and a PhD in Social and Human Sciences from the Pontificia Universidad Javeriana in Bogotá. \n\nHis research focuses on migration narratives, representations of socio-environmental conflicts, and community memories in Latin America. He has published a monograph and several articles on these topics. Since 2023, he has been the responsible for the course Indigenous and Afro-Descendant Cultures at the University of Milan. He serves on the Board of Directors of the Asociación de Colombianistas. Dr Ferrari is in charge of the case study in Latin America to explore the journey of migrants to the United States.',
     email: 'simone.ferrari.fs@gmail.com',
@@ -22,7 +22,7 @@ export const coreTeam = [
 
   {
     key: 'martina-sardo',
-    name: 'Martina Sardo',
+    name: 'Dr. Martina Sardo',
     role: 'Postdoctoral Researcher',
     bio: 'Martina Sardo is Postdoctoral Researcher at Resisting Human Erosion Project, University of Bern. She holds a PhD in Human Rights from the University of Palermo, where she completed a dissertation entitled “Sea Level Rise and Human (Im)Mobility: Between International Obligations of Prevention, Protection, and Cooperation.” \n\nShe then worked as a Postdoctoral Researcher at the same university within the project “Gendering International Legal Responses to Chronic Emergencies” (GenRem), which examined the concept of Environmental Chronic Emergencies (ECEs) through a gender lens, with particular attention to the protection of human rights under international law. Dr Sardo is in charge of the Italian case study that explores the arrival of migrants from Bangladesh.',
     email: 'martina.sardo@unibe.ch',
@@ -74,16 +74,6 @@ export const coreTeam = [
 ]
 
 export const visitingAlumni = [
-  {
-    key: 'martina-sardo',
-    name: 'Martina Sardo',
-    role: 'Postdoctoral Researcher',
-    bio: 'Martina Sardo is Postdoctoral Researcher at Resisting Human Erosion Project, University of Bern. She holds a PhD in Human Rights from the University of Palermo, where she completed a dissertation entitled “Sea Level Rise and Human (Im)Mobility: Between International Obligations of Prevention, Protection, and Cooperation.” \n\nShe then worked as a Postdoctoral Researcher at the same university within the project “Gendering International Legal Responses to Chronic Emergencies” (GenRem), which examined the concept of Environmental Chronic Emergencies (ECEs) through a gender lens, with particular attention to the protection of human rights under international law. Dr Sardo is in charge of the Italian case study that explores the arrival of migrants from Bangladesh.',
-    email: 'martina.sardo@unibe.ch',
-    linkedin: 'https://www.linkedin.com/in/martina-sardo/',
-    location: 'Bern, Switzerland',
-    photo: '',
-  },
   {
     key: 'riccarda-heepen',
     name: 'Riccarda Heepen',
