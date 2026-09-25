@@ -368,10 +368,11 @@
 }
 
 .contact-page .wti-logo {
-  width: 250px;
+  width: 150px;
   height: auto;
   display: block;
   filter: saturate(1.05);
+  transform: translateY(-20px);
 }
 
 .contact-page .address {

@@ -73,6 +73,29 @@ export const coreTeam = [
   },
 ]
 
+export const visitingAlumni = [
+  {
+    key: 'martina-sardo',
+    name: 'Martina Sardo',
+    role: 'Postdoctoral Researcher',
+    bio: 'Martina Sardo is Postdoctoral Researcher at Resisting Human Erosion Project, University of Bern. She holds a PhD in Human Rights from the University of Palermo, where she completed a dissertation entitled “Sea Level Rise and Human (Im)Mobility: Between International Obligations of Prevention, Protection, and Cooperation.” \n\nShe then worked as a Postdoctoral Researcher at the same university within the project “Gendering International Legal Responses to Chronic Emergencies” (GenRem), which examined the concept of Environmental Chronic Emergencies (ECEs) through a gender lens, with particular attention to the protection of human rights under international law. Dr Sardo is in charge of the Italian case study that explores the arrival of migrants from Bangladesh.',
+    email: 'martina.sardo@unibe.ch',
+    linkedin: 'https://www.linkedin.com/in/martina-sardo/',
+    location: 'Bern, Switzerland',
+    photo: '',
+  },
+  {
+    key: 'riccarda-heepen',
+    name: 'Riccarda Heepen',
+    role: 'Research Assist.',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non risus ac nulla luctus tincidunt. Maecenas at arcu non justo aliquam posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+    email: 'riccard.heepen@unibe.ch',
+    linkedin: 'https://www.linkedin.com/in/riccarda-heepen-9593b828a/',
+    location: 'Geneva, Switzerland',
+    photo: '',
+  },
+]
+
 export const advisoryBoard = [
   {
     key: 'zaker-ahmad',

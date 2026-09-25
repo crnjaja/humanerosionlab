@@ -1187,3 +1187,6 @@
     grid-template-columns: minmax(0, 1fr) !important;
   }
 }
+.home-modern-cards .logo-img--unibe {
+  transform: translateY(-20px) scale(1.15);
+}

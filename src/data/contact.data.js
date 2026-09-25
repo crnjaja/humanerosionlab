@@ -11,7 +11,7 @@ export const CONTACT_CONFIG = {
     postalCode: '3012',
     city: 'Bern',
     country: 'Switzerland',
-    logo: '/images/logos/unibe.png',
+    logo: '/images/logos/bern.png',
     mapUrl:
       'https://www.google.com/maps/embed?origin=mfe&pb=!1m2!2m1!1sSchanzeneckstrasse+1,3012+Bern,Switzerland',
     directionsUrl: 'https://www.google.com/maps/dir//Schanzeneckstrasse+1,+3012+Bern,+Switzerland',

@@ -151,7 +151,7 @@ export const partners = [
   {
     href: 'https://www.unibe.ch',
     ariaLabel: 'University of Bern',
-    image: '/images/logos/unibe.png',
+    image: '/images/logos/bern.png',
     imageAlt: 'University of Bern logo',
     imageClass: 'logo-img logo-img--unibe',
   },

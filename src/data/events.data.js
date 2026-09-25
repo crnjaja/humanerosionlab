@@ -129,10 +129,10 @@ Participation is open to the public and free of charge. The hybrid events will b
     title: 'Fieldwork in Tapachula, Mexico',
     start: '2026-08-10T15:00',
     end: '2026-08-25T16:30',
-    location: 'Tapachula, Mexico',
+    location: 'Tijuana, Mexico',
     category: 'Fieldwork',
-    image: '/files/events/Tapachula.jpg',
-    imageAlt: 'Fieldwork in Tapachula, Mexico',
+    image: '/files/events/Tijuana2.jpg',
+    imageAlt: 'Fieldwork in Tijuana, Mexico',
     speakers: ['Simone Ferrari'],
     summary: `As part of his fieldwork in Mexico, Dr. Simone Ferrari conducted research activities at El Colegio de la Frontera Norte (El Colef) in Tijuana, hosted by Prof. Rafael Alonso Hernández, former coordinator of El Colef’s PhD programme in Migration Studies.
 
