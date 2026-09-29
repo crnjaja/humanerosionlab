@@ -469,19 +469,19 @@
 }
 
 .contact-page .form-group textarea {
-    padding: 12px 12px 36px;
+  padding: 12px 12px 36px;
 }
 
 .contact-page .char-count {
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    z-index: 2;
-    pointer-events: none;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .contact-page .error-message {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 /* Fix: keep textarea character counter inside the textarea even when errors appear */
@@ -517,4 +517,33 @@
   .contact-page .form-group--textarea textarea {
     anchor-name: --message-field;
   }
+}
+/* FIX: typed text inside contact form fields */
+.contact-page .contact-form input,
+.contact-page .contact-form textarea {
+  color: #0b1f33 !important;
+  -webkit-text-fill-color: #0b1f33 !important;
+  caret-color: #0b1f33;
+}
+
+.contact-page .contact-form input:focus,
+.contact-page .contact-form textarea:focus {
+  color: #0b1f33 !important;
+  -webkit-text-fill-color: #0b1f33 !important;
+}
+
+/* Keep placeholder lighter */
+.contact-page .contact-form input::placeholder,
+.contact-page .contact-form textarea::placeholder {
+  color: rgba(11, 31, 51, 0.44) !important;
+  -webkit-text-fill-color: rgba(11, 31, 51, 0.44) !important;
+  opacity: 1;
+}
+
+/* Chrome/Safari autofill */
+.contact-page .contact-form input:-webkit-autofill,
+.contact-page .contact-form input:-webkit-autofill:hover,
+.contact-page .contact-form input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0b1f33 !important;
+  caret-color: #0b1f33;
 }
