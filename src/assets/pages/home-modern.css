@@ -573,21 +573,19 @@
 .home-modern-cards .feature-title {
   position: relative;
 
-  max-width: 18ch;
+  width: 100%;
+  max-width: 100%;
 
   margin: 0 0 clamp(18px, 2.2vw, 24px);
 
   color: #fff;
 
   font-size: clamp(29px, 4vw, 44px);
-
   font-weight: 950;
-
   line-height: 0.98;
-
   letter-spacing: -0.045em;
 
-  text-wrap: balance;
+  text-wrap: pretty;
 
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.14);
 }
