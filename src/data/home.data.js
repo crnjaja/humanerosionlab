@@ -7,7 +7,7 @@ export const latestItems = [
     image: '/images/backgrounds/rose.png',
     imageAlt: 'VI International Congress in Bogotá',
     link: '/events',
-    linkLabel: 'Full Article →',
+    linkLabel: 'Full Article',
   },
   {
     label: 'Latest Publication',
@@ -17,7 +17,7 @@ export const latestItems = [
     image: '/images/backgrounds/rose.png',
     imageAlt: 'Publication cover',
     link: '/publications',
-    linkLabel: 'Full Article →',
+    linkLabel: 'Full Article',
   },
 ]
 
@@ -28,7 +28,7 @@ export const projects = [
     image: '/images/backgrounds/background4.jpg',
     imageAlt: 'HEL cover',
     to: '/projects/hel',
-    linkLabel: 'Go to the HEL project →',
+    linkLabel: 'Go to the HEL project',
   },
   {
     title: 'HRJUST',
@@ -36,7 +36,7 @@ export const projects = [
     image: '/images/backgrounds/bordeaux.png',
     imageAlt: 'HRJUST cover',
     to: '/projects/hrjust',
-    linkLabel: 'Go to the HRJUST project →',
+    linkLabel: 'Go to the HRJUST project',
   },
   {
     title: 'GEM',
