@@ -48,7 +48,6 @@
   text-transform: uppercase;
 }
 
-
 /* =========================================================
    TEAM SHOWCASE
    ========================================================= */
@@ -87,22 +86,13 @@
   border-radius: 999px;
 
   background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(2, 152, 158, 0.13),
-      transparent 58%
-    ),
-    radial-gradient(
-      circle at 72% 32%,
-      rgba(107, 151, 96, 0.16),
-      transparent 44%
-    );
+    radial-gradient(circle at 50% 50%, rgba(2, 152, 158, 0.13), transparent 58%),
+    radial-gradient(circle at 72% 32%, rgba(107, 151, 96, 0.16), transparent 44%);
 
   filter: blur(2px);
   pointer-events: none;
   z-index: -1;
 }
-
 
 /* =========================================================
    PROFILE MINIATURES — ONE COLUMN
@@ -132,7 +122,6 @@
 .team-profile-item {
   min-width: 0;
 }
-
 
 /* =========================================================
    MINIATURE CARD
@@ -166,12 +155,7 @@
   color: var(--ink);
   text-align: left;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(242, 250, 248, 0.95)
-    );
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(242, 250, 248, 0.95));
 
   border: 1px solid rgba(2, 152, 158, 0.16);
 
@@ -200,12 +184,7 @@
 
   width: 5px;
 
-  background:
-    linear-gradient(
-      180deg,
-      #02989e,
-      #6b9760
-    );
+  background: linear-gradient(180deg, #02989e, #6b9760);
 
   opacity: 0.42;
 
@@ -239,18 +218,9 @@
 
 .team-profile-button.is-active {
   background:
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(2, 152, 158, 0.12),
-      transparent 40%
-    ),
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.99),
-      rgba(235, 249, 245, 0.97)
-    );
+    radial-gradient(circle at 100% 0%, rgba(2, 152, 158, 0.12), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.99), rgba(235, 249, 245, 0.97));
 }
-
 
 /* =========================================================
    AVATARS
@@ -268,12 +238,7 @@
   overflow: hidden;
   box-sizing: border-box;
 
-  background:
-    linear-gradient(
-      145deg,
-      #02989e 0%,
-      #0b635b 100%
-    );
+  background: linear-gradient(145deg, #02989e 0%, #0b635b 100%);
 }
 
 .team-avatar {
@@ -282,8 +247,7 @@
 
   border: 1px solid rgba(255, 255, 255, 0.62);
 
-  box-shadow:
-    0 12px 26px rgba(2, 152, 158, 0.18);
+  box-shadow: 0 12px 26px rgba(2, 152, 158, 0.18);
 
   transition:
     transform 0.22s ease,
@@ -291,21 +255,11 @@
 }
 
 .team-profile-item:nth-child(2n) .team-avatar {
-  background:
-    linear-gradient(
-      145deg,
-      #0b635b 0%,
-      #6b9760 100%
-    );
+  background: linear-gradient(145deg, #0b635b 0%, #6b9760 100%);
 }
 
 .team-profile-item:nth-child(3n) .team-avatar {
-  background:
-    linear-gradient(
-      145deg,
-      #6b9760 0%,
-      #02989e 100%
-    );
+  background: linear-gradient(145deg, #6b9760 0%, #02989e 100%);
 }
 
 .team-profile-button.is-active .team-avatar,
@@ -313,8 +267,7 @@
 .team-profile-button:focus-visible .team-avatar {
   transform: scale(1.04) rotate(-1deg);
 
-  box-shadow:
-    0 16px 34px rgba(2, 152, 158, 0.26);
+  box-shadow: 0 16px 34px rgba(2, 152, 158, 0.26);
 }
 
 .team-avatar img,
@@ -352,7 +305,6 @@
 .team-bio-avatar[data-initials]:not(:has(img))::after {
   font-size: clamp(26px, 3vw, 38px);
 }
-
 
 /* =========================================================
    MINIATURE COPY
@@ -402,7 +354,6 @@
   overflow-wrap: anywhere;
 }
 
-
 /* =========================================================
    SELECTED PROFILE
    ========================================================= */
@@ -422,22 +373,9 @@
   color: #fff;
 
   background:
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(255, 255, 255, 0.14),
-      transparent 36%
-    ),
-    radial-gradient(
-      circle at 0% 100%,
-      rgba(107, 151, 96, 0.32),
-      transparent 42%
-    ),
-    linear-gradient(
-      145deg,
-      #02989e 0%,
-      #0b635b 68%,
-      #083f3a 100%
-    );
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.14), transparent 36%),
+    radial-gradient(circle at 0% 100%, rgba(107, 151, 96, 0.32), transparent 42%),
+    linear-gradient(145deg, #02989e 0%, #0b635b 68%, #083f3a 100%);
 
   border: 0;
 
@@ -483,7 +421,6 @@
   z-index: -1;
 }
 
-
 /* =========================================================
    BIO CARD
    ========================================================= */
@@ -518,7 +455,6 @@
   }
 }
 
-
 /* =========================================================
    BIO KICKER
    ========================================================= */
@@ -543,7 +479,6 @@
   text-transform: uppercase;
 }
 
-
 /* =========================================================
    BIO HEADER
    ========================================================= */
@@ -567,8 +502,7 @@
 
   border: 7px solid rgba(255, 255, 255, 0.9);
 
-  box-shadow:
-    0 18px 38px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.18);
 }
 
 .team-bio-heading {
@@ -617,7 +551,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-
 
 /* =========================================================
    BIO ACTIONS
@@ -688,7 +621,6 @@
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-
 /* =========================================================
    BIO TEXT
    ========================================================= */
@@ -713,7 +645,6 @@
   white-space: pre-line;
 }
 
-
 /* =========================================================
    LOCATION
    ========================================================= */
@@ -721,15 +652,13 @@
 .team-bio-location {
   display: flex;
   align-items: center;
+  justify-content: center;
 
   gap: 20px;
-
   padding: 18px 22px;
-
   margin-top: 22px;
 
   background: rgba(255, 255, 255, 0.42);
-
   border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: var(--radius);
 
@@ -778,9 +707,7 @@
 .team-bio-location:hover .team-bio-location-logo {
   opacity: 1;
 
-  transform:
-    translateY(-12px)
-    scale(1.03);
+  transform: translateY(-12px) scale(1.03);
 }
 
 .team-bio-location-copy {
@@ -814,7 +741,6 @@
   overflow-wrap: anywhere;
 }
 
-
 /* =========================================================
    LEGACY / OTHER TEAM CARDS
    ========================================================= */
@@ -836,8 +762,7 @@
 
   display: grid;
 
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 
   gap: clamp(16px, 2vw, 24px);
 }
@@ -860,8 +785,7 @@
 
   border: 1px solid var(--border);
 
-  box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
 
   outline: none;
 
@@ -889,12 +813,7 @@
 
   width: 3px;
 
-  background:
-    linear-gradient(
-      180deg,
-      var(--accent),
-      var(--accent-2)
-    );
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
 
   opacity: 0.9;
 
@@ -1059,7 +978,6 @@
   border-color: var(--accent);
 }
 
-
 /* =========================================================
    PAGE HELPERS
    ========================================================= */
@@ -1084,7 +1002,6 @@ a[href^='mailto:'] {
 
   word-break: break-word;
 }
-
 
 /* =========================================================
    RESPONSIVE — MEDIUM DESKTOP
@@ -1124,8 +1041,7 @@ a[href^='mailto:'] {
    * because the bio and selector are vertically separated.
    */
   .team-profile-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 14px;
   }
@@ -1135,14 +1051,11 @@ a[href^='mailto:'] {
   }
 }
 
-
 @media (max-width: 1024px) {
   .team-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-
 
 @media (max-width: 900px) {
   .team-hero-offset {
@@ -1157,7 +1070,6 @@ a[href^='mailto:'] {
     gap: 12px;
   }
 }
-
 
 /* =========================================================
    RESPONSIVE — MOBILE
@@ -1228,13 +1140,11 @@ a[href^='mailto:'] {
   }
 }
 
-
 @media (max-width: 600px) {
   .team-grid {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* =========================================================
    REDUCED MOTION
