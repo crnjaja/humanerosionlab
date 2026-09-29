@@ -340,7 +340,8 @@
 
   position: absolute;
 
-  right: -110px;
+  left: -110px;
+  right: auto;
   bottom: -150px;
 
   width: 330px;
