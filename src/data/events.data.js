@@ -126,7 +126,7 @@ Participation is open to the public and free of charge. The hybrid events will b
   },
   {
     id: 'fieldwork-tapachula-mexico-2',
-    title: 'Fieldwork in Tapachula, Mexico',
+    title: 'Fieldwork in Tijuana, Mexico',
     start: '2026-08-10T15:00',
     end: '2026-08-25T16:30',
     location: 'Tijuana, Mexico',
@@ -176,16 +176,62 @@ Participation is open to the public and free of charge. The hybrid events will b
     category: 'Congress',
     image: '/files/events/Bogota.jpg',
     imageAlt: 'VI International Congress on Literature and Human Rights',
-    speakers: ['Elisa Fornalé', 'Simone Ferrari'],
-    summary: `Resisting Human Erosion was among the co-organisers of the VI International Congress on Literature and Human Rights, We Are Not Islands: Peace Actions for the Care of the World, which took place in Bogotá (Colombia) from 8 to 11 September 2026. Hosted by the National University of Colombia and the Pontifical Xavierian University of Bogotá, the Congress brought together participants from more than 60 institutions across the Americas, Europe and Asia to discuss questions of human rights, environmental justice, mobility and peacebuilding, themes that closely resonate with the project's interdisciplinary research agenda.
+    speakers: ['Simone Ferrari'],
+    summary: `From 8 to 11 September 2026, the Resisting Human Erosion project co-organized the VI International Congress on Literature and Human Rights, No somos islas: acciones y estéticas de paz para el cuidado del mundo, held at the Universidad Nacional de Colombia and the Pontificia Universidad Javeriana in Bogotá.
 
-    As a representative of Resisting Human Erosion, Dr. Simone Ferrari served as a member of the Congress's coordinating committee. Within the programme, a dedicated session was devoted to presenting the latest developments and research outcomes of the project. The session was led by Prof. Elisa Fornalé and provided an opportunity to discuss the project's ongoing work and future directions with an international scholarly audience.`,
+    The four-day event brought together more than 130 scholars, writers, artists and representatives of social movements from Latin America and beyond to reflect on the relationships between literature, human rights, forced mobility, environmental justice and practices of peace. The programme combined academic discussions with artistic and community-based approaches to testimony, memory and displacement.`,
     links: {
       program: '',
       flyer: '',
       video: '',
       external:
         'https://www.lared.red/2025/12/19/vi-congreso-internacional-de-literatura-y-derechos-humanos/',
+    },
+    gallery: [],
+  },
+  {
+    id: 'zones-land-ecologies-and-the-pluriverse',
+    title: 'Land, Ecologies and the Pluriverse',
+    start: '2026-09-18T14:00',
+    end: '2026-09-18T16:30',
+    location: 'Zurich, Switzerland',
+    category: 'Workshop',
+    image: '/files/events/Zurich.jpg',
+    imageAlt: 'Workshop on Land, Ecologies and the Pluriverse',
+    speakers: ['Elisa Fornalé'],
+    summary: `On 18 September 2026, Prof. Elisa Fornalé and Camilla Paglia participated in the workshop Zones: Land, Ecologies and the Pluriverse, held in Zurich in connection with the publication of Jeanne Etelain’s new book Zones: Terre, sexes et science-fiction.
+
+    During the workshop session dedicated to case studies, Prof. Fornalé presented “Slow Violence, Toxic Exposure, and the Legal Value of Time”, in which she explored the temporal dimensions of slow violence and toxic exposure and their implications for legal analysis.
+
+    The workshop brought together scholars to discuss the concept of “zones” across questions of land, ecology and law.`,
+    links: {
+      program: '',
+      flyer: '/files/events/ZonesZurich.jpg',
+      video: '',
+      external:
+        'https://unrulynatures.ch/Events',
+    },
+    gallery: [],
+  },
+  {
+    id: 'fathoming-the-deep-slow-time-and-extractive-desires',
+    title: 'Fathoming the Deep: Slow Time and Extractive Desires',
+    start: '2026-10-12T16:30',
+    end: '2026-10-12T17:30',
+    location: 'Bern, Switzerland',
+    category: 'Lecture Series',
+    image: '/files/events/Bern.jpg',
+    imageAlt: 'Lecture on Fathoming the Deep: Slow Time and Extractive Desires',
+    speakers: ['Elisa Fornalé'],
+    summary: `The lecture “Fathoming the Deep: Slow Time and Extractive Desires”, delivered by Prof. Elizabeth DeLoughrey (UCLA), explored the relationships between planetary water systems, climate change, environmental degradation, and slow violence. Drawing on Julian Charrière’s exhibition Deep End, the lecture examined the environmental and social consequences of extractive practices, highlighting the gradual and often invisible impacts of ecological transformations.
+
+    The event marked the opening of the interdisciplinary lecture series “Rethinking Slow Violence: Conversations on Human Erosion”, organised within the SNSF-funded research project Resisting Human Erosion, led by Prof. Elisa Fornalé. Bringing together perspectives from environmental humanities, postcolonial studies, and critical ocean studies, the lecture provided an opportunity to reflect on the temporal dimensions of environmental degradation and slow violence. The event concluded with an apéro, encouraging further discussions among participants.`,
+    links: {
+      program: '',
+      flyer: '',
+      video: '',
+      external:
+        'https://unrulynatures.ch/Events',
     },
     gallery: [],
   },
