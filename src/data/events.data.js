@@ -2,59 +2,138 @@ export const fallbackImage = '/files/events/event-placeholder.jpg'
 
 export const events = [
   {
-    id: 'gendered-precarities-gender-lecture-series-2026-2027',
-    title: 'Gendered Precarities: Gender Lecture Series 2026–2027',
+    id: 'gender-lecture-series-justifying-womens-poverty',
+    title: 'Gender Lecture Series - Justifying Women\'s Poverty: Challenging the Constitutional Permissibility of Women\'s Poverty ',
     start: '2026-09-01T12:30',
-    end: '2027-03-16T13:30',
-    location: 'World Trade Institute / Online',
-    category: 'Lecture Series',
+    end: '2026-09-01T13:30',
+    location: 'Bern, Switzerland',
+    category: 'Lecture',
     image: '/files/events/Bern.jpg',
-    imageAlt: 'Gendered Precarities – Gender Lecture Series 2026–2027',
-    speakers: ['Partners'],
-    summary: `The Gender Lecture Series 2026–2027, “Gendered Precarities”, is co-organized by the World Trade Institute (WTI), KNOW THE GAP!, and the Faculty of Law of the University of Bern.
+    imageAlt: 'Gender Lecture Series 1',
+    speakers: ['Meghan Campbell'],
+    summary: `Abstract: If women have a right to equality, why do courts keep holding that it is constitutionally justified to pursue laws that entrench women's poverty? This lecture seeks to answer this question by exploring the mechanics of justifying infringements of rights in the context of women's poverty. It argues that justification concepts are misappropriated and misused to trivialize the harms of gendered economic inequality and to inflate the strengths of neoliberal logic. Through enriching justification criteria with women's substantive equality, the lecture explores how any arguments that women's poverty is justified are not illogical, implausible, unfair or rooted in patriarchal attitudes and systems.
 
-The series aims to deepen understanding of the complexity of gender issues by exploring their multiple dimensions at both the international and domestic levels. The 2026–2027 edition focuses on precarity as a broad analytical lens for examining contemporary social, political, and legal challenges. Through an interdisciplinary perspective, the lectures explore how precarity is experienced, produced, and contested across different contexts, highlighting the central role of gender inequalities in shaping contemporary life.
+    Bio of the speaker: Meghan Campbell is a Reader in International Human Rights Law at the University of Birmingham and Deputy-Director of the Oxford Human Rights Hub. Her research focuses on women’s economic inequality and overlooked aspects of women's equality including on rurality, the procedural rules on international access to justice and temporality. Her first monograph, Women, Poverty, Equality (Hart 2018) examined women's poverty in the CEDAW and her second, Hanging in the Balance: The Function of Justification in Achieving Women's Equality (Hart 2025), looks at the relationship between women's equality and limits on rights. She has acted as an independent expert advisor to the Council of Europe on comprehensive sexuality education and the UK Cabinet Office on equal pay. `,
+    links: {
+      program: '',
+      flyer: '/files/events/genderlecture/GenderLectureSeries1.pdf',
+      video: '/files/events/genderlecture/GenderLectureSeries1.mp4',
+      external:
+        '',
+    },
+    gallery: [],
+  },
+  {
+    id: 'gender-lecture-series-intersectional-discontents-in-migration',
+    title: 'Gender Lecture Series - Intersectional dis/contents in migration: Thai women in Belgium, Belgian men in Thailand',
+    start: '2026-09-08T12:30',
+    end: '2026-09-08T13:30',
+    location: 'Bern, Switzerland',
+    category: 'Lecture',
+    image: '/files/events/Bern.jpg',
+    imageAlt: 'Gender Lecture Series 2',
+    speakers: ['Asuncion Fresnoza-Flot'],
+    summary: `Abstract: The scholarly literature on highly gendered migration phenomena has widely documented how dis/contents – dis/satisfaction with certain aspects of life – can propel people to move out of their countries and pursue their projects abroad. Once in their receiving countries, these individuals undergo several challenges and personal adjustments contingent on their differing social positions in global reproductive system/s. This process accompanies dis/contents at the intersection of individuals’ multiple identities. Why and how do dis/contents take shape? How do women and men deal with them? Drawing from two qualitative studies conducted within a span of eight years in Belgium (2012-2015) and in Thailand (2018-2023) respectively, this presentation brings to the fore the intersectional dis/contents of Thai women in Belgium and their Belgian men counterparts in Thailand. Although the study participants highlight the advantages they get from migration, they emphasize some dissatisfactions. The former (mostly marriage migrants) lament about family-related issues and labour market incorporation, whereas the latter (mostly retired men) complain about immigration policies and social security matters. Through the lens of intersectionality, these dis/contents appear not only gendered but also generational (age) and classed. They also stem from larger structural forces, pinpointing the contextuality of intersectional dis/contents in migration.
 
-The programme includes eight lectures:
+    Bio of the speaker: Asuncion Fresnoza-Flot is tenured associate researcher (chercheuse qualifiée) of the Belgian Fund for Scientific Research (F.R.S.-FNRS) and senior lecturer (maîtresse d'enseignement) at the Laboratory of Anthropology of Contemporary Worlds (LAMC) of the Université libre de Bruxelles (ULB) in Belgium. Since 2004, she has been working on migration-related issues and phenomena in Europe-Asia social spaces, notably involving the Philippines, Thailand, France, Belgium, and the Netherlands. Her recent works include the edited volume Situated mixedness. Understanding migration-related intimate diversity in Belgium (Routledge 2025). Her research focuses on the following themes: family, gender, migration, and mobility.`,
+    links: {
+      program: '',
+      flyer: '/files/events/genderlecture/GenderLectureSeries2.pdf',
+      video: '/files/events/genderlecture/GenderLectureSeries2.mp4',
+      external:
+        '',
+    },
+    gallery: [],
+  },
+  {
+    id: 'gender-lecture-series-hidden-costs-of-crises',
+    title: 'Gender Lecture Series - The Hidden Costs of Crises: Gender, Inequality, and Recovery',
+    start: '2026-09-29T12:30',
+    end: '2026-09-29T13:30',
+    location: 'Bern, Switzerland',
+    category: 'Lecture',
+    image: '/files/events/Bern.jpg',
+    imageAlt: 'Gender Lecture Series 3',
+    speakers: ['Simonetta Zarrilli'],
+    summary: `Abstract: Trade is often portrayed as a pathway to growth, resilience, and recovery from crises. But are economic crises – and the policies designed to address them – experienced in the same way by everyone? From geopolitical tensions and supply chain disruptions to food, energy, and financial shocks, the consequences of crises are shaped by unequal access to resources, labour market segmentation, and unpaid care responsibilities. By examining who bears the costs of crises and who benefits from recovery, this lecture invites participants to rethink some of the assumptions underlying trade policy and to explore what they may be overlooking.
 
-1 September 2026, 12:30–13:30 | Zoom Webinar
-“Justifying Women's Poverty: Challenging the Constitutional Permissibility of Women's Poverty”
-Meghan Campbell, University of Birmingham
+    Bio of the speaker: Simonetta Zarrilli is a leading trade analyst with over 30 years of experience in the United Nations system. Her work has focused on policy analysis, capacity-building, and international dialogue on trade and development. Simonetta is currently an advisor to the Asia-Pacific Research and Training Network on Trade, ARTNeT, and a founding member of the WTO Gender Research Hub. In 2010, she launched UNCTAD’s Trade, Gender and Development Programme, which she directed until her retirement from the organization in 2024.
 
-8 September 2026, 12:30–13:30 | Hybrid Event
-“Intersectional Precarities in Neo-Liberal Societies: Thais in Belgium and Belgians in Thailand”
-Asuncion Fresnoza, F.R.S.-FNRS, Université libre de Bruxelles
+    Over the course of her career, she has addressed a wide range of issues – from renewable energy and biotechnology to health and environmental services, and preferential tariff schemes – and has published extensively on these topics. In recognition of her groundbreaking work linking trade and gender equality, Simonetta received the WTO’s inaugural Gender Equality Pioneering Award in 2023. She holds a law degree with highest honours from the University of Siena in Italy and a postgraduate degree in European Studies from the College of Europe in Bruges.`,
+    links: {
+      program: '',
+      flyer: '/files/events/genderlecture/GenderLectureSeries3.pdf',
+      video: '/files/events/genderlecture/GenderLectureSeries3.mp4',
+      external:
+        '',
+    },
+    gallery: [],
+  },
+  {
+    id: 'gender-lecture-series-gender-stereotyping-in-international-human-rights-judicial-discourse',
+    title: 'Gender Lecture Series - Gender Stereotyping in International Human Rights Judicial Discourse',
+    start: '2026-11-03T12:30',
+    end: '2026-11-03T13:30',
+    location: 'Online - Zoom Webinar',
+    category: 'Lecture',
+    image: '/files/events/Bern.jpg',
+    imageAlt: 'Gender Lecture Series 4',
+    speakers: ['Carmelo Danisi'],
+    summary: `Abstract: The talk explores the role and impact of prejudices, stereotypes and biases (PSB) in the discourse of international human rights courts. By taking the example of the European Court of Human Rights (ECtHR), it illustrates how PSB are conceptualised by the ECtHR and what PSB it was able to identify when general assumptions raised by States parties to justify restrictions or denial of rights protected under the European Convention on Human Rights were successfully challenged. To this end, the talk focuses on PSB involving social groups who share a common gender and/or sexual orientation in the area of sexual, parental and reproductive rights, as a good example that shows the ECtHR’s possibly ambiguous approach and the continuous challenge of contrasting, also through language, the original and heteronormative interpretation of the ECHR.
 
-29 September 2026, 12:30–13:30 | Hybrid Event
-“The Hidden Costs of Crises: Gender, Inequality, and Recovery”
-Simonetta Zarrilli, ARTNeT
+    Bio of the speaker: Carmelo Danisi is Associate Professor of Public International Law at Alma Mater Studiorum - University of Bologna, after having been Research Fellow at the University of Sussex (UK). His main areas of research are human rights, non-discrimination, refugee law, on which he published several works including the ERC Starting Grant-monograph Queering Asylum in Europe (Springer 2021) and has carried out a number of projects, like GenDJuS - Rights and Prejudice: Linguistic and Legal Implications of Gendered Discourses in Judicial Spaces (Co-PI, 2023-2026). He is also Programme Director of the joint Bachelor of European Studies - BAES for Unibo.`,
+    links: {
+      program: '',
+      flyer: '/files/events/genderlecture/GenderLectureSeries4.pdf',
+      video: '/files/events/genderlecture/GenderLectureSeries4.mp4',
+      external:
+        '',
+    },
+    gallery: [],
+  },
+  {
+    id: 'gender-lecture-series-feminist-academic-freedom-in-latin-america-in-the-new-geopolitical-context',
+    title: 'Gender Lecture Series - Feminist Academic Freedom in Latin America in the New Geopolitical Context',
+    start: '2026-12-01T15:30',
+    end: '2026-12-01T16:30',
+    location: 'Online - Zoom Webinar',
+    category: 'Lecture',
+    image: '/files/events/Bern.jpg',
+    imageAlt: 'Gender Lecture Series 5',
+    speakers: ['Cristina Burneo Salazar'],
+    summary: `Abstract: Ecuador has been included in the new cartographic delineation of the United States as part of the so-called “New North America.” This indicates a new geopolitical reality determined by the Shield of the Americas political alliance. What does this have to do with academic freedom? Academic censorship and the stifling of certain fields of study –especially gender studies– in Latin American countries controlled by right-wing authoritarian regimes have led some universities to subordinate themselves to these regimes’ agendas. This presentation will address the new retrograde academic establishment and the power it wields over feminist scholars of the South.
 
-3 November 2026, 12:30–13:30 | Zoom Webinar
-“Gender Stereotyping in International Human Rights Judicial Discourse”
-Carmelo Danisi, University of Bologna
+    Bio of the speaker: Cristina Burneo Salazar is a writer, translator, and academic researcher. Areas of research: feminist cultural studies; translation and migration; relations between writing and justice; epistemic justice. Her creative work spans essay and nonfiction. Recent books: Dime si son latinxs (Casa de las Américas International Prize 2025, Cuba, Essay category); Podría decirse ya que su alma era de pólvora (Chile, Palinodia, 2024); and Otra forma de besar (Mexico, Iberoamericana, 2023). She is a co-founder of the collective Corredores Migratorios (2018), which advocates for migrant justice. Coming soon: Antipostales. Pequeñas crónicas en tránsito (Canal Press, Houston, 2027) and Canto mineral, a project of non-fiction short stories.`,
+    links: {
+      program: '',
+      flyer: '/files/events/genderlecture/GenderLectureSeries5.pdf',
+      video: '',
+      external:
+        '',
+    },
+    gallery: [],
+  },
+  {
+    id: 'gender-lecture-series-precarious-justice-travesti-reparation-in-abya-yala',
+    title: 'Gender Lecture Series - Precarious Justice: Travesti Reparation in Abya Yala',
+    start: '2027-01-26T15:30',
+    end: '2027-01-26T16:30',
+    location: 'Online - Zoom Webinar',
+    category: 'Lecture',
+    image: '/files/events/Bern.jpg',
+    imageAlt: 'Gender Lecture Series 6',
+    speakers: ['Diego Falconí Trávez'],
+    summary: `Abstract: This talk explores precarious, communal, and dissident forms of justice emerging from travesti experiences across Abya Yala. Focusing on travesti subjectivities, it examines how travesti bodies have historically been criminalized, racialized, and excluded from legal frameworks. Through the Ecuadorian, Salvadorian, Colombian and Argentinian cases the complexities of reparation will be explained but also how través groups have
+developed their own forms of memory, reparation, and recognition. Against institutional forms of justice that often reproduce colonial, patriarchal, and cisnormative violence, travesti practices open alternative possibilities for repair grounded in archives, collective memory, care, and self-representation. The talk understands justice as a situated and unfinished process, shaped by the tensions, exclusions, and political possibilities generated by travesti subjectivities.
 
-1 December 2026, 15:30–16:30 | Zoom Webinar
-“Feminist Academic Freedom in Latin America in the New Geopolitical Context”
-Cristina Burneo Salazar, Independent Researcher
 
-26 January 2027, 15:30–16:30 | Zoom Webinar
-“Precarious Justice: Travesti Reparation in Abya Yala”
-Diego Falconí, Universidad Autónoma de Barcelona
-
-9 February 2027, 15:30–16:30 | Zoom Webinar
-“Reproductive Justice & Resistance in Precarious Times”
-Luna Zakiya, Washington University
-
-16 March 2027, 12:30–13:30 | Zoom Webinar
-“Human Rights Law and Gender-Based Poverty: Reproduction or Transformation?”
-Kelly-Jane Bishop, TRANSVERSAL Consulting
-
-Participation is open to the public and free of charge. The hybrid events will be held at the World Trade Institute and can also be attended remotely via Zoom. For further information, please contact Dr Simone Ferrari at simone.ferrari@unibe.ch.`,
+    Bio of the speaker: Diego Falconí Trávez (Quito, 1979) is a lawyer specializing in human rights and an academic in literary theory and comparative literature. He is a Lecturer in Literary Theory at the Universitat Autònoma de Barcelona (UAB) and a researcher at the College of Jurisprudence of Universidad San Francisco de Quito. He is also involved in sex-dissident and anti-racist movements in Barcelona. His research focuses on literary and cultural texts in relation to gender, decoloniality, and anti-racism, as well as on the intersections between literature and law. He has published monographs and scholarly articles addressing sexual dissidence, the cultural construction of the contemporary Andes, and Latin American migration to Spain and Catalonia. In 2016, he received the Casa de las Américas Prize in the Essay category.`,
     links: {
       program: '',
       flyer: '',
       video: '',
-      external: '',
+      external:
+        '',
     },
     gallery: [],
   },
@@ -219,7 +298,7 @@ Participation is open to the public and free of charge. The hybrid events will b
     start: '2026-10-12T16:30',
     end: '2026-10-12T17:30',
     location: 'Bern, Switzerland',
-    category: 'Lecture Series',
+    category: 'Lecture',
     image: '/files/events/Bern.jpg',
     imageAlt: 'Lecture on Fathoming the Deep: Slow Time and Extractive Desires',
     speakers: ['Elisa Fornalé'],

@@ -19,18 +19,6 @@ export const coreTeam = [
     location: 'Bern, Switzerland',
     photo: '',
   },
-
-  {
-    key: 'martina-sardo',
-    name: 'Dr. Martina Sardo',
-    role: 'Postdoctoral Researcher',
-    bio: 'Martina Sardo is Postdoctoral Researcher at Resisting Human Erosion Project, University of Bern. She holds a PhD in Human Rights from the University of Palermo, where she completed a dissertation entitled “Sea Level Rise and Human (Im)Mobility: Between International Obligations of Prevention, Protection, and Cooperation.” \n\nShe then worked as a Postdoctoral Researcher at the same university within the project “Gendering International Legal Responses to Chronic Emergencies” (GenRem), which examined the concept of Environmental Chronic Emergencies (ECEs) through a gender lens, with particular attention to the protection of human rights under international law. Dr Sardo is in charge of the Italian case study that explores the arrival of migrants from Bangladesh.',
-    email: 'martina.sardo@unibe.ch',
-    linkedin: 'https://www.linkedin.com/in/martina-sardo/',
-    location: 'Bern, Switzerland',
-    photo: '',
-  },
-
   {
     key: 'camilla-paglia',
     name: 'Camilla Paglia',
@@ -44,11 +32,21 @@ export const coreTeam = [
   {
     key: 'akhilesh-anil-kumar',
     name: 'Akhilesh Anil Kumar',
-    role: 'Research Assist.',
+    role: 'Research Assistant',
     bio: "Akhilesh Anil Kumar is a research assistant in Climate Migration at the University of Bern. Since 2026, he is part of the SNF research project 'Resisting Human Erosion', led by Prof. Elisa Fornalè. He holds a Bachelor of Business Administration from IFIM College, Bangalore, India and he is now studying for a Master of Arts in Political, Legal, & Economic Philosophy at the University of Bern. He has experience bridging grassroots in climate action, knowledge generation, and international development. ",
     email: 'akhilesh.kumar@unibe.ch',
     linkedin: 'https://www.linkedin.com/in/akhileshanil/',
     location: 'Bern, Switzerland',
+    photo: '',
+  },
+  {
+    key: 'leonie-isabelle-frischknecht',
+    name: 'Leonie Isabelle Frischknecht',
+    role: 'Research Assistant',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, sapien vel tincidunt facilisis, lorem justo tincidunt magna, vitae pellentesque libero neque at sapien. Integer malesuada, velit sed fermentum tincidunt, erat magna vulputate lectus, non faucibus neque turpis vel justo. Curabitur tincidunt, nisi at consectetur facilisis, sapien justo interdum erat, vitae posuere magna lorem vitae neque. \n\nPraesent vitae libero nec sapien facilisis malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec feugiat, magna sed tincidunt malesuada, justo neque fermentum sapien, non malesuada erat lorem eget magna. Aliquam erat volutpat. Suspendisse potenti. Vivamus tincidunt, arcu sed vulputate facilisis, ipsum magna feugiat lorem, vitae tincidunt neque sapien sed libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+    email: '',
+    linkedin: '',
+    location: 'Zurich, Switzerland',
     photo: '',
   },
   {
@@ -64,16 +62,36 @@ export const coreTeam = [
 ]
 
 export const visitingAlumni = [
+    {
+    key: 'martina-sardo',
+    name: 'Dr. Martina Sardo',
+    role: 'Postdoctoral Researcher',
+    bio: 'Martina Sardo is Postdoctoral Researcher at Resisting Human Erosion Project, University of Bern. She holds a PhD in Human Rights from the University of Palermo, where she completed a dissertation entitled “Sea Level Rise and Human (Im)Mobility: Between International Obligations of Prevention, Protection, and Cooperation.” \n\nShe then worked as a Postdoctoral Researcher at the same university within the project “Gendering International Legal Responses to Chronic Emergencies” (GenRem), which examined the concept of Environmental Chronic Emergencies (ECEs) through a gender lens, with particular attention to the protection of human rights under international law. Dr Sardo is in charge of the Italian case study that explores the arrival of migrants from Bangladesh.',
+    email: 'martina.sardo@unibe.ch',
+    linkedin: 'https://www.linkedin.com/in/martina-sardo/',
+    location: 'Bern, Switzerland',
+    photo: '',
+  },
   {
     key: 'riccarda-heepen',
     name: 'Riccarda Heepen',
-    role: 'Research Assist.',
+    role: 'Research Assistant',
     bio: 'Riccarda Heepen worked as a research assistant in Prof. Fornalé’s team for three years while completing her academic training in international law at the Geneva Graduate Institute. As part of the Human Erosion Project, she contributed to the research on Swiss case law, helping to shape the research framework as well as systematically mapping, organizing, and categorizing relevant cases. She is currently completing an internship at the Council of Europe.',
     email: '',
     linkedin: 'https://www.linkedin.com/in/riccarda-heepen-9593b828a/',
     location: 'Geneva, Switzerland',
     photo: '',
   },
+    {
+    key: 'piyasiri-wickramasekara',
+    name: 'Piyasiri Wickramasekara',
+    role: 'Visiting Fellow',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, sapien vel tincidunt facilisis, lorem justo tincidunt magna, vitae pellentesque libero neque at sapien. Integer malesuada, velit sed fermentum tincidunt, erat magna vulputate lectus, non faucibus neque turpis vel justo. Curabitur tincidunt, nisi at consectetur facilisis, sapien justo interdum erat, vitae posuere magna lorem vitae neque. \n\nPraesent vitae libero nec sapien facilisis malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec feugiat, magna sed tincidunt malesuada, justo neque fermentum sapien, non malesuada erat lorem eget magna. Aliquam erat volutpat. Suspendisse potenti. Vivamus tincidunt, arcu sed vulputate facilisis, ipsum magna feugiat lorem, vitae tincidunt neque sapien sed libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+    email: '',
+    linkedin: 'https://ch.linkedin.com/in/piyasiri-wickramasekara-77b6752b',
+    location: 'Geneva, Switzerland',
+    photo: '',
+  }
 ]
 
 export const advisoryBoard = [
