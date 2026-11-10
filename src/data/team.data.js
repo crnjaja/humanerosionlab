@@ -17,7 +17,7 @@ export const coreTeam = [
     email: 'simone.ferrari.fs@gmail.com',
     linkedin: '#',
     location: 'Bern, Switzerland',
-    photo: '',
+    photo: '/images/profilePictures/Simone.jpg',
   },
   {
     key: 'camilla-paglia',
@@ -27,7 +27,7 @@ export const coreTeam = [
     email: 'camilla.paglia@students.unibe.ch',
     linkedin: '#',
     location: 'Bern, Switzerland',
-    photo: '',
+    photo: '/images/profilePictures/Camilla.jpg',
   },
   {
     key: 'akhilesh-anil-kumar',
@@ -37,7 +37,7 @@ export const coreTeam = [
     email: 'akhilesh.kumar@unibe.ch',
     linkedin: 'https://www.linkedin.com/in/akhileshanil/',
     location: 'Bern, Switzerland',
-    photo: '',
+    photo: '/images/profilePictures/Akhilesh.jpg',
   },
   {
     key: 'leonie-isabelle-frischknecht',
@@ -70,7 +70,7 @@ export const visitingAlumni = [
     email: 'martina.sardo@unibe.ch',
     linkedin: 'https://www.linkedin.com/in/martina-sardo/',
     location: 'Bern, Switzerland',
-    photo: '',
+    photo: '/images/profilePictures/Martina2.jpeg',
   },
   {
     key: 'riccarda-heepen',
@@ -80,17 +80,17 @@ export const visitingAlumni = [
     email: '',
     linkedin: 'https://www.linkedin.com/in/riccarda-heepen-9593b828a/',
     location: 'Geneva, Switzerland',
-    photo: '',
+    photo: '/images/profilePictures/Riccarda.png',
   },
     {
     key: 'piyasiri-wickramasekara',
     name: 'Piyasiri Wickramasekara',
     role: 'Visiting Fellow',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, sapien vel tincidunt facilisis, lorem justo tincidunt magna, vitae pellentesque libero neque at sapien. Integer malesuada, velit sed fermentum tincidunt, erat magna vulputate lectus, non faucibus neque turpis vel justo. Curabitur tincidunt, nisi at consectetur facilisis, sapien justo interdum erat, vitae posuere magna lorem vitae neque. \n\nPraesent vitae libero nec sapien facilisis malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec feugiat, magna sed tincidunt malesuada, justo neque fermentum sapien, non malesuada erat lorem eget magna. Aliquam erat volutpat. Suspendisse potenti. Vivamus tincidunt, arcu sed vulputate facilisis, ipsum magna feugiat lorem, vitae tincidunt neque sapien sed libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+    bio: 'Piyasiri Wickramasekara is a migration and labour policy expert from Sri Lanka and a Non-Resident Fellow at the World Trade Institute, University of Bern. He holds a PhD in Economics from the University of Cambridge and previously taught at the University of Peradeniya, Sri Lanka. From 1985 to 2010, he worked with the International Labour Organization (ILO), most recently as a Senior Migration Specialist in Geneva. \n\nHis research focuses on international labour migration, migrant workers’ rights, employment policies, and poverty alleviation. He has provided policy advice and technical assistance across Asia, Africa, Europe, and the Middle East. A strong advocate of rights-based approaches to migration, he is currently associated with Global Migration Policy Associates (GMPA) in Geneva and has held academic appointments at the University of Sydney.',
     email: '',
     linkedin: 'https://ch.linkedin.com/in/piyasiri-wickramasekara-77b6752b',
     location: 'Geneva, Switzerland',
-    photo: '',
+    photo: '/images/profilePictures/Piyasiri.jpeg',
   }
 ]
 
